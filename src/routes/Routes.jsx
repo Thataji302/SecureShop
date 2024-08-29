@@ -12,7 +12,7 @@ import ContentUpload from "../pages/contentmanagement/contentupload";
 import Client from "../pages/clientmanagement/client";
 
 import Profile from "../pages/profile";
-import Company from "../pages/clientmanagement/company/company";
+// import Company from "../pages/clientmanagement/company/company";
 import EditClient from "../pages/clientmanagement/editclient";
 import MapContent from "../pages/contentmanagement/mapcontentnew";
 import EditContent from "../pages/contentmanagement/editContent";
@@ -91,7 +91,8 @@ import Search from "../pages/Search";
 import Myaccount from "../pages/Myaccount";
 import SavedProperties from "../pages/SavedProperties";
 import PropertyCalculatorV1 from "../pages/PropertyCalculatorV1";
-
+import Company from "../pages/Company";
+import YellowForm from "../pages/YellowForm";
 
 const Routes = () => {
   return (
@@ -214,6 +215,8 @@ const Routes = () => {
       <Route path={`/profile`} component={Myaccount} />
       <Route path={`/properties`} component={SavedProperties} />
       <Route path={`/calculator`} component={PropertyCalculatorV1} />
+      <Route path={`/company`} component={Company} />
+      <Route path={`/dealerForm`} component={YellowForm} />
       {/* <Route path={`/landingPage`} component={landingPage} /> */}
 
       <Route path={`*`} component={NotFound} />

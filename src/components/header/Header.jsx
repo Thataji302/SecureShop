@@ -141,6 +141,10 @@ const Header = (props) => {
   const profile = () => {
     history.push("/profile");
   }
+  const company = () => {
+    history.push("/company");
+  }
+  
   return (
     <header id="header" className={scroll ? "fixed-top header-scrolled" : "fixed-top"}>
      
@@ -175,7 +179,9 @@ const Header = (props) => {
 
             <div className="d-flex">
             {!token ?
-              <a className="register" href="#" onClick={handleSignin}>Sign In</a>:
+            <div>
+              <a className="register" href="#" onClick={handleSignin}>Sign In</a>
+              <a className="register" href="#" onClick={handleSignup}>Sign Up</a></div>:
               <div className="dropdown d-inline-block">
                 <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -189,9 +195,9 @@ const Header = (props) => {
                   <a className="dropdown-item" href="#" onClick={profile}><i className="bx bx-user font-size-16 align-middle me-1"></i>
                     <span key="t-profile">Profile</span></a>
 
-                  {/* <a className="dropdown-item d-block" href="#"><i
+                  <a className="dropdown-item d-block" href="#" onClick={company}><i
                 className="bx bx-wrench font-size-16 align-middle me-1"></i> <span
-                  key="t-settings">Settings</span></a> */}
+                  key="t-settings">Company</span></a>
 
                   <div className="dropdown-divider"></div>
                   <a className="dropdown-item text-danger" href="#" onClick={handleLogout}><i

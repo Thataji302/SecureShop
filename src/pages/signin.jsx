@@ -557,12 +557,10 @@ const SignIn = () => {
                              </button> : null
  } */}
                             </div>
-                            {/* <div className="signin-footer mt-4"> */}
-                            {/* <p className="signup-prompt mt-5" >Not Registered Yet?<a href="/signup" className="mx-2">Sign Up</a></p> */}
-                            {/* <p className="signup-prompt mt-5" >New users can set password using login with otp!</p> */}
-
-
-                            {/* </div> */}
+                            <div className="signin-footer mt-4"> 
+                            <p className="signup-prompt mt-5" >Not Registered Yet?<a href="/signup" className="mx-2">Sign Up</a></p>
+                             <p className="signup-prompt mt-5" >New users can set password using login with otp!</p>
+                            </div>
 
                         </div>
 

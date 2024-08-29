@@ -97,7 +97,7 @@ const tmdbApi = {
     let payload = params
     let projection = params?.projection ? params?.projection : "";
     let status = params?.status ? params?.status : "";
-    let url = "/lookups?appname=" + appname + "&token=" + token;
+    let url = "/lookups?appname=" + appname;
     
     if( projection != "") { url = url + `&projection=tiny`}
     if( status != "") { url = url + `&status=ACTIVE`}
@@ -111,7 +111,7 @@ const tmdbApi = {
 
   getUserData: (params) => {
     const token = localStorage.getItem("token")
-    const userid = localStorage.getItem("userId")
+    const userid = localStorage.getItem("userid")
     const url = "/user?appname="+ appname +"&userId="+userid+ "&token=" + token;
     return axiosClient.get(url, params);
   },
@@ -240,6 +240,10 @@ const tmdbApi = {
     const token = localStorage.getItem("token")
     const userid = localStorage.getItem("userId")
     const url = "/items?appname="+ appname +"&userId="+userid + "&token=" + token;
+    return axiosClient.post(url, params);
+  },
+  signUp: (params) => {
+    const url = "/signUp?appname=" + appname ;
     return axiosClient.post(url, params);
   },
   otpVerify: (params) => {

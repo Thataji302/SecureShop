@@ -13,7 +13,7 @@
  **Last modified on: Dec 27 2022
  **Description : contains header component details.
  ***/
-import React, { useState, useEffect, useContext,useCallback } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 // import { Link, useLocation, useHistory } from "react-router-dom";
 // import Header from ".././components/dashboard/header";
 import Header from ".././components/header/Header";
@@ -43,7 +43,7 @@ const LandingPage = (props) => {
     // const { pathname } = useLocation();
     // const headerRef = useRef(null);
     // const [scroll, setScroll] = useState(false);
-     const history = useHistory();
+    const history = useHistory();
     const libraries = ["places"];
     // console.log("props", props.menus);
     // const active = headerNav.findIndex((e) => e.path === pathname);
@@ -56,7 +56,7 @@ const LandingPage = (props) => {
         if (localStorage.getItem("token")) {
             history.push("/dashboard");
         }
-      
+
     }, []);
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -96,11 +96,11 @@ const LandingPage = (props) => {
             props?.setSelectedPlace('');
             return; // Exit early if the input is empty
         }
-    
+
         const places = searchBox.getPlaces();
         console.log('places', places);
         const addressData = {}; // Initialize address data object
-    
+
         // Process address components from the Places API
         places?.[0]?.address_components?.forEach(place => {
             place.types.forEach(type => {
@@ -123,7 +123,7 @@ const LandingPage = (props) => {
                 }
             });
         });
-    
+
         // Use Geocoder to fetch more detailed address information
         const geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({ location: places[0]?.geometry.location }, (results, status) => {
@@ -138,7 +138,7 @@ const LandingPage = (props) => {
                     }));
                 });
                 const addressComponents = results[0].address_components;
-                console.log('addressComponentsaddressData',addressData);
+                console.log('addressComponentsaddressData', addressData);
                 addressComponents.forEach(component => {
                     const types = component.types;
                     if (types.includes('locality')) {
@@ -154,11 +154,11 @@ const LandingPage = (props) => {
             } else {
                 console.error('Geocoder failed due to: ', status);
             }
-    
+
             // Log the processed address data
-           // console.log('addressDatahere',addressData.image);
-           setSearchData(addressData)
-    
+            // console.log('addressDatahere',addressData.image);
+            setSearchData(addressData)
+
             // Update props with the processed address data
             // props?.setAddressData(prevData => ({
             //     ...prevData,
@@ -172,7 +172,7 @@ const LandingPage = (props) => {
             //     fullAddress: places[0].formatted_address,
             //     image: addressData.image
             // }));
-    
+
             // Set the selected place if formatted address is available
             // if (places[0].formatted_address) {
             //     console.log("place address",places[0].formatted_address);
@@ -180,27 +180,27 @@ const LandingPage = (props) => {
             //     if(props?.placeIndex){
             //         props?.setAddressIndex({...props?.addressIndex,[props?.placeIndex]:props?.placeIndex});// comes from deal under wrtiting termsheet
             //     }
-                
+
             // }
         });
-      };
+    };
     const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(value);
-        console.log('valueee----->',value)
-        
+        console.log('valueee----->', value)
+
         // Check if the input is empty
         if (value === '') {
-          console.log('Input cleared');
-          props?.setSelectedPlace('');
-          // Handle the input clear case here (e.g., resetting state or triggering a search)
+            console.log('Input cleared');
+            props?.setSelectedPlace('');
+            // Handle the input clear case here (e.g., resetting state or triggering a search)
         }
-      };
-      const handleSearch = () => {
-        console.log('searchValueData',searchValueData)
-        console.log('searchData',searchData)
+    };
+    const handleSearch = () => {
+        console.log('searchValueData', searchValueData)
+        console.log('searchData', searchData)
         let locData = JSON.stringify(searchData)
-        console.log('locData',locData)
+        console.log('locData', locData)
         localStorage.setItem("searchData", locData)
         localStorage.setItem("searchValueData", searchValueData)
         if (searchData !== null) {
@@ -210,98 +210,82 @@ const LandingPage = (props) => {
         // const value = event.target.value;
         // setInputValue(value);
         // console.log('valueee----->',value)
-        
+
         // // Check if the input is empty
         // if (value === '') {
         //   console.log('Input cleared');
         //   props?.setSelectedPlace('');
         //   // Handle the input clear case here (e.g., resetting state or triggering a search)
         // }
-      };
-      
+    };
+
     return (
         <div className="landing_page">
             {/* {token && */}
             <Header />
             {/* } */}
-            <div className="estimate_calculator">
-
-                <div className="container">
-                    <div className="estimate_price">
-                        <h2>Search Property to Estimate Price</h2>
-                        <div className="search_block">
-                            <span className="material-symbols-outlined">location_on</span>
-                            {/* <input type="text" className="form-control" placeholder="Search Property" value="" onChange={handleChange}/>
-                            <button className="search_btn" role="link"><span className="material-symbols-outlined">mystery</span>search</button> */}
-                        {isLoaded && <StandaloneSearchBox onLoad={onSearchBoxLoad} onPlacesChanged={onPlacesChanged} >
-                                <input onChange={handleInputChange} type="text" placeholder="Search Properties" className="form-control searchcontroll" defaultValue={props?.selectedPlace ? (props?.simpleAddress ? props?.selectedPlace?.split(',')[0] : props?.selectedPlace) : ''} name={props?.name ? props?.name : 'locationsearch'} />
-                                
-                            </StandaloneSearchBox>}
-                            <button className="search_btn" role="link" onClick={handleSearch}><span className="material-symbols-outlined">mystery</span>search</button>
-                            {/* <Form style={{ width: "75%" }} onSubmit={handleSubmit}>
-                                <Form.Group controlId="formSearch">
-                                    <Form.Control
-                                        type="text"
-                                        name="search"
-                                        placeholder="Search for a Link Near you..."
-                                        onChange={handleInputChange} />
-                                </Form.Group>
-                                <Button variant="primary" type="submit" >
-                                    Search
-                                </Button>
-                            </Form> */}
+            <div class="estimate_calculator">
+                <div class="container">
+                    <div class="estimate_price">
+                        <h1>Efficiently Launch Talent with Freelance Platforms</h1>
+                        <div class="d-flex align-items-start mt-3 mb-4 justify-content-between">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <div class="d-flex align-items-center">
+                                <a class="register">Get Started</a>
+                                <a class="register btn-outline ms-2">Contact Us</a></div>
                         </div>
                     </div>
-                    <div className="adv_tools">
+                    <img class="w-100" src="./assets/images/dummy.png" />
+                    {/* <div class="adv_tools">
                         <h2>Advantages of Tools</h2>
                         <p>Nam pharetra egestas tellus, at lobortis erat. Cras vitae auctor nunc.</p>
-                        <div className="d-flex align-items-center mt-4 mb-4">
-                            <div className="tool_block">
-                                <div className="tool_card">
+                        <div class="d-flex align-items-center mt-4 mb-4">
+                            <div class="tool_block">
+                                <div class="tool_card">
                                     <a href="#">
-                                        <span className="material-symbols-outlined">cottage</span>
+                                        <span class="material-symbols-outlined">cottage</span>
                                         <h5>Property Valuation</h5>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus enim ex, et bibendum dui lobortis et.</p>
-                                        <button type="button">Read More<span className="material-symbols-outlined">arrow_forward</span></button>
+                                        <button type="button">Read More<span class="material-symbols-outlined">arrow_forward</span></button>
                                     </a>
                                 </div>
                             </div>
-                            <div className="tool_block">
-                                <div className="tool_card">
+                            <div class="tool_block">
+                                <div class="tool_card">
                                     <a href="#">
-                                        <span className="material-symbols-outlined"><span className="material-symbols-outlined">
+                                        <span class="material-symbols-outlined"><span class="material-symbols-outlined">
                                             quick_reference_all
                                         </span></span>
                                         <h5>Title Check</h5>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus enim ex, et bibendum dui lobortis et.</p>
-                                        <button type="button">Read More<span className="material-symbols-outlined">arrow_forward</span></button>
+                                        <button type="button">Read More<span class="material-symbols-outlined">arrow_forward</span></button>
                                     </a>
                                 </div>
                             </div>
-                            <div className="tool_block">
-                                <div className="tool_card">
+                            <div class="tool_block">
+                                <div class="tool_card">
                                     <a href="#">
-                                        <span className="material-symbols-outlined">trending_up</span>
+                                        <span class="material-symbols-outlined">trending_up</span>
                                         <h5>Rates and Trends</h5>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus enim ex, et bibendum dui lobortis et.</p>
-                                        <button type="button">Read More<span className="material-symbols-outlined">arrow_forward</span></button>
+                                        <button type="button">Read More<span class="material-symbols-outlined">arrow_forward</span></button>
                                     </a>
                                 </div>
                             </div>
-                            <div className="tool_block">
-                                <div className="tool_card">
+                            <div class="tool_block">
+                                <div class="tool_card">
                                     <a href="#">
-                                        <span className="material-symbols-outlined">calculate</span>
+                                        <span class="material-symbols-outlined">calculate</span>
                                         <h5>calculator</h5>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus enim ex, et bibendum dui lobortis et.</p>
-                                        <button type="button">Read More<span className="material-symbols-outlined">arrow_forward</span></button>
+                                        <button type="button">Read More<span class="material-symbols-outlined">arrow_forward</span></button>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="reserved">
+                <div class="reserved">
                     <p>All Rights Reserved 2024.</p>
                 </div>
             </div>

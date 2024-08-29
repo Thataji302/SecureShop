@@ -13,7 +13,7 @@
  **Last modified on: Dec 27 2022
  **Description : contains Signup details.
  ***/
-import React, { useState, useRef, useEffect , useContext} from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import tmdbApi from "../api/tmdbApi";
 import axios from 'axios';
 // import "../../src/assets/css/style.css";
@@ -32,6 +32,7 @@ const SignUp = () => {
   const [Corporate, setCorporate] = useState('');
   const [name, setName] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const [role, setRole] = useState('');
   const [companyError, setCompanyError] = useState('');
   const [mpin, setInput] = useState({});
   const [otp, setOtp] = useState('');
@@ -66,13 +67,13 @@ const SignUp = () => {
   useEffect(() => {
     setLocData(JSON.parse(localStorage.getItem("loc")));
     if (localStorage.getItem("loc") === null) {
-      userAgent();
+     // userAgent();
       clientActivity();
-    }else{
+    } else {
       clientActivity();
     }
-    // GetCountries();
-   
+     GetCountries();
+
   }, []);
 
   useEffect(() => {
@@ -125,18 +126,18 @@ const SignUp = () => {
         "sortBy": "alpha3"
       });
 
-      // console.log(response.result);
-      setCountries(response.result);
+       console.log(response.result);
+      setCountries(response.result.data);
       if (localStorage.getItem("loc") !== null) {
         let userAgentData = JSON.parse(localStorage.getItem("loc"))
         let temp = userAgentData?.headers['cloudfront-viewer-country'][0]?.value
         setDefaultCountryCode(temp)
 
-        let k = response?.result?.length > 0 && response?.result?.filter(eachItem => eachItem.alpha2 === temp)
+        let k = response?.result?.data?.length > 0 && response?.result?.data?.filter(eachItem => eachItem.alpha2 === temp)
         setValues(k[0].alpha3)
       }
 
-   
+
     } catch {
       console.log("error");
     }
@@ -150,8 +151,8 @@ const SignUp = () => {
 
 
 
- 
-  const emailValidation = (e)=> {
+
+  const emailValidation = (e) => {
     let flag = true;
     const regEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,8}(.[a-zA-Z{2,8}])?/g;
     if (regEx.test(email)) {
@@ -159,15 +160,15 @@ const SignUp = () => {
 
     } else if (!regEx.test(email) && email !== "") {
       setEmailError("Email is Not Valid");
-        flag = false;
+      flag = false;
     }
     if (email === "") {
       setEmailError("Please Enter Email");
-        flag = false;
+      flag = false;
     }
     return flag
 
-}
+  }
 
 
 
@@ -232,11 +233,11 @@ const SignUp = () => {
     if (buttonText === 'VERIFY & CONTINUE') {
       const isValid = formvalidation();
       if (isValid) {
-        // console.log('asdfasd is valid')
+         console.log('asdfasd is valid')
         setButtonText('VERIFY & CREATE');
         console.log('VERIFY & CONTINUE and signup triggered')
         if (activeLoad == "") {
-         // clientActivity();
+          clientActivity();
           signUp();
         }
       }
@@ -245,7 +246,7 @@ const SignUp = () => {
       if (isValid) {
 
         if (activeLoad == "") {
-         // clientActivity()
+          clientActivity()
           signUp();
         }
         console.log('CONTINUE singup calll ')
@@ -292,7 +293,7 @@ const SignUp = () => {
       "name": name,
       "idc": values,
       "phone": number,
-      "companyname": Corporate === "INDIVIDUAL" ? [name] : Corporate === 'COMPANY' ? [companyName] : [],
+      "companyName": companyName != "" && companyName !== undefined ? companyName : "",
       "clienttype": "ONLINE",
       "emailid": email,
     };
@@ -335,7 +336,7 @@ const SignUp = () => {
         "name": name != "" && name !== undefined ? name : "",
         "idc": values != "" && values !== undefined ? values : "",
         "phone": number != "" && number !== undefined ? number : "",
-        // "companyname": Corporate === "INDIVIDUAL" ? [name] : Corporate === 'COMPANY' ? [companyName] : [],
+        "companyName": companyName != "" && companyName !== undefined ? companyName : "",
         "clienttype": "ONLINE",
         "emailid": email != "" && email !== undefined ? email : "",
         "useragent": locData?.headers !== undefined ? locData?.headers : {}
@@ -405,7 +406,7 @@ const SignUp = () => {
         console.log(tmdbApi);
         const response = await tmdbApi.resendMail({
           "emailid": email,
-          "page":"signup"
+          "page": "signup"
         });
         console.log(response);
         // setActiveLoad("")
@@ -425,10 +426,12 @@ const SignUp = () => {
         "otp": Number(otp),
         "emailid": email
       });
-      if (response.result == "User verified Successfully") {
+      if (response.result == "User verified Successfully" || response.result.token) {
         // localStorage.setItem("Terms", "terms");
         console.log('otp verify block user verified and redirect to terms page')
-        history.push("./terms/" + email);
+        localStorage.setItem("token", response?.result?.token?.token)
+        localStorage.setItem("userid", response?.result?.userid)
+        history.push("/company");
       }
       else {
         setOtpClass(true)
@@ -466,7 +469,7 @@ const SignUp = () => {
   };
 
   let k = countries && countries.length > 0 && countries.filter(eachItem => eachItem.alpha2 === defaultCountryCode)
-// console.log('countries',countries)
+  // console.log('countries',countries)
   return (
     <>
       <button className="close-btn" onClick={handlecancel}><span className="material-icons">close</span></button>
@@ -530,7 +533,14 @@ const SignUp = () => {
                 }
                 <label htmlFor="name">Name</label>
               </div>
-
+              {/* <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Enter Company Name" name="companyName" autocomplete="on" required="" value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
+                <label for="name">Company Name</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Enter Role" name="role" autocomplete="on" required="" value={role} onChange={(e) => setRole(e.target.value)}/>
+                <label for="name">Role</label>
+              </div> */}
               <div className="input-group mb-3 custom-drop_down">
 
                 <select name="countryCodeAlpha2" value={values} className="colorselect capitalize" onChange={(e) => setValues(e.target.value)}>
@@ -552,7 +562,7 @@ const SignUp = () => {
                 </div>
               </div>
               <div className="form-floating mb-3">
-                <input type="email" className="form-control" id="email" name="emailid" placeholder="name@example.com" value={email} onChange={(e) =>  setEmail(e.target.value)} onFocus={(e) => handleEmailMessage(e)} autoComplete="on" />
+                <input type="email" className="form-control" id="email" name="emailid" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} onFocus={(e) => handleEmailMessage(e)} autoComplete="on" />
                 <span className="errormsg" style={{
                   fontWeight: 'bold',
                   color: 'red',

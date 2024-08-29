@@ -470,11 +470,11 @@ const Profile = () => {
             {/* {menuList.map(eachItem => (
                             <li key={eachItem.id}><a href='#' className={`"waves-effect ${eachItem.id === menu ? 'active' : ''}`} onClick={() => onClickMenu(eachItem.id,eachItem.route)}  data-tip={eachItem.labelName}><span className="material-symbols-outlined icon"> {eachItem.name} </span> <span key="t-chat">{eachItem.labelName}</span></a> <Tooltip />  </li>
                         ))} */}
-                        {menuList.map((val) => (
+                        {/* {menuList.map((val) => (
 <li key={val.id}>
 <a href='#' className={`${activeId === val.id ? "waves-effect active" : "waves-effect"}`} onClick={(e) => onClickMenu(e, val)}  data-tip={val.labelName}><span className="material-symbols-outlined icon"> {val.name} </span> <span key="t-chat">{val.labelName}</span></a> 
 </li>
-))}
+))} */}
         </ul>
     </div>
 
