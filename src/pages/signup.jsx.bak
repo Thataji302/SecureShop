@@ -472,15 +472,13 @@ const SignUp = () => {
   // console.log('countries',countries)
   return (
     <>
-    <div className="signup_section">
       <button className="close-btn" onClick={handlecancel}><span className="material-icons">close</span></button>
       <div className="sign-wrapper">
-        <div className="sign-header">
-          {/* <a href="/">
-        <img src="./assets/images/brand-logo.png" class="logo"/></a> */}
-          <h1 className="mb-3">Create Account</h1>
-          
-        </div>
+        {/* <div className="sign-header"><a href="/">
+          <img src={"https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images//logoupdated.png?auto=compress,format"} className="logo" /></a>
+          <h1>Create Account</h1>
+          <p>Join Orasi Media to explore content</p>
+        </div> */}
         <div className="sign-body">
           {/* <div className="sign-block">
             <h2 className="title">I Want to</h2>
@@ -621,7 +619,7 @@ const SignUp = () => {
               </div>
             }
             <div className="signup">
-              <button className="fill_btn" onClick={e => handleStatus(e)}>
+              <button className="fill_btn yellow-gradient" onClick={e => handleStatus(e)}>
                 {activeLoad === "signUpActive" ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
 
                 {buttonText}</button>
@@ -636,7 +634,6 @@ const SignUp = () => {
             <p className="signup-prompt mt-5" >Already have an Account<a href="/login" className="mx-2">Sign In</a></p>
           </div>
         </div>
-      </div>
       </div>
     </>
   );

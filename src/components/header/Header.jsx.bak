@@ -158,10 +158,10 @@ const Header = (props) => {
               <div className="navbar-brand-box">
                 <a href="" className="logo logo-dark">
                   <span className="logo-sm">
-                    <img className="w-100" src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
+                    <img src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
                   </span>
                   <span className="logo-lg">
-                    <img className="w-100" src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
+                    <img src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
                   </span>
                 </a>
 
@@ -179,9 +179,9 @@ const Header = (props) => {
 
             <div className="d-flex">
             {!token ?
-            <div className="d-flex align-items-center">
-              <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>
-              <a className="register ms-2" href="#" onClick={handleSignup}>Sign Up</a></div>:
+            <div>
+              <a className="register" href="#" onClick={handleSignin}>Sign In</a>
+              <a className="register" href="#" onClick={handleSignup}>Sign Up</a></div>:
               <div className="dropdown d-inline-block">
                 <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

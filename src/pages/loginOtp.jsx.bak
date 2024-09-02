@@ -236,7 +236,7 @@ const SignInOtp = () => {
 
   return (
     <>
-      <div className="signup_section">
+      <div className="login-section">
         <button className="close-btn" onClick={handleClose}><span className="material-icons">close</span></button>
         <div className="signin-wrapper">
           <a href="/"><img className="logo" src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} /></a>
@@ -278,7 +278,7 @@ const SignInOtp = () => {
 
               <div className="signin-footer mt-4">
 
-                <button className="fill_btn" onClick={e => handleLogin(e)}>
+                <button className="fill_btn yellow-gradient" onClick={e => handleLogin(e)}>
                   {activeLoad === "loginOtp" ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
                   LOGIN</button>
                 <button className="sm-btn" onClick={handleEmailLogin}>Login with Password</button>
