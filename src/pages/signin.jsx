@@ -363,6 +363,12 @@ const SignIn = () => {
             } else if (response.result === "Session Already Exists") {
                 // signoutsession()
                 setShowSessionPopup(true)
+            }else if (response.result === "Invalid password") {
+                setError("Invalid password");
+            } else if (response.result === "Invalid email") {
+                setError("Invalid email");
+            } else if (response.result === "User not found") {
+                setError("User not Found. Please SignUp ");
             } else if (response.result === "ACTIVE" || response.result === "Email Sent Successfully") {
                 console.log("response.result", response.result);
                 history.push("/loginotp");
@@ -373,13 +379,7 @@ const SignIn = () => {
                 setWelcomeMsg(true)
 
 
-            } else if (response.result === "Invalid password") {
-                setError("Invalid password");
-            } else if (response.result === "Invalid email") {
-                setError("Invalid email");
-            } else if (response.result === "Client not found") {
-                setError("User not Found. Please SignUp ");
-            }
+            } 
             else {
                 setError("Invalid Details");
 

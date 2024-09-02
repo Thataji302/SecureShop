@@ -66,7 +66,7 @@ const SignInOtp = () => {
   }
   let imageCloudfront;
   if (config.common && config.common.imageCloudfront) {
-      imageCloudfront = config.common.imageCloudfront;
+    imageCloudfront = config.common.imageCloudfront;
   }
   // const appMenus = async () => {
   //   try {
@@ -133,11 +133,11 @@ const SignInOtp = () => {
 
     try {
       setActiveLoad("loginOtp")
-      const response = await tmdbApi.signOtp({
+      const response = await tmdbApi.otpVerify({
         "emailid": localStorage.getItem("email"),
-        "logintype": "otp",
+        // "logintype": "otp",
         "otp": Number(otp),
-        "useragent": locData?.headers !== undefined ? locData?.headers : {}
+        // "useragent": locData?.headers !== undefined ? locData?.headers : {}
       });
       console.log(response);
       if (response.result.res === "password not set") {
@@ -152,19 +152,22 @@ const SignInOtp = () => {
         localStorage.setItem("currentSessionClientTime", currentDate);
         GetClientDataFunction();
         history.push("/moreinfo/" + localStorage.getItem("check"));
-      } else if (response.result.token) {
+      } else if (response.result === "Invalid code entered") {
+        setError("The OTP entered is incorrect. Please try again or request a new OTP");
+        setActiveLoad("")
+    } else if (response.result === "Invalid email") {
+        setError("Invalid email");
+    } else if (response.result === "User not found") {
+        setError("User not Found. Please SignUp ");
+    }else if (response.result.token) {
         console.log("came");
         localStorage.setItem("token", response.result.token.token);
         localStorage.setItem("userId", response.result.userid);
         let currentDate = new Date().toJSON();
         localStorage.setItem("currentSessionClientTime", currentDate);
-        let calculationValues = JSON.parse(localStorage.getItem("calculationValues"));
-        if(calculationValues){
-          history.push("/calculator");
-        }else{
-          history.push("/search");
-        }
-       
+        history.push("/yellowForm");
+
+
       } else {
         // setError(response.result);
         // setTimeout(function () { setError("") }, 3000);
@@ -260,8 +263,14 @@ const SignInOtp = () => {
                     // onChange={setOtp}
                     onChange={handleChange}
                     autoFocus OTPLength={5} otpType="number" onFocus={(e) => handleOtpError(e)} />
-                  <p>The OTP you have entered is incorrect. Please try again or request a new OTP</p>
+                    
+                  {/* <p>The OTP you have entered is incorrect. Please try again or request a new OTP</p> */}
                 </div>
+                {error ? <span className="errormsg" style={{
+                fontWeight: 'bold',
+                color: 'red',
+              }}>{error}</span> : ""
+              }
                 <button className="resend-button" onClick={handleResendOtp}>Resend</button>{resendActive ?
                   <p style={{ 'font-size': '12px', 'color': 'green', 'position': 'absolute', 'left': '0', 'bottom': '-29%' }}>OTP Resent!</p>
                   : null}
@@ -275,11 +284,7 @@ const SignInOtp = () => {
                 <button className="sm-btn" onClick={handleEmailLogin}>Login with Password</button>
               </div>
 
-              {error ? <span className="errormsg" style={{
-                fontWeight: 'bold',
-                color: 'red',
-              }}>{error}</span> : ""
-              }
+              
 
               {/* <p className="signup-prompt mt-5">Not Registered Yet?<a href="/signup" className="mx-2">Sign Up</a></p> */}
 
