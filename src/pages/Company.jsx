@@ -236,7 +236,7 @@ const Company = () => {
                 .then(function (response) {
                     if (response.data.result) {
                         // localStorage.setItem("previousid", response.data.result)
-                        history.push("./dealerForm");
+                        history.push("./yellowForm");
                     }
                 });
         }else if(valid){
@@ -257,7 +257,7 @@ const Company = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                        history.push("./dealerForm");
+                        history.push("./yellowForm");
                     }
                 });
         }
