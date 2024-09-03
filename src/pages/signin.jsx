@@ -290,12 +290,12 @@ const SignIn = () => {
                 localStorage.setItem("userId", response.result.userid);
                 let currentDate = new Date().toJSON();
                 localStorage.setItem("currentSessionClientTime", currentDate);
-                let calculationValues = JSON.parse(localStorage.getItem("calculationValues"));
-                if (calculationValues) {
-                    history.push("/calculator");
-                } else {
-                    history.push("/search");
-                }
+                // let calculationValues = JSON.parse(localStorage.getItem("calculationValues"));
+                // if (calculationValues) {
+                //     history.push("/calculator");
+                // } else {
+                    history.push("/yellowForm");
+                // }
             } else if (response.result === "Invalid password") {
                 setError("Invalid password");
             } else if (response.result === "Client not found") {

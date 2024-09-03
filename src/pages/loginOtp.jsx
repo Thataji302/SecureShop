@@ -165,7 +165,7 @@ const SignInOtp = () => {
         localStorage.setItem("userId", response.result.userid);
         let currentDate = new Date().toJSON();
         localStorage.setItem("currentSessionClientTime", currentDate);
-        history.push("/dealerForm");
+        history.push("/yellowForm");
 
 
       } else {

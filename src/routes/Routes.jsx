@@ -216,7 +216,7 @@ const Routes = () => {
       <Route path={`/properties`} component={SavedProperties} />
       <Route path={`/calculator`} component={PropertyCalculatorV1} />
       <Route path={`/company`} component={Company} />
-      <Route path={`/dealerForm`} component={YellowForm} />
+      <Route path={`/yellowForm`} component={YellowForm} />
       {/* <Route path={`/landingPage`} component={landingPage} /> */}
 
       <Route path={`*`} component={NotFound} />

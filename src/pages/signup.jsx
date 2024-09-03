@@ -72,7 +72,7 @@ const SignUp = () => {
     } else {
       clientActivity();
     }
-     GetCountries();
+    // GetCountries();
 
   }, []);
 
@@ -241,18 +241,7 @@ const SignUp = () => {
           signUp();
         }
       }
-    } else if (buttonText === 'CONTINUE') {
-      const isValid = formvalidation();
-      if (isValid) {
-
-        if (activeLoad == "") {
-          clientActivity()
-          signUp();
-        }
-        console.log('CONTINUE singup calll ')
-
-      }
-    }
+    } 
 
 
 
@@ -288,8 +277,8 @@ const SignUp = () => {
       "pageurl": window.location.href,
       "starttime": presentTime,
       "useragent": JSON.parse(localStorage.getItem("loc")),
-      "userType": type,
-      "corporate": Corporate,
+      "userType": "type",
+     // "corporate": Corporate,
       "name": name,
       "idc": values,
       "phone": number,
@@ -331,7 +320,7 @@ const SignUp = () => {
       console.log('signup try block')
       setActiveLoad("signUpActive")
       const response = await tmdbApi.signUp({
-        "userType": type != "" && type !== undefined ? type : "",
+        "userType": type != "" && type !== undefined ? type : "SuperAdmin",
         // "corporate": Corporate != "" && Corporate !== undefined ? Corporate : "",
         "name": name != "" && name !== undefined ? name : "",
         "idc": values != "" && values !== undefined ? values : "",
@@ -545,7 +534,7 @@ const SignUp = () => {
               </div> */}
               <div className="input-group mb-3 custom-drop_down">
 
-                <select name="countryCodeAlpha2" value={values} className="colorselect capitalize" onChange={(e) => setValues(e.target.value)}>
+                {/* <select name="countryCodeAlpha2" value={values} className="colorselect capitalize" onChange={(e) => setValues(e.target.value)}>
 
                   <option value={k && k[0] && k[0].alpha3}>{k && k[0] && k[0].alpha3}{k && k[0] && k[0].countrycode}</option>
                   {countries && countries.length > 0 && countries.map((task, i) => {
@@ -555,7 +544,7 @@ const SignUp = () => {
                     )
                   }
                   )}
-                </select>
+                </select> */}
                 <div className="form-floating">
 
                   <input type="text" className="field form-control" placeholder="Enter Phone Number" maxLength="10" value={number} name="phonenumber" onChange={e => checkInput(e)} autoComplete="on" />

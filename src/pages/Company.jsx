@@ -60,7 +60,7 @@ const Company = () => {
     const [activeId, setActiveId] = useState();
     const [name, setName] = useState('');
     const [companyName, setCompanyName] = useState('');
-    const [companyEmail, setCompanyEmail] = useState("");
+    const [emailid, setCompanyEmail] = useState("");
     const [companyNumber, setCompanyNumber] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
     const [companyResult, setCompanyResult] = useState("");
@@ -78,7 +78,7 @@ const Company = () => {
     const [passwordError, setPasswordErr] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
-    const [number, setNumber] = useState(false);
+    const [phoneNumber, setNumber] = useState("");
     const [upper, setUpper] = useState(false);
     const [limit, setLimit] = useState(false);
     const [lower, setLower] = useState(false);
@@ -142,9 +142,9 @@ const Company = () => {
                 } else {
                     setName(response.result[0].name)
                     // setCompanyName(response.result[0].companyName)
-                    //setCompanyEmail(response.result[0].emailid)
+                    setCompanyEmail(response.result[0].emailId)
                     // setIdc(response.result[0].idc)
-                    // setPhoneNumber(response.result[0].phone)
+                    setNumber(response.result[0].phoneNumber)
                     setData(response.result[0]);
                 }
             }
@@ -156,7 +156,7 @@ const Company = () => {
     //  console.log("data", data);
     const checkInput = (e) => {
         const onlyDigits = e.target.value.replace(/\D/g, "");
-        setCompanyNumber(onlyDigits);
+        setNumber(onlyDigits);
 
     };
 
@@ -183,9 +183,9 @@ const Company = () => {
     function formvalidation() {
         let formIsValid = true;
         const regEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,8}(.[a-zA-Z{2,8}])?/g;
-        if (regEx.test(companyEmail)) {
+        if (regEx.test(emailid)) {
             setEmailError("");
-        } else if (!regEx.test(companyEmail) && companyEmail !== "") {
+        } else if (!regEx.test(emailid) && emailid !== "") {
             setEmailError("Email is Not Valid");
             formIsValid = false;
         }
@@ -199,11 +199,11 @@ const Company = () => {
         //   setCategoryError("Please Select Corporate");
         //   formIsValid = false;
         // }
-        if (companyName === "") {
+        if (name === "") {
             setNameError("Please Enter Name");
             formIsValid = false;
         }
-        if (companyEmail === "") {
+        if (emailid === "") {
             setEmailError("Please Enter Email");
             formIsValid = false;
         }
@@ -222,9 +222,9 @@ const Company = () => {
             let payload;
             let userid = localStorage.getItem("userid")
             payload = {
-                "companyName": companyName,
-                "companyEmail": companyEmail,
-                "companyNumber": companyNumber,
+                "name": name,
+                "emailid": emailid,
+                "phoneNumber": phoneNumber,
                 "companyAddress": companyAddress
             };
             const urlLink = lambda + '/updateCompany?appname=' + appname + "&companyId=" + companyResult?.companyId;
@@ -243,9 +243,9 @@ const Company = () => {
             let payload;
             let userid = localStorage.getItem("userid")
             payload = {
-                "companyName": companyName,
-                "companyEmail": companyEmail,
-                "companyNumber": companyNumber,
+                "name": name,
+                "emailid": emailid,
+                "phoneNumber": phoneNumber,
                 "companyAddress": companyAddress
             };
             const urlLink = lambda + '/addCompany?appname=' + appname + (userid ? "&userid=" + userid : "");
@@ -274,9 +274,9 @@ const Company = () => {
                 console.log("response?.result",response.data.result)
                 if (response.data.result) {
                     // localStorage.setItem("previousid", response.data.result)
-                    setCompanyName(response.data.result && response.data.result[0].companyName)
-                    setCompanyEmail(response.data.result && response.data.result[0].companyEmail)
-                    setCompanyNumber(response.data.result && response.data.result[0].companyNumber)
+                    setName(response.data.result && response.data.result[0].name)
+                    setCompanyEmail(response.data.result && response.data.result[0].emailid)
+                    setNumber(response.data.result && response.data.result[0].phoneNumber)
                     setCompanyAddress(response.data.result && response.data.result[0].companyAddress)
                     setCompanyResult(response.data.result && response.data.result[0])
                 }
@@ -313,7 +313,7 @@ const Company = () => {
                                             <div className="col-lg-8 col-md-8 col-xs-12">
                                                 <h3>Company Details</h3>
                                                 <div className="form-floating mb-3">
-                                                    <input type="text" className="form-control" id="name" placeholder="Enter Company Name" name="companyName" value={companyName} onChange={(e) => setCompanyName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                    <input type="text" className="form-control" id="name" placeholder="Enter Company Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
                                                         <span className="errormsg" style={{
                                                             fontWeight: 'bold',
                                                             color: 'red',
@@ -322,7 +322,7 @@ const Company = () => {
                                                     <label for="floatingInput">Company Name</label>
                                                 </div>
                                                 <div className="form-floating mb-3">
-                                                    <input type="text" className="form-control" id="companyEmail" placeholder="Enter Company Email" name="companyEmail" value={companyEmail} onChange={(e) => setCompanyEmail(e.target.value)} onFocus={(e) => handleEmailMessage(e)} autoComplete="on" required /> {emailError != "" ?
+                                                    <input type="text" className="form-control" id="companyEmail" placeholder="Enter Company Email" name="emailid" value={emailid} onChange={(e) => setCompanyEmail(e.target.value)} onFocus={(e) => handleEmailMessage(e)} autoComplete="on" required /> {emailError != "" ?
                                                         <span className="errormsg" style={{
                                                             fontWeight: 'bold',
                                                             color: 'red',
@@ -331,12 +331,12 @@ const Company = () => {
                                                     <label for="floatingInput">Company Email Id</label>
                                                 </div>
                                                 <div className="form-floating mb-3">
-                                                    <input type="text" className="form-control" id="companyNumber" placeholder="Enter Company Number" name="companyNumber" value={companyNumber} onChange={e => checkInput(e)} autoComplete="on" />
+                                                    <input type="text" className="form-control" id="companyNumber" placeholder="Enter Company Number" name="phoneNumber" value={phoneNumber} onChange={e => checkInput(e)} autoComplete="on" />
                                                     <label for="floatingInput">Company Phone Number</label>
                                                 </div>
                                                 <div className="form-floating mb-3">
                                                     <input type="text" className="form-control" id="name" placeholder="Enter Company Address" name="companyAddress" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} autoComplete="on" />
-                                                    <label for="floatingInput">Company Adress</label>
+                                                    <label for="floatingInput">Company Address</label>
                                                 </div>
                                                 <button className="fill_btn" onClick={e => handleUpdate(e)}> Update</button>
                                             </div>
