@@ -54,7 +54,7 @@ const LandingPage = (props) => {
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
-            history.push("/dashboard");
+            history.push("/yellowForm");
         }
 
     }, []);

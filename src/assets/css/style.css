@@ -317,20 +317,6 @@ align-items: center;
   background: linear-gradient(to bottom, #f2e18d 0%, #f2a341 100%);
   transition: all 0.3s ease-out;
 }
-.fill_btn:after {
-  content: "";
-  background: #ffffffbd;
-  display: block;
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  opacity: 0;
-  transition: all 0.8s;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
 .signup-prompt {
   font-size: 13px !important;
   font-weight: normal !important;
@@ -394,7 +380,7 @@ align-items: center;
   text-align: center !important;
   background-color: #f2f2f2 !important;
 }
-input, textarea {
+/* input, textarea {
   background: none;
   color: #606060;
   font-size: 16px;
@@ -403,7 +389,7 @@ input, textarea {
   width: 100%;
   border: none;
   border-radius: 0;
-}
+} */
 .otp-inputs p {
   position: absolute;
   left: -5px;
@@ -491,6 +477,268 @@ input, textarea {
   width: 57%;} 
   .adv_tools {margin-top: 40px;}
 .sign-body .tab-content.p-3.text-muted {padding-top: 10px !important;}
+@media (min-width: 1200px) {
+  body[data-layout=horizontal] .container-fluid, body[data-layout=horizontal] .navbar-header {
+      max-width: 99%;
+  }
+}
+.footer {position: fixed;}
+.topnav .navbar-nav .nav-link {font-size: 13.5px; color: #1E266D; text-transform: unset; font-weight: 500;}
+.topnav .navbar-nav .nav-link:hover, .topnav .navbar-nav .nav-link:focus, .topnav .navbar-nav .nav-link.active{color: rgba(227, 114, 68, 1) !important;}
+.rights {margin-bottom: 0; font-size: 12px;}
+.topnav {box-shadow: none;}
+#layout-wrapper {background-color: #f6f6fa;}
+.inner_page {background-color: #f6f6fa !important;}
+table thead tr th {color: #4E4E4E;
+  font-size: 12px;
+  font-weight: 600;
+}
+  table tbody tr td {
+    color: #717171;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .app-search {padding: 0; margin: 0;}
+  .navbar-brand-box {display: flex; align-items: center;}
+  .navbar-brand-box .logo-lg img{height: 21px;}
+  .md-container {
+    width: 95%;
+    max-width: 990px;
+    margin: 0 auto;
+}
+.page-header {
+  padding: 10px 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.block-title h2 {
+  font-size: 18px;
+  line-height: 1;
+  color: #1E266D;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-weight: 700;
+}
+.plain-btn {
+  display: flex;
+  appearance: none;
+  border: 1px solid #D6D6D6;
+  padding: 7px 16px 7px 8px;
+  border-radius: 5px;
+  line-height: 1;
+  background: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  color: #1E266D;
+  text-transform: uppercase;
+  align-items: center;
+}
+.plain-btn span {
+  font-size: 20px;
+}
+.card-block {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 0 30px rgb(214 215 216 / 60%);
+}
+.card-block h3 {
+  font-size: 16px;
+  color: #1E266D;
+  font-weight: 700;
+}
+.profile .card-block .form-floating .form-control {
+  font-size: 13px;
+  color: #4c4c4c;
+  font-weight: 500;
+  border-radius: 3px !important;
+}
+.profile .country-dropdown .colorselect {
+  border: 1px solid #ced4da;
+  width: 110px;
+  font-size: 10.5px;
+  color: #000;
+  font-weight: bold;
+  border-radius: 0.25rem 0 0 0.25rem;
+  background-color: #DFDFDF;
+  padding: 5px;
+  overflow: auto !important;
+  opacity: .65;
+  text-transform: capitalize;
+}
+.profile .country-dropdown .form-floating {
+  width: calc(100% - 110px);
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.avatar-block {
+  background-color: #fff;
+  border-radius: 5px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgb(214 215 216 / 60%);
+}
+.avatar-block .avatar-header {
+  background-image: url(https://orasimedia.imgix.net/orasi/client/resources/orasiv1/images/bg-pattern.jpg);
+  background-size: 100%;
+  position: relative;
+  height: 100px;
+}
+.avatar-img-block {
+  display: flex;
+  width: 110px;
+  height: 110px;
+  border-radius: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -15px);
+  background-color: #d4784f;
+  overflow: hidden;
+  border: 5px solid #fff;
+  box-shadow: 0 0 30px rgb(214 215 216 / 60%);
+  align-items: center;
+  justify-content: center;
+}
+.avatar-img-block p {
+  color: #fff;
+  font-weight: 800;
+  font-size: 42px;
+  margin-bottom: 0;
+}
+.avatar-body {
+  padding: 35px 20px;
+  text-align: center;
+}
+.profile .country-dropdown {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+.avatar-body .username {
+  font-size: 16px;
+    font-weight: 500;
+}
+.profile .card-block .text-danger {
+  font-size: 12px;
+  text-transform: lowercase;
+  position: absolute;
+}
+.form-floating>label>span {
+  color: var(--red);
+}
+.terms-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.terms-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+input[type=checkbox] {
+  position: relative;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+input[type=checkbox]:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 16px !important;
+  height: 16px;
+  top: -1px;
+  left: -1px;
+  background-color: #e9e9e9;
+  border: 1px solid var(--borderColor);
+  border-radius: 2px;
+}
+.terms-block label {
+  width: calc(100% - 25px);
+  text-align: left;
+  margin-left: 10px;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  color: #000 !important;
+}
+.signin-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem !important;
+  position: relative;
+}
+.create-password {
+  max-width: 870px;
+}
+.profile .create-password .crpsd-cnt-blk {
+  position: inherit;
+  display: flex;
+  width: 100%;
+}
+.create-password .crpsd-cnt-blk .ins-dsp-none {
+  display: none !important;
+}
+.profile .create-password .crpsd-cnt-blk .create-password-instruction {
+  display: block;
+  width: auto;
+  position: inherit;
+  padding: 15px;
+  height: fit-content;
+  border: 1px solid #b7babd;
+  padding-bottom: 10px;
+}
+.create-password .crpsd-cnt-blk .create-password-instruction .error {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-size: 12px;
+ margin-bottom: 5px;
+  color: red;
+}
+.create-password .crpsd-cnt-blk .create-password-instruction .material-symbols-outlined {
+  font-size: 20px;
+}
+.create-password .crpsd-cnt-blk .create-password-instruction .vaild {
+  color: green;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.terms-block label {
+  width: calc(100% - 25px);
+  text-align: left;
+  margin-left: 10px;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  color: #000 !important;
+  margin-bottom: 0;
+}
+.add_btn {    
+  align-items: center;
+  background-color: #d4784f;
+  border: 1px solid #d4784f;
+  border-radius: 6px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 12px;
+  text-transform: uppercase;}
+
+  .add_btn span {
+    font-size: 18px;
+  }
 
 
 

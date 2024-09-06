@@ -43,7 +43,7 @@ const menuList = [
         id: '3',
         name: 'settings',
         labelName: 'Groups',
-       // route: "dashboard"
+        // route: "dashboard"
     },
     // {
     //     id: '10',
@@ -443,87 +443,54 @@ const Profile = () => {
     }
     const onClickMenu = (e, item) => {
         //setMenu(id);
-        console.log('handleActiveMenuObj------------>',item)
-         setActiveId(item.id)
-         
-         history.push(item.route)
+        console.log('handleActiveMenuObj------------>', item)
+        setActiveId(item.id)
+
+        history.push(item.route)
     }
     return (
         <>
             <div id="layout-wrapper">
-                <div className="dashboard">
-                    <Header />
-                    <div className="vertical-menu">
 
-<div data-simplebar className="h-100">
-    <div id="sidebar-menu">
-        <ul className="metismenu list-unstyled" id="side-menu">
-            {/* <li>
-                <a href="#" className={isActive ? "waves-effect active": "waves-effect"} onClick={searchClick}> <span className="material-symbols-outlined icon"> travel_explore </span> <span key="t-chat">Search</span> </a>
-            </li>
-            <li>
-                <a href="#" className="waves-effect " onClick={savedClick}> <span className="material-symbols-outlined icon"> collections_bookmark </span> <span key="t-chat">Properties</span> </a>
-            </li>
-            <li>
-                <a href="#" className="waves-effect"> <span className="material-symbols-outlined icon"> settings </span> <span key="t-chat">Settings</span> </a>
-            </li> */}
-            {/* {menuList.map(eachItem => (
-                            <li key={eachItem.id}><a href='#' className={`"waves-effect ${eachItem.id === menu ? 'active' : ''}`} onClick={() => onClickMenu(eachItem.id,eachItem.route)}  data-tip={eachItem.labelName}><span className="material-symbols-outlined icon"> {eachItem.name} </span> <span key="t-chat">{eachItem.labelName}</span></a> <Tooltip />  </li>
-                        ))} */}
-                        {/* {menuList.map((val) => (
-<li key={val.id}>
-<a href='#' className={`${activeId === val.id ? "waves-effect active" : "waves-effect"}`} onClick={(e) => onClickMenu(e, val)}  data-tip={val.labelName}><span className="material-symbols-outlined icon"> {val.name} </span> <span key="t-chat">{val.labelName}</span></a> 
-</li>
-))} */}
-        </ul>
-    </div>
-
-</div>
-</div>
-
-                    <div className="main-content">
-
-                        <div className="page-content my_account">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="d-flex align-items-center">
-                                            <div className="flex-grow-1">
-                                                <div className="title-block">
-                                                    <div class="d-flex">
-                                                        <h4 className="mb-2 card-title">Profile</h4>
-                                                    </div>
-                                                    <div className="property_info">
-                                                        <button type="button" className="back" onClick={backClick}><span class="material-symbols-outlined">chevron_left</span>back</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                <Header />
+                <div className="topnav">
+                    <div className="container-fluid">
+                        <div className="md-container">
+                            <div className="page-header">
+                                <div className="block-title">
+                                    <h2>Profile</h2>
                                 </div>
-                                <div className="row">
-                                    <div className="col-12">
-                                        <div className="card mb-3 card-height">
-                                            <div className="card-body">
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <h3>User Details</h3>
-                                                        <div className="d-flex justify-content-between mb-4">
+                                <button className="plain-btn" onClick={backClick}><span class="material-icons-outlined">chevron_left</span>Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="main-content profile">
 
-                                                            <div className="form-group">
-                                                                <label for="example-text-input" className="col-form-label">Name</label>
-                                                                <input type="text" className="form-control" id="floatingInput" placeholder="Enter Name" value={name} onChange={(e) => setName(e.target.value)} />
-                                                                {nameerror ? <span className="errormsg" style={{ fontWeight: 'bold', color: 'red', }}>{nameerror}</span> : ""}
-                                                            </div>
+                    <div className="page-content">
+                        <div className="container-fluid">
+                            <div className="md-container">
+                                <div className="card-block">
+                                    <div className="row profile-pic">
+                                        <div className="col-lg-8 col-md-8 col-xs-12">
+
+                                            <h3>User Details</h3>
+                                            <div className="form-floating mb-3">
+
+                                                <input type="text" className="form-control" id="floatingInput" placeholder="Enter Name" value={name} onChange={(e) => setName(e.target.value)} />
+                                                {nameerror ? <span className="errormsg" style={{ fontWeight: 'bold', color: 'red', }}>{nameerror}</span> : ""}
+                                                <label for="floatingInput" >Name</label>
+                                            </div>
 
 
-                                                            <div className="form-group">
-                                                                <label for="example-text-input" className="col-form-label">Email ID</label>
-                                                                <input className="form-control contact-number" type="email" placeholder=" Enter Company Email" id="example-email-input" value={email} readOnly />
-                                                            </div>
+                                            <div className="form-floating mb-3">
+
+                                                <input className="form-control contact-number" type="email" placeholder=" Enter Company Email" id="example-email-input" value={email} readOnly />
+                                                <label for="floatingInput" >Email ID</label>
+                                            </div>
 
 
-                                                            {/* <div className="col-md-12">
+                                            {/* <div className="col-md-12">
                                                                                  <div className="form-group">
                                                                                  <label for="example-text-input" class="col-form-label">PHONE NUMBER</label>
                                                                                  <div className="country-code">
@@ -537,114 +504,177 @@ const Profile = () => {
                                                                                  </div>
                                                                              </div>
                                                                          </div> */}
-                                                            <div className="update_button">
-                                                                <label>Show</label>
-                                                                <button onClick={handleUserUpdate} className="btn btn-primary"> {loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}UPDATE</button>
-                                                            </div>
 
+                                          
+                                            <button onClick={handleUserUpdate} className="fill_btn"> {loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}UPDATE</button>
+                                            </div>
+                                            <div className="col-lg-4 col-md-4 col-xs-12">
+                                                <div className="avatar-block">
+                                                    <div className="avatar-header">
+                                                        <div className="avatar-img-block">
+                                                            {/* <p>VK</p> */}
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-12">
-                                                        <h3>Change Password</h3>
-                                                        <div className="d-flex justify-content-between mb-4">
-                                                            {/* <div className="col-md-12">
-                                                                                         <div className="form-group">
-                                                                                                 <label for="example-text-input" className="col-form-label">Old Password<span class="required">*</span></label>
-                                                                                                 <input type="password" name="oldPassword" placeholder="Old Password" className="form-control" value=""/>
-                                                                                     </div>
-                                                                                 </div> */}
+                                                    <div className="avatar-body">
+                                                        <h6 className="username mt-3">{name}</h6>
 
-                                                            <div className="form-group">
-                                                                <label for="example-text-input" className="col-form-label">New Password<span className="required">*</span></label>
-                                                                <input type={passwordShown ? "text" : "password"} value={passwordInput.password} onChange={(e) => handlePasswordChange(e)} onKeyUp={handleValidation} name="password" placeholder="Password" className="form-control" onBlur={(e) => { handleAddclass(e) }}
-                                                                    onFocus={(e) => { handleRemoveclass(e) }} />
-                                                                <p className="text-danger">{passwordError}</p>
-                                                                <div className="flex-left terms-block">
-                                                                    <input type="checkbox" id="terms-check" onChange={(e) => togglePassword(e)} />
-                                                                    <label>Show Password</label>
-                                                                </div>
-                                                            </div>
-
-
-
-                                                            <div className="form-group">
-                                                                <label for="example-text-input" className="col-form-label">Confirm Password<span className="required">*</span></label>
-                                                                <input type={passwordShown ? "text" : "password"} value={passwordInput.confirmPassword} onChange={(e) => handlePasswordChange(e)} onKeyUp={handleConfirm} onBlur={(e) => { handleAddclass(e) }} onFocus={(e) => { handleRemoveclass(e) }} name="confirmPassword" placeholder="Password" className="form-control" />
-                                                                <p className="text-danger">{confirmPasswordError}</p>
-                                                            </div>
-
-
-
-                                                            <div className="update_button">
-                                                                <label>Show</label>
-                                                                <button className="btn btn-primary" onClick={e => handlePwdGenerate(e)}>{loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null} UPDATE</button>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                            <div class="create-password-instruction ins-dsp-none" id="instruction">
-                                                                <p className="error" id="err">{lower ? <span className="material-symbols-outlined">
-                                                                    check
-                                                                </span> : <span className="material-symbols-outlined">
-                                                                    close
-                                                                </span>} Password must contain a lower case letter</p>
-                                                                <p className="error" id="err1"> {upper ? <span className="material-symbols-outlined">
-                                                                    check
-                                                                </span> : <span className="material-symbols-outlined">
-                                                                    close
-                                                                </span>} Password must contain an upper case letter</p>
-                                                                <p className="error" id="err2">  {number ? <span className="material-symbols-outlined">
-                                                                    check
-                                                                </span> : <span className="material-symbols-outlined">
-                                                                    close
-                                                                </span>} Password must contain a number</p>
-                                                                <p className="error" id="err3"> {special ? <span className="material-symbols-outlined">
-                                                                    check
-                                                                </span> : <span className="material-symbols-outlined">
-                                                                    close
-                                                                </span>} Password must contain a special character or a space</p>
-                                                                <p className="error" id="err4"> {limit ? <span className="material-symbols-outlined">
-                                                                    check
-                                                                </span> : <span className="material-symbols-outlined">
-                                                                    close
-                                                                </span>} Password must contain at least 8 characters</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       
+                                    </div>
+                                </div>
+                                {/* <div className="card-block my-3">
+                                        <div class="row">
+                                            <div class="col-lg-7 col-md-7 col-xs-12">
+                                                <h3>Change Password</h3>
+                                                <div className="form-floating mb-3">
+                                                    <label for="example-text-input" className="col-form-label">New Password<span className="required">*</span></label>
+                                                    <input type={passwordShown ? "text" : "password"} value={passwordInput.password} onChange={(e) => handlePasswordChange(e)} onKeyUp={handleValidation} name="password" placeholder="Password" className="form-control" onBlur={(e) => { handleAddclass(e) }}
+                                                        onFocus={(e) => { handleRemoveclass(e) }} />
+                                                    <p className="text-danger">{passwordError}</p>
+                                                    <div className="flex-left terms-block">
+                                                        <input type="checkbox" id="terms-check" onChange={(e) => togglePassword(e)} />
+                                                        <label>Show Password</label>
                                                     </div>
 
                                                 </div>
 
+
+                                                <div className="form-floating mb-3">
+                                                    <label for="example-text-input" className="col-form-label">Confirm Password<span className="required">*</span></label>
+                                                    <input type={passwordShown ? "text" : "password"} value={passwordInput.confirmPassword} onChange={(e) => handlePasswordChange(e)} onKeyUp={handleConfirm} onBlur={(e) => { handleAddclass(e) }} onFocus={(e) => { handleRemoveclass(e) }} name="confirmPassword" placeholder="Password" className="form-control" />
+                                                    <p className="text-danger">{confirmPasswordError}</p>
+                                                </div>
+
+
+
+                                                <div className="update_button">
+                                                    <label>Show</label>
+                                                    <button className="btn btn-primary" onClick={e => handlePwdGenerate(e)}>{loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null} UPDATE</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="create-password-instruction ins-dsp-none" id="instruction">
+                                                <p className="error" id="err">{lower ? <span className="material-symbols-outlined">
+                                                    check
+                                                </span> : <span className="material-symbols-outlined">
+                                                    close
+                                                </span>} Password must contain a lower case letter</p>
+                                                <p className="error" id="err1"> {upper ? <span className="material-symbols-outlined">
+                                                    check
+                                                </span> : <span className="material-symbols-outlined">
+                                                    close
+                                                </span>} Password must contain an upper case letter</p>
+                                                <p className="error" id="err2">  {number ? <span className="material-symbols-outlined">
+                                                    check
+                                                </span> : <span className="material-symbols-outlined">
+                                                    close
+                                                </span>} Password must contain a number</p>
+                                                <p className="error" id="err3"> {special ? <span className="material-symbols-outlined">
+                                                    check
+                                                </span> : <span className="material-symbols-outlined">
+                                                    close
+                                                </span>} Password must contain a special character or a space</p>
+                                                <p className="error" id="err4"> {limit ? <span className="material-symbols-outlined">
+                                                    check
+                                                </span> : <span className="material-symbols-outlined">
+                                                    close
+                                                </span>} Password must contain at least 8 characters</p></div>
+
+
+                                        </div>
+                                    </div> */}
+                                <div className="card-block my-3">
+                                    <div className="row">
+                                        <div className="col-lg-7 col-md-7 col-xs-12">
+                                            <h3>Change Password</h3>
+                                            <div className="form-floating mb-3">
+                                                <input type={passwordShown ? "text" : "password"} value={passwordInput.password} onChange={(e) => handlePasswordChange(e)} onKeyUp={handleValidation} name="password" placeholder="Password" className="form-control" onBlur={(e) => { handleAddclass(e) }}
+                                                    onFocus={(e) => { handleRemoveclass(e) }} />
+                                                <p className="text-danger">{passwordError}</p>
+                                                <label className="floatingInput">New Password<span>*</span></label>
+                                            </div>
+                                            <div className="form-floating mb-3">
+                                                <input type={passwordShown ? "text" : "password"} value={passwordInput.confirmPassword} onChange={(e) => handlePasswordChange(e)} onKeyUp={handleConfirm} onBlur={(e) => { handleAddclass(e) }} onFocus={(e) => { handleRemoveclass(e) }} name="confirmPassword" placeholder="Password" className="form-control" />
+                                                <p className="text-danger">{confirmPasswordError}</p>
+                                                <label className="floatingInput">Confirm Password<span>*</span></label>
+                                            </div>
+                                            <div className="flex-left terms-block">
+                                                <input type="checkbox" id="terms-check" onChange={(e) => togglePassword(e)} />
+                                                <label> Show Password.</label>
+                                            </div>
+                                            <p className="text-danger"></p>
+                                            <div className="signin-footer mt-4">
+                                                <button className="fill_btn" onClick={e => handlePwdGenerate(e)}>{loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null} UPDATE</button>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-5 col-md-5 col-xs-12">
+                                            <div className="create-password">
+                                                <div className="crpsd-cnt-blk">
+                                                    <div className="create-password-instruction ins-dsp-none" id="instruction">
+                                                        <p className="error" id="err">{lower ? <span className="material-symbols-outlined">
+                                                            check
+                                                        </span> : <span className="material-symbols-outlined">
+                                                            close
+                                                        </span>} Password must contain a lower case letter</p>
+                                                        <p className="error" id="err1"> {upper ? <span className="material-symbols-outlined">
+                                                            check
+                                                        </span> : <span className="material-symbols-outlined">
+                                                            close
+                                                        </span>} Password must contain an upper case letter</p>
+                                                        <p className="error" id="err2">  {number ? <span className="material-symbols-outlined">
+                                                            check
+                                                        </span> : <span className="material-symbols-outlined">
+                                                            close
+                                                        </span>} Password must contain a number</p>
+                                                        <p className="error" id="err3"> {special ? <span className="material-symbols-outlined">
+                                                            check
+                                                        </span> : <span className="material-symbols-outlined">
+                                                            close
+                                                        </span>} Password must contain a special character or a space</p>
+                                                        <p className="error" id="err4"> {limit ? <span className="material-symbols-outlined">
+                                                            check
+                                                        </span> : <span className="material-symbols-outlined">
+                                                            close
+                                                        </span>} Password must contain at least 8 characters</p></div>
+
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <footer className="footer">
-                            <div className="container-fluid">
-                                <div className="row">
 
-                                    <div className="col-sm-12 text-center">
-                                        <div className="text-sm-center d-none d-sm-block text-center">
-                                            All Rights Reserved 2024.
-                                        </div>
+                    <footer className="footer">
+                        <div className="container-fluid">
+                            <div className="row">
+
+                                <div className="col-sm-12 text-center">
+                                    <div className="text-sm-center d-none d-sm-block text-center">
+                                        All Rights Reserved 2024.
                                     </div>
                                 </div>
                             </div>
-                        </footer>
-                        <SweetAlert show={success}
-                            custom
-                            confirmBtnText="Ok"
-                            confirmBtnBsStyle="primary"
-                            title={"Updated successfully"}
-                            onConfirm={e => onConfirm()}
-                        >
-                        </SweetAlert>
+                        </div>
+                    </footer>
+                    <SweetAlert show={success}
+                        custom
+                        confirmBtnText="Ok"
+                        confirmBtnBsStyle="primary"
+                        title={"Updated successfully"}
+                        onConfirm={e => onConfirm()}
+                    >
+                    </SweetAlert>
 
-
-                    </div>
 
                 </div>
-            </div>
 
+            </div>
         </>
     );
 };

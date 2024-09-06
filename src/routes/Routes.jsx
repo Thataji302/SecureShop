@@ -93,6 +93,12 @@ import SavedProperties from "../pages/SavedProperties";
 import PropertyCalculatorV1 from "../pages/PropertyCalculatorV1";
 import Company from "../pages/Company";
 import YellowForm from "../pages/YellowForm";
+import Lookups from "../pages/lookups";
+import LookupForm from "../pages/LookupForm";
+import Branches from "../pages/Branches";
+import Models from "../pages/Models";
+import Insurance from "../pages/Insurance";
+import Finance from "../pages/Finance";
 
 const Routes = () => {
   return (
@@ -177,7 +183,7 @@ const Routes = () => {
       <Route path={`/sessions`} component={Sessions} />
       <Route path={`/sewingreport`} component={SewingReports} />
 
-      <Route path={`/lookups`} component={LookUp} />
+      {/* <Route path={`/lookups`} component={LookUp} /> */}
       <Route path={`/editlookup/:id`} component={EditLookUp} />
       <Route path={`/viewlookup/:id`} component={ViewLookUp} />
       <Route path={`/addlookup`} component={EditLookUp} />
@@ -217,6 +223,12 @@ const Routes = () => {
       <Route path={`/calculator`} component={PropertyCalculatorV1} />
       <Route path={`/company`} component={Company} />
       <Route path={`/yellowForm`} component={YellowForm} />
+      <Route path={`/lookups`} component={Lookups} />
+      <Route path={`/lookupForm`} component={LookupForm} />
+      <Route path={`/branches`} component={Branches} />
+      <Route path={`/models`} component={Models} />
+      <Route path={`/insurance`} component={Insurance} />
+      <Route path={`/finance`} component={Finance} />
       {/* <Route path={`/landingPage`} component={landingPage} /> */}
 
       <Route path={`*`} component={NotFound} />
