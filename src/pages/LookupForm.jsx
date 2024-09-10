@@ -531,7 +531,7 @@ const LookupForm = () => {
         // formvalidation()
     }
 
-    let type = localStorage.getItem("formType") || urlParams;
+    let type = localStorage.getItem("formType");
     return (
         <>
             <div id="layout-wrapper">
