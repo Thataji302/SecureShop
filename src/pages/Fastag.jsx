@@ -21,7 +21,7 @@ import axios from 'axios';
 import { formatCurrency } from '../utils/commonUtils.js';
 // import * as Config from "./../../constants/Config";
 let { lambda, appname } = window.app
-const Insurance = (props) => {
+const Fastag = (props) => {
     // const { pathname } = useLocation();
     // const headerRef = useRef(null);
     // const [scroll, setScroll] = useState(false);
@@ -68,7 +68,7 @@ const Insurance = (props) => {
         //     GetPropertyData(name);
         //    // setPropertyNameValue(propertyValue)
         // }
-        const type = "insurance";
+        const type = "fastag";
             GetPropertyData(type);
     }, []);
     const GetPropertyData = (type) => {
@@ -108,7 +108,7 @@ const Insurance = (props) => {
     const editClick = (e, item) => {
         let type = item && item.type;
         let id = item && item.lookupId;
-       // localStorage.setItem("item", JSON.stringify(item));
+      //  localStorage.setItem("item", JSON.stringify(item));
         //history.push("/lookupForm")
         localStorage.removeItem("formType");
         window.location = `/lookupForm?id=${id}&type=${type} `;
@@ -144,12 +144,12 @@ const Insurance = (props) => {
                         <div className="col-12">
                             <div className="card mb-3 card-height">
                                 <div className="card-body recent_property_values">
-                                {savedPropertyData && savedPropertyData?.insurance && savedPropertyData?.insurance?.length > 0 && savedPropertyData?.insurance?.map((eachItem, key) => {
+                                {savedPropertyData && savedPropertyData?.fastag && savedPropertyData?.fastag?.length > 0 && savedPropertyData?.fastag?.map((eachItem, key) => {
                                                     return (
                                     <div className="row mt-4" key={key}>
                                         <div className="col-md-2">
                                             <div className="form-group">
-                                                <label className="col-form-label">Insurance Name</label>
+                                                <label className="col-form-label">Fastag Name</label>
                                                 <p>{eachItem?.name ? eachItem?.name : 'N/A'}</p>
                                             </div>
                                         </div>
@@ -196,7 +196,7 @@ const Insurance = (props) => {
                                             <div className="card-body">
                                                 <div className="new_search error_wrapper">
                                                     <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                    <p>There are no insurance available.</p>
+                                                    <p>There are no fastag available.</p>
                                                     <button className="button_style" href="#" onClick={goBack}> GO BACK</button>
                                                 </div>
                                             </div>
@@ -226,4 +226,4 @@ const Insurance = (props) => {
     );
 };
 
-export default Insurance;
+export default Fastag;

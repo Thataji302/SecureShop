@@ -453,7 +453,7 @@ const Profile = () => {
             <div id="layout-wrapper">
 
                 <Header />
-                <div className="topnav">
+                {/* <div className="topnav">
                     <div className="container-fluid">
                         <div className="md-container">
                             <div className="page-header">
@@ -464,11 +464,22 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="main-content profile">
 
                     <div className="page-content">
                         <div className="container-fluid">
+                        <div className="md-container">
+                        <div className="breadcurmb">
+                <div className="title_block">
+                <h5>profile</h5>
+             </div>
+                        <div className="buttons">
+                        <button className=" btn-primary" type="button">Back</button>
+                       
+                        </div>
+                        </div>
+                        </div>
                             <div className="md-container">
                                 <div className="card-block">
                                     <div className="row profile-pic">

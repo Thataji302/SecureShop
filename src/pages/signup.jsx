@@ -459,14 +459,18 @@ const SignUp = () => {
 
   let k = countries && countries.length > 0 && countries.filter(eachItem => eachItem.alpha2 === defaultCountryCode)
   // console.log('countries',countries)
+  let imageCloudfront;
+  if (config.common && config.common.imageCloudfront) {
+    imageCloudfront = config.common.imageCloudfront;
+  }
   return (
     <>
     <div className="signup_section">
       <button className="close-btn" onClick={handlecancel}><span className="material-icons">close</span></button>
       <div className="sign-wrapper">
         <div className="sign-header">
-          {/* <a href="/">
-        <img src="./assets/images/brand-logo.png" class="logo"/></a> */}
+          <a href="/">
+        <img src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} class="logo"/></a>
           <h1 className="mb-3">Create Account</h1>
           
         </div>

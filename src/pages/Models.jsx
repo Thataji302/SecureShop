@@ -72,7 +72,8 @@ const Models = (props) => {
             GetPropertyData(type);
     }, []);
     const GetPropertyData = (type) => {
-        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
@@ -103,6 +104,14 @@ const Models = (props) => {
     let imageCloudfront;
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
+    }
+    const editClick = (e, item) => {
+        let type = item && item.type;
+        let id = item && item.lookupId;
+      //  localStorage.setItem("item", JSON.stringify(item));
+        //history.push("/lookupForm")
+        localStorage.removeItem("formType");
+        window.location = `/lookupForm?id=${id}&type=${type} `;
     }
     return (
 
@@ -162,6 +171,13 @@ const Models = (props) => {
                                                 <p>{eachItem?.version ? eachItem?.version : 'N/A'}</p>
                                             </div>
                                         </div>
+                                        <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Actions</label>
+                                                        <button type="button" className="back" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined">edit</span>Edit</button>
+                                                        <button type="button" className="back" ><span className="material-symbols-outlined">delete</span>Delete</button>
+                                                    </div>
+                                                </div>
                                     </div>
                                      )
 

@@ -311,10 +311,10 @@ if (config.common && config.common.imageCloudfront) {
                         <div className="navbar-brand-box">
                             <a className="logo logo-dark">
                                 <span className="logo-sm">
-                                    <img src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
+                                    <img src={imageCloudfront + "propertyCalculator/images/dealerbrand.png"} alt="" height="25" />
                                 </span>
                                 <span className="logo-lg">
-                                    <img src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
+                                    <img src={imageCloudfront + "propertyCalculator/images/dealerbrand.png"} alt="" height="25" />
                                 </span>
                             </a>
 

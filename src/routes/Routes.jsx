@@ -99,6 +99,7 @@ import Branches from "../pages/Branches";
 import Models from "../pages/Models";
 import Insurance from "../pages/Insurance";
 import Finance from "../pages/Finance";
+import Fastag from "../pages/Fastag";
 
 const Routes = () => {
   return (
@@ -229,6 +230,7 @@ const Routes = () => {
       <Route path={`/models`} component={Models} />
       <Route path={`/insurance`} component={Insurance} />
       <Route path={`/finance`} component={Finance} />
+      <Route path={`/fastag`} component={Fastag} />
       {/* <Route path={`/landingPage`} component={landingPage} /> */}
 
       <Route path={`*`} component={NotFound} />

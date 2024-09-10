@@ -171,7 +171,7 @@ const Dashboard = (props) => {
             </div>
             <div className="main-content">
 
-            <div className="page-content">
+           
                 <div className="container-fluid">
                      <div className="row">
                         <div className="col-lg-12">
@@ -354,7 +354,7 @@ const Dashboard = (props) => {
                   
                     
                 </div> 
-            </div>
+             m,jkkbb
             
             <footer className="footer">
                 <div className="container-fluid">

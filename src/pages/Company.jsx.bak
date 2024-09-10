@@ -107,7 +107,7 @@ const Company = () => {
         let payload;
 
         payload = {
-            "userid": localStorage.getItem("userId") || localStorage.getItem("userid"),
+            "userid": localStorage.getItem("userId"),
             "pagename": pageName,
             "pageurl": window.location.href,
             "starttime": presentTime,
@@ -220,7 +220,7 @@ const Company = () => {
         let valid = formvalidation();
         if(companyResult?.companyId){
             let payload;
-            let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
+            let userid = localStorage.getItem("userid")
             payload = {
                 "companyName": companyName,
                 "emailid": emailid,
@@ -241,7 +241,7 @@ const Company = () => {
                 });
         }else if(valid){
             let payload;
-            let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
+            let userid = localStorage.getItem("userid")
             payload = {
                 "companyName": companyName,
                 "emailid": emailid,
@@ -264,7 +264,7 @@ const Company = () => {
         
     }
     const getCompany = (e) => {
-        let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
+        let userid = localStorage.getItem("userid")
         const urlLink = lambda + '/getCompany?appname=' + appname + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
@@ -287,24 +287,29 @@ const Company = () => {
             <div id="layout-wrapper">
                 <div className="dashboard">
                     <Header />
-                    <div className="main-content profile company">
+                    <div className="main-content profile">
 
                         <div className="page-content">
                             <div className="container-fluid">
-                            <div className="md-container">
-                        <div className="breadcurmb">
-                <div className="title_block">
-                <h5>company</h5>
-             </div>
-                        <div className="buttons">
-                        <button className=" btn-primary" type="button" onClick={backClick}>Back</button>
-                       
-                        </div>
-                        </div>
-                        </div>
-                                <div className="md-container profile-pic">
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div className="d-flex align-items-center">
+                                            <div className="flex-grow-1">
+                                                <div className="title-block">
+                                                    <div className="d-flex">
+                                                        <h4 className="mb-2 card-title">Company</h4>
+                                                    </div>
+                                                    <div className="property_info">
+                                                        <button type="button" className="back" onClick={backClick}><span className="material-symbols-outlined">chevron_left</span>back</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="md-container">
                                     <div className="card-block">
-                                        <div className="row">
+                                        <div className="row profile-pic">
                                             <div className="col-lg-8 col-md-8 col-xs-12">
                                                 <h3>Company Details</h3>
                                                 <div className="form-floating mb-3">
@@ -470,9 +475,9 @@ const Company = () => {
                                         <p className="rights">2024 ALL RIGHTS RESERVED MOTOR SALES</p>
                                     </div>
                                     <div className="col-sm-6">
-                                        {/* <div className="text-sm-end d-none d-sm-block">
+                                        <div className="text-sm-end d-none d-sm-block">
                                             Design & Develop by Themesbrand
-                                        </div> */}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

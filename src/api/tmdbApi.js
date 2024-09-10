@@ -111,7 +111,7 @@ const tmdbApi = {
 
   getUserData: (params) => {
     const token = localStorage.getItem("token")
-    const userid = localStorage.getItem("userid")
+    const userid = localStorage.getItem("userId") || localStorage.getItem("userid")
     const url = "/user?appname="+ appname +"&userId="+userid+ "&token=" + token;
     return axiosClient.get(url, params);
   },

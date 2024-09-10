@@ -115,6 +115,10 @@ const Lookups = (props) => {
         // localStorage.setItem("propertyZipCode", zipCode)
         history.push("/finance");
     }
+    const fastagClick = (e) => {
+        history.push("/fastag");
+    }
+    
     let imageCloudfront;
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
@@ -172,6 +176,7 @@ const Lookups = (props) => {
                                     <option value="models">Models</option>
                                     <option value="insurance"> Insurance</option>
                                     <option value="finance"> Finance</option>
+                                    <option value="fastag"> Fastag</option>
 
                                 </select>
                                 <button type="button" className="back" onClick={buttonClick}><span className="material-symbols-outlined">add</span>ADD</button>
@@ -273,6 +278,27 @@ const Lookups = (props) => {
                                                                     </div>
                                                                     <div className="card-info" >
                                                                         <h6>Finance</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                </div>
+                                <div className="row">
+                                            <div className="col-md-3" >
+                                                <div className="card">
+                                                    <div className="card-body">
+                                                        <div className="property_info">
+                                                            <div className="info" style={{ cursor: 'pointer' }} onClick={e => fastagClick(e)}>
+                                                                <div className="card-wrapper" >
+                                                                    <div className="icon-box">
+                                                                        <span className="material-symbols-outlined"> cottage </span>
+                                                                    </div>
+                                                                    <div className="card-info" >
+                                                                        <h6>Fastag</h6>
                                                                     </div>
                                                                 </div>
                                                             </div>

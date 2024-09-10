@@ -21,18 +21,45 @@ import tmdbApi from "../../api/tmdbApi";
 import { contentContext } from "../../context/contentContext";
 // const headerNav = [
 //   {
-//     display: "Home",
-//     path: `/${Config.HOME_PAGE}`,
+//     display: "Yellow Form",
+//     path: `/yellowForm`,
 //   },
 //   {
-//     display: "Movies",
-//     path: `/${Config.HOME_PAGE}/movie`,
+//     display: "Lokkups",
+//     path: `/lookups`,
 //   },
 //   {
-//     display: "TV Series",
-//     path: `/${Config.HOME_PAGE}/tv`,
+//     display: "Reports",
+//     path: `/reports`,
+//   },
+//   {
+//     display: "Users",
+//     path: `/user`,
 //   },
 // ];
+const menuList = [
+  {
+      id: '1',
+      labelName: 'Yellow Form',
+      route: "yellowForm"
+  },
+  {
+      id: '2',
+      labelName: 'Lookups',
+      route: "lookups"
+  },
+  {
+      id: '3',
+      labelName: 'Reports',
+      //route: "reports"
+  },
+  {
+      id: '4',
+      labelName: 'Users',
+      //route: "user"
+  },
+
+]
 
 const Header = (props) => {
   const { pathname } = useLocation();
@@ -41,6 +68,7 @@ const Header = (props) => {
   const history = useHistory();
   const [userName, setUserName] = useState([]);
   const [config, setConfig] = useState({});
+  const [activeId, setActiveId] = useState();
 
   const { userData, setUserData, setShowPopup, setSelectedOptions, setMultiSelectFields, setActiveFieldsObj,
     setSelectedOptionsClientName, setSearchPayload, setInitialCategoriesData1, GetTimeActivity } = useContext(contentContext)
@@ -48,6 +76,15 @@ const Header = (props) => {
   //console.log("props", props.menus);
   // const active = headerNav.findIndex((e) => e.path === pathname);
   let token = localStorage.getItem("token")
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+        history.push("/");
+    } 
+    else if(menuList[0]?.id){
+       setActiveId(menuList[0].id)
+    }
+
+}, []);
   //console.log('token', token)
   useEffect(() => {
     // const shrinkHeader = () => {
@@ -144,72 +181,88 @@ const Header = (props) => {
   const company = () => {
     history.push("/company");
   }
-  
-  return (
-    <header id="header" className={scroll ? "fixed-top header-scrolled" : "fixed-top"}>
+  const onClickMenu = (e, item) => {
+    //setMenu(id);
+    console.log('handleActiveMenuObj------------>',item)
+     setActiveId(item.id)
      
+     history.push(item.route)
+}
+  return (
+    <header id="page-topbar" >
+      <div className="navbar-header inner_header">
 
-        
-        <div id="page-topbar">
-          <div className="navbar-header">
+        <div className="d-flex">
+
+          <div className="navbar-brand-box">
+            <a href="" className="logo logo-dark">
+              <span className="logo-sm">
+                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} alt="" height="25" />
+              </span>
+              <span className="logo-lg">
+                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} alt="" height="25" />
+              </span>
+            </a>
+
+
+          </div>
+
+          <button type="button"
+            className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
+            data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+            <i className="fa fa-fw fa-bars"></i>
+          </button>
+          {token &&
+          <div className="dropdown d-none d-lg-block ms-2 menu">
+          {menuList.map((val) => (
          
-            <div className="d-flex">
+            <button key={val.id} href='#' className={`${activeId === val.id ? "btn header-item waves-effect active" : "btn header-item waves-effect"}`} onClick={(e) => onClickMenu(e, val)}  data-tip={val.labelName}><span key="t-chat">{val.labelName}</span></button> 
+        ))}
+                        {/* <button type="button" className="btn active header-item waves-effect" >
+                            <span>New Search</span>
 
-              <div className="navbar-brand-box">
-                <a href="" className="logo logo-dark">
-                  <span className="logo-sm">
-                    <img src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
-                  </span>
-                  <span className="logo-lg">
-                    <img src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
-                  </span>
-                </a>
+                        </button>
+                        <button type="button" className="btn header-item waves-effect" >
+                            <span>Saved Searches</span>
 
+                        </button> */}
+                    </div>}
 
-              </div>
+        </div>
 
-              <button type="button"
-                className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
-                data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
-                <i className="fa fa-fw fa-bars"></i>
+        <div className="d-flex">
+          {!token ?
+            <div className="d-flex align-items-center">
+              <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>
+              <a className="register ms-2" href="#" onClick={handleSignup}>Sign Up</a></div> :
+            <div className="dropdown d-inline-block">
+              <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img className="rounded-circle header-profile-user" src={imageCloudfront + "propertyCalculator/images/user_icon.png"}
+                  alt="Header Avatar" />
+                <span className="d-none d-xl-inline-block ms-1" key="t-henry">{userName && userName.length > 1 ? userName && userName.length > 0 && userName[0]?.slice(0, 1)?.toUpperCase() + userName[1]?.slice(0, 1)?.toUpperCase()
+                  : userData && userData.name?.slice(0, 2)?.toUpperCase()}</span>
+                <i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
               </button>
+              <div className="dropdown-menu dropdown-menu-end">
+                <a className="dropdown-item" href="#" onClick={profile}><i className="bx bx-user font-size-16 align-middle me-1"></i>
+                  <span key="t-profile">Profile</span></a>
 
+                <a className="dropdown-item d-block" href="#" onClick={company}><i
+                  className="bx bx-wrench font-size-16 align-middle me-1"></i> <span
+                    key="t-settings">Company</span></a>
 
-            </div>
+                <div className="dropdown-divider"></div>
+                <a className="dropdown-item text-danger" href="#" onClick={handleLogout}><i
+                  className="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span
+                    key="t-logout">Logout</span></a>
+              </div>
+            </div>}
 
-            <div className="d-flex">
-            {!token ?
-            <div>
-              <a className="register" href="#" onClick={handleSignin}>Sign In</a>
-              <a className="register" href="#" onClick={handleSignup}>Sign Up</a></div>:
-              <div className="dropdown d-inline-block">
-                <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img className="rounded-circle header-profile-user" src={imageCloudfront + "propertyCalculator/images/user_icon.png"}
-                    alt="Header Avatar" />
-                  <span className="d-none d-xl-inline-block ms-1" key="t-henry">{userName && userName.length > 1 ? userName && userName.length > 0 && userName[0]?.slice(0, 1)?.toUpperCase() + userName[1]?.slice(0, 1)?.toUpperCase()
-                    : userData && userData.name?.slice(0, 2)?.toUpperCase()}</span>
-                  <i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                </button>
-                <div className="dropdown-menu dropdown-menu-end">
-                  <a className="dropdown-item" href="#" onClick={profile}><i className="bx bx-user font-size-16 align-middle me-1"></i>
-                    <span key="t-profile">Profile</span></a>
+            
 
-                  <a className="dropdown-item d-block" href="#" onClick={company}><i
-                className="bx bx-wrench font-size-16 align-middle me-1"></i> <span
-                  key="t-settings">Company</span></a>
-
-                  <div className="dropdown-divider"></div>
-                  <a className="dropdown-item text-danger" href="#" onClick={handleLogout}><i
-                    className="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span
-                      key="t-logout">Logout</span></a>
-                </div>
-              </div>}
-
-
-
-            </div>
-          </div></div>
+        </div>
+      </div>
     </header>
   );
 };

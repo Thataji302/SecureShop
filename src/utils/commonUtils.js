@@ -20,3 +20,27 @@ export const formatPhoneNumber = (value) => {
         currency: 'USD'
     });
   };
+
+  export const location = (name) => {
+    let results = new RegExp(name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+      results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href);
+    }
+    if (results == null) {
+      return null;
+    }
+    return decodeURI(results[1]) || 0;
+  }
+  
+  export const removeSpecialCharecters = (filename) => {
+    let timeStamp = new Date().getTime();
+    let tmpFile = filename
+      .substring(0, filename.lastIndexOf("."))
+      .replace(/[^a-zA-Z 0-9]/g, "");
+    tmpFile = tmpFile.replaceAll(" ", "");
+    let tmpExtension = filename.substring(filename.lastIndexOf("."));
+    let tmpNewFileName = tmpFile + timeStamp + tmpExtension;
+    // console.log("tmpNewFileName", tmpNewFileName)
+    // return encodeURIComponent(tmpNewFileName);
+    return tmpNewFileName;
+  };

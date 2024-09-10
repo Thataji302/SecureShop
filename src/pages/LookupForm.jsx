@@ -24,9 +24,11 @@ import { useHistory, Link } from "react-router-dom";
 import * as Config from "../constants/Config";
 import moment from "moment";
 import axios from 'axios';
+import { removeSpecialCharecters, location } from '././../utils/commonUtils';
 
 let { lambda, country, appname } = window.app;
-
+var urlParams = location("type");
+var id = location("id");
 const LookupForm = () => {
     const history = useHistory();
     const [countries, setCountries] = useState('');
@@ -66,16 +68,48 @@ const LookupForm = () => {
     const [modelVersion, setModelVersion] = useState('');
     const [insuranceName, setInsuranceName] = useState('');
     const [insuranceNumber, setInsuranceNumber] = useState('');
+    const [commission, setCommission] = useState('');
     const [financeNumber, setFinanceNumber] = useState('');
+    const [fastagNumber, setFastagNumber] = useState('');
     const [financeName, setFinanceName] = useState('');
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
             history.push("/");
         }
-
+       // console.log('urlParams', urlParams)
+        if (urlParams == "branches") {
+            branchClick()
+        }
+        if (urlParams == "models") {
+            modelsClick()
+        }
+        if (urlParams == "insurance") {
+            insuranceClick()
+        }
+        if (urlParams == "finance") {
+            financeClick()
+        }
+        if (urlParams == "fastag") {
+            fastagClick()
+        }
     }, []);
-    //  console.log("data", data);
+    //  console.log("data", data);setCommission
+    const Commission = (e) => {
+        const onlyDigits = e.target.value.replace(/\D/g, "");
+        setCommission(onlyDigits);
+
+    };
+    const financeCommission = (e) => {
+        const onlyDigits = e.target.value.replace(/\D/g, "");
+        setCommission(onlyDigits);
+
+    };
+    const fastagCommission = (e) => {
+        const onlyDigits = e.target.value.replace(/\D/g, "");
+        setCommission(onlyDigits);
+
+    };
     const checkInput = (e) => {
         const onlyDigits = e.target.value.replace(/\D/g, "");
         setNumber(onlyDigits);
@@ -89,6 +123,11 @@ const LookupForm = () => {
     const checkInput2 = (e) => {
         const onlyDigits = e.target.value.replace(/\D/g, "");
         setFinanceNumber(onlyDigits);
+
+    };
+    const checkInput3 = (e) => {
+        const onlyDigits = e.target.value.replace(/\D/g, "");
+        setFastagNumber(onlyDigits);
 
     };
     const backClick = () => {
@@ -137,156 +176,362 @@ const LookupForm = () => {
 
 
     }
+    const branchClick = () => {
+        // let item = JSON.parse(localStorage.getItem('item'));
+        // console.log("item", item)
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + urlParams + "&lookupId=" + id  + (userid ? "&userid=" + userid : "");
+        axios({
+            method: 'GET',
+            url: urlLink,
+        })
+            .then(function (response) {
+                if (response.data.result) {
+                    let branchesData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].branches && response.data.result.data[0].branches[0]
+                    setName(branchesData && branchesData.name)
+        setBranchAddress(branchesData && branchesData.address)
+        setNumber(branchesData && branchesData.phoneNumber)
+                }
+            });
+        
+       // console.log("name", name)
+    }
+    const modelsClick = () => {
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + urlParams + "&lookupId=" + id  + (userid ? "&userid=" + userid : "");
+        axios({
+            method: 'GET',
+            url: urlLink,
+        })
+            .then(function (response) {
+                if (response.data.result) {
+                    let modelData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].models && response.data.result.data[0].models[0]
+                    setName(modelData && modelData.name)
+        setModelColor(modelData && modelData.color)
+        setModelVersion(modelData && modelData.version)
+                }
+            });
+    }
+    const insuranceClick = () => {
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + urlParams + "&lookupId=" + id  + (userid ? "&userid=" + userid : "");
+        axios({
+            method: 'GET',
+            url: urlLink,
+        })
+            .then(function (response) {
+                if (response.data.result) {
+                    let insuranceData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].insurance && response.data.result.data[0].insurance[0]
+                    setName(insuranceData && insuranceData.name)
+                    setCommission(insuranceData && insuranceData.commission)
+                    setInsuranceNumber(insuranceData && insuranceData.phoneNumber)
+                }
+            });
+    }
+    const financeClick = () => {
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + urlParams + "&lookupId=" + id  + (userid ? "&userid=" + userid : "");
+        axios({
+            method: 'GET',
+            url: urlLink,
+        })
+            .then(function (response) {
+                if (response.data.result) {
+                    let financeData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].finance && response.data.result.data[0].finance[0]
+                    setName(financeData && financeData.name)
+                    setCommission(financeData && financeData.commission)
+                    setFinanceNumber(financeData && financeData.phoneNumber)
+                }
+            });
+    }
+    const fastagClick = () => {
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + urlParams + "&lookupId=" + id  + (userid ? "&userid=" + userid : "");
+        axios({
+            method: 'GET',
+            url: urlLink,
+        })
+            .then(function (response) {
+                if (response.data.result) {
+                    let fastagData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].fastag && response.data.result.data[0].fastag[0]
+                    setName(fastagData && fastagData.name)
+                    setCommission(fastagData && fastagData.commission)
+                    setFastagNumber(fastagData && fastagData.phoneNumber)
+                }
+            });
+    }
     const handleUpdate = (e) => {
         let valid = formvalidation();
-        // if(companyResult?.companyId){
-        //     let payload;
-        //     let userid = localStorage.getItem("userid")
-        //     payload = {
-        //         "name": name,
-        //         "emailid": emailid,
-        //         "phoneNumber": phoneNumber,
-        //         "companyAddress": companyAddress
-        //     };
-        //     const urlLink = lambda + '/updateCompany?appname=' + appname + "&companyId=" + companyResult?.companyId;
-        //     axios({
-        //         method: 'POST',
-        //         url: urlLink,
-        //         data: payload
-        //     })
-        //         .then(function (response) {
-        //             if (response.data.result) {
-        //                 // localStorage.setItem("previousid", response.data.result)
-        //                 history.push("./yellowForm");
-        //             }
-        //         });
-        // }else if(valid){
-        //     let payload;
-        //     let userid = localStorage.getItem("userid")
-        //     payload = {
-        //         "name": name,
-        //         "emailid": emailid,
-        //         "phoneNumber": phoneNumber,
-        //         "companyAddress": companyAddress
-        //     };
-        //     const urlLink = lambda + '/addCompany?appname=' + appname + (userid ? "&userid=" + userid : "");
-        //     axios({
-        //         method: 'POST',
-        //         url: urlLink,
-        //         data: payload
-        //     })
-        //         .then(function (response) {
-        //             if (response.data.statusCode === 200) {
-        //                 // localStorage.setItem("previousid", response.data.result)
-        //                 history.push("./yellowForm");
-        //             }
-        //         });
-        // }
-        if(valid){
-                let payload;
-               // let userid = localStorage.getItem("userid")
-                payload = {
-                    "name": name,
-                    "phoneNumber": phoneNumber,
-                    "address": branchAddress,
-                    "type":"branches"
-                };
-                console.log('payload',payload)
-                const urlLink = lambda + '/lookups?appname=' + appname;
-                axios({
-                    method: 'POST',
-                    url: urlLink,
-                    data: payload
-                })
-                    .then(function (response) {
-                        if (response.data.statusCode === 200) {
-                            // localStorage.setItem("previousid", response.data.result)
-                            history.push("./branches");
-                        }
-                    });
-            }
-       // formvalidation()
+        let lookupid = id;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        console.log("lookupid", lookupid)
+        if (valid && lookupid) {
+            let payload;
+            // let userid = localStorage.getItem("userid")
+            payload = {
+                "name": name,
+                "phoneNumber": phoneNumber,
+                "address": branchAddress,
+                "type": "branches",
+                "status": "Active",
+                "lookupId":lookupid
+            };
+            const urlLink = lambda + '/lookups?appname=' + appname;
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./branches");
+                        
+                    }
+                });
+        } else if (valid) {
+            let payload;
+
+            payload = {
+                "name": name,
+                "phoneNumber": phoneNumber,
+                "address": branchAddress,
+                "type": "branches",
+                "status": "Active"
+            };
+            console.log('payload', payload)
+            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./branches");
+                    }
+                });
+        }
+
+        // formvalidation()
     }
     const modelUpdate = (e) => {
         let valid = formvalidation();
-        if(valid){
-                let payload;
-               // let userid = localStorage.getItem("userid")
-                payload = {
-                    "name": modelName,
-                    "color": modelColor,
-                    "address": modelVersion,
-                    "type":"models"
-                };
-                console.log('payload',payload)
-                const urlLink = lambda + '/lookups?appname=' + appname;
-                axios({
-                    method: 'POST',
-                    url: urlLink,
-                    data: payload
-                })
-                    .then(function (response) {
-                        if (response.data.statusCode === 200) {
-                            // localStorage.setItem("previousid", response.data.result)
-                            history.push("./models");
-                        }
-                    });
-            }
-       // formvalidation()
+        let lookupid = id;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        if (valid && lookupid) {
+            let payload;
+            // let userid = localStorage.getItem("userid")
+            payload = {
+                "name": name,
+                "color": modelColor,
+                "version": modelVersion,
+                "type": "models",
+                "status": "Active",
+                "lookupId":lookupid
+            };
+            const urlLink = lambda + '/lookups?appname=' + appname;
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./models");
+                        
+                    }
+                });
+        } else if (valid) {
+            let payload;
+            payload = {
+                "name": name,
+                "color": modelColor,
+                "version": modelVersion,
+                "type": "models",
+                "status": "Active",
+            };
+            console.log('payload', payload)
+            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./models");
+                    }
+                });
+        }
+        // formvalidation()
     }
     const insuranceUpdate = (e) => {
         let valid = formvalidation();
-        if(valid){
-                let payload;
-               // let userid = localStorage.getItem("userid")
-                payload = {
-                    "name": name,
-                    "phoneNumber": insuranceNumber,
-                    "type":"insurance"
-                };
-                console.log('payload',payload)
-                const urlLink = lambda + '/lookups?appname=' + appname;
-                axios({
-                    method: 'POST',
-                    url: urlLink,
-                    data: payload
-                })
-                    .then(function (response) {
-                        if (response.data.statusCode === 200) {
-                            // localStorage.setItem("previousid", response.data.result)
-                            history.push("./insurance");
-                        }
-                    });
-            }
-       // formvalidation()
+        let lookupid = id;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        if (valid && lookupid) {
+            let payload;
+            // let userid = localStorage.getItem("userid")
+            payload = {
+                "name": name,
+                "phoneNumber": insuranceNumber,
+                "type": "insurance",
+                "status": "Active",
+                "commission": commission,
+                "lookupId":lookupid
+            };
+            const urlLink = lambda + '/lookups?appname=' + appname;
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./insurance");
+                        
+                    }
+                });
+        } else if (valid) {
+            let payload;
+            payload = {
+                "name": name,
+                "phoneNumber": insuranceNumber,
+                "type": "insurance",
+                "status": "Active",
+                "commission": commission,
+            };
+            console.log('payload', payload)
+            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./insurance");
+                    }
+                });
+        }
+        // formvalidation()
     }
     const financeUpdate = (e) => {
         let valid = formvalidation();
-        if(valid){
-                let payload;
-               // let userid = localStorage.getItem("userid")
-                payload = {
-                    "name": name,
-                    "phoneNumber": financeNumber,
-                    "type":"finance"
-                };
-                console.log('payload',payload)
-                const urlLink = lambda + '/lookups?appname=' + appname;
-                axios({
-                    method: 'POST',
-                    url: urlLink,
-                    data: payload
-                })
-                    .then(function (response) {
-                        if (response.data.statusCode === 200) {
-                            // localStorage.setItem("previousid", response.data.result)
-                            history.push("./finance");
-                        }
-                    });
-            }
-       // formvalidation()
+        let lookupid = id;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        if (valid && lookupid) {
+            let payload;
+            // let userid = localStorage.getItem("userid")
+            payload = {
+                "name": name,
+                "phoneNumber": financeNumber,
+                "type": "finance",
+                "status": "Active",
+                "commission": commission,
+                "lookupId":lookupid
+            };
+            const urlLink = lambda + '/lookups?appname=' + appname;
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./finance");
+                        
+                    }
+                });
+        } else if (valid) {
+            let payload;
+            payload = {
+                "name": name,
+                "phoneNumber": financeNumber,
+                "type": "finance",
+                "commission": commission,
+                "status": "Active",
+            };
+            console.log('payload', payload)
+            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./finance");
+                    }
+                });
+        }
+        // formvalidation()
     }
-    let type = localStorage.getItem("formType")
+    const fastagUpdate = (e) => {
+        let valid = formvalidation();
+        let lookupid = id;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        if (valid && lookupid) {
+            let payload;
+            // let userid = localStorage.getItem("userid")
+            payload = {
+                "name": name,
+                "phoneNumber": fastagNumber,
+                "type": "fastag",
+                "status": "Active",
+                "commission": commission,
+                "lookupId":lookupid
+            };
+            const urlLink = lambda + '/lookups?appname=' + appname;
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./fastag");
+                        
+                    }
+                });
+        } else if (valid) {
+            let payload;
+           // let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+            payload = {
+                "name": name,
+                "phoneNumber": fastagNumber,
+                "type": "fastag",
+"status": "Active",
+"commission": commission,
+
+            };
+            console.log('payload', payload)
+            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        history.push("./fastag");
+                    }
+                });
+        }
+        // formvalidation()
+    }
+
+    let type = localStorage.getItem("formType") || urlParams;
     return (
         <>
             <div id="layout-wrapper">
@@ -319,7 +564,7 @@ const LookupForm = () => {
                                                 <div className="col-lg-8 col-md-8 col-xs-12">
                                                     <h3>Branch Details</h3>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="name" placeholder="Enter Branch Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                        <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
                                                             <span className="errormsg" style={{
                                                                 fontWeight: 'bold',
                                                                 color: 'red',
@@ -337,11 +582,11 @@ const LookupForm = () => {
                                                     <label for="floatingInput">Company Email Id</label>
                                                 </div> */}
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Branch Number" name="phoneNumber" value={phoneNumber} onChange={e => checkInput(e)} autoComplete="on" />
+                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={phoneNumber} onChange={e => checkInput(e)} autoComplete="on" />
                                                         <label for="floatingInput">Phone Number</label>
                                                     </div>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="name" placeholder="Enter Branch Address" name="address" value={branchAddress} onChange={(e) => setBranchAddress(e.target.value)} autoComplete="on" />
+                                                        <input type="text" className="form-control" id="name" placeholder="Enter Address" name="address" value={branchAddress} onChange={(e) => setBranchAddress(e.target.value)} autoComplete="on" />
                                                         <label for="floatingInput">Address</label>
                                                     </div>
                                                     <button className="fill_btn" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}> Update</button>
@@ -351,7 +596,7 @@ const LookupForm = () => {
                                                 <div className="col-lg-8 col-md-8 col-xs-12">
                                                     <h3>Models Details</h3>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="name" placeholder="Enter Model Name" name="name" value={modelName} onChange={(e) => setModelName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                        <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
                                                             <span className="errormsg" style={{
                                                                 fontWeight: 'bold',
                                                                 color: 'red',
@@ -390,7 +635,7 @@ const LookupForm = () => {
                                                 <div className="col-lg-8 col-md-8 col-xs-12">
                                                     <h3>Insurance Details</h3>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="name" placeholder="Enter Insurance Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                        <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
                                                             <span className="errormsg" style={{
                                                                 fontWeight: 'bold',
                                                                 color: 'red',
@@ -399,7 +644,11 @@ const LookupForm = () => {
                                                         <label for="floatingInput">Insurance Name</label>
                                                     </div>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Branch Number" name="phoneNumber" value={insuranceNumber} onChange={e => checkInput1(e)} autoComplete="on" />
+                                                        <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => Commission(e)} autoComplete="on" />
+                                                        <label for="floatingInput">Commission %</label>
+                                                    </div>
+                                                    <div className="form-floating mb-3">
+                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={insuranceNumber} onChange={e => checkInput1(e)} autoComplete="on" />
                                                         <label for="floatingInput">Phone Number</label>
                                                     </div>
                                                     <button className="fill_btn" onClick={e => insuranceUpdate(e)} style={{ cursor: 'pointer' }}> Update</button>
@@ -409,7 +658,7 @@ const LookupForm = () => {
                                                 <div className="col-lg-8 col-md-8 col-xs-12">
                                                     <h3>Finance Details</h3>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="name" placeholder="Enter Finance Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                        <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
                                                             <span className="errormsg" style={{
                                                                 fontWeight: 'bold',
                                                                 color: 'red',
@@ -418,10 +667,37 @@ const LookupForm = () => {
                                                         <label for="floatingInput">Finance Name</label>
                                                     </div>
                                                     <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Branch Number" name="phoneNumber" value={financeNumber} onChange={e => checkInput2(e)} autoComplete="on" />
+                                                        <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => financeCommission(e)} autoComplete="on" />
+                                                        <label for="floatingInput">Commission %</label>
+                                                    </div>
+                                                    <div className="form-floating mb-3">
+                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={financeNumber} onChange={e => checkInput2(e)} autoComplete="on" />
                                                         <label for="floatingInput">Phone Number</label>
                                                     </div>
                                                     <button className="fill_btn" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}> Update</button>
+                                                </div>
+                                            }
+                                            {type === "fastag" &&
+                                                <div className="col-lg-8 col-md-8 col-xs-12">
+                                                    <h3>Fastag Details</h3>
+                                                    <div className="form-floating mb-3">
+                                                        <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                            <span className="errormsg" style={{
+                                                                fontWeight: 'bold',
+                                                                color: 'red',
+                                                            }}>{nameerror}</span> : ""
+                                                        }
+                                                        <label for="floatingInput">Fastag Name</label>
+                                                    </div>
+                                                    <div className="form-floating mb-3">
+                                                        <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => fastagCommission(e)} autoComplete="on" />
+                                                        <label for="floatingInput">Commission %</label>
+                                                    </div>
+                                                    <div className="form-floating mb-3">
+                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={fastagNumber} onChange={e => checkInput3(e)} autoComplete="on" />
+                                                        <label for="floatingInput">Phone Number</label>
+                                                    </div>
+                                                    <button className="fill_btn" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}> Update</button>
                                                 </div>
                                             }
                                         </div>

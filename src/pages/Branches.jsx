@@ -18,6 +18,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import Header from ".././components/header/Header";
 import Sidebar from ".././components/dashboard/sidebar";
 import axios from 'axios';
+import SweetAlert from 'react-bootstrap-sweetalert';
 import { formatCurrency } from '../utils/commonUtils.js';
 // import * as Config from "./../../constants/Config";
 let { lambda, appname } = window.app
@@ -32,6 +33,7 @@ const Branches = (props) => {
     const [propertyNameValue, setPropertyNameValue] = useState();
     const [activeId, setActiveId] = useState();
     const [config, setConfig] = useState({});
+    const [resultSuccess, setResultSuccess] = useState(false);
     // console.log("props", props.menus);
     // const active = headerNav.findIndex((e) => e.path === pathname);
     // useEffect(() => {
@@ -69,10 +71,11 @@ const Branches = (props) => {
         //    // setPropertyNameValue(propertyValue)
         // }
         const type = "branches";
-            GetPropertyData(type);
+        GetPropertyData(type);
     }, []);
     const GetPropertyData = (type) => {
-        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
@@ -104,6 +107,49 @@ const Branches = (props) => {
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
     }
+    const editClick = (e, item) => {
+         let type = item && item.type;
+        let id = item && item.lookupId;
+        //localStorage.setItem("item", JSON.stringify(item));
+        //history.push("/lookupForm")
+        localStorage.removeItem("formType");
+         window.location = `/lookupForm?id=${id}&type=${type} `;
+    }
+    const deleteClick = (e, item) => {
+        let type = item && item.type;
+       let id = item && item.lookupId;
+       let lookupid = id;
+        if (lookupid) {
+            let payload;
+            // let userid = localStorage.getItem("userid")
+            payload = {
+                "name": item && item.name,
+                "phoneNumber": item && item.phoneNumber,
+                "address": item && item.address,
+                "type": type,
+                "status": "Archive",
+                "lookupId":lookupid
+            };
+            const urlLink = lambda + '/lookups?appname=' + appname;
+            axios({
+                method: 'POST',
+                url: urlLink,
+                data: payload
+            })
+                .then(function (response) {
+                    if (response.data.statusCode === 200) {
+                        // localStorage.setItem("previousid", response.data.result)
+                        // history.push("./fastag");
+                        setResultSuccess(true)
+                    }
+                });
+        }
+   }
+   function onConfirm1() {
+    setResultSuccess(false)
+    const type = "branches";
+        GetPropertyData(type);
+};
     return (
 
         <div className="dashboard">
@@ -135,58 +181,77 @@ const Branches = (props) => {
                         <div className="col-12">
                             <div className="card mb-3 card-height">
                                 <div className="card-body recent_property_values">
-                                {savedPropertyData && savedPropertyData?.branches && savedPropertyData?.branches?.length > 0 && savedPropertyData?.branches?.map((eachItem, key) => {
-                                                    return (
-                                    <div className="row mt-4" key={key}>
-                                        <div className="col-md-2">
-                                            <div className="form-group">
-                                                <label className="col-form-label">Branch Name</label>
-                                                <p>{eachItem?.name ? eachItem?.name : 'N/A'}</p>
+                                    {savedPropertyData && savedPropertyData?.branches && savedPropertyData?.branches?.length > 0 && savedPropertyData?.branches?.map((eachItem, key) => {
+                                        return ( eachItem && eachItem.status == "Active" &&
+                                            <div className="row mt-4" key={key}>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Branch Name</label>
+                                                        <p>{eachItem?.name ? eachItem?.name : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Phone Number</label>
+                                                        <p>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Created</label>
+                                                        <p>{eachItem?.created ? eachItem?.created : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Address</label>
+                                                        <p>{eachItem?.address ? eachItem?.address : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Actions</label>
+                                                        <button type="button" className="back" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined">edit</span>Edit</button>
+                                                        <button type="button" className="back" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined">delete</span>Delete</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-2">
-                                            <div className="form-group">
-                                                <label className="col-form-label">Phone Number</label>
-                                                <p>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</p>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-2">
-                                            <div className="form-group">
-                                                <label className="col-form-label">Created</label>
-                                                <p>{eachItem?.created ? eachItem?.created : 'N/A'}</p>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-2">
-                                            <div className="form-group">
-                                                <label className="col-form-label">Address</label>
-                                                <p>{eachItem?.address ? eachItem?.address : 'N/A'}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     )
-
-                                    })}
+                                        )
+                                        
+                                    }
+                                    
+                                    )
+                                
+                                }
                                 </div>
-                                {!savedPropertyData &&
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="card mb-3">
-                                            <div className="card-body">
-                                                <div className="new_search error_wrapper">
-                                                    <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                    <p>There are no branches available.</p>
-                                                    <button className="button_style" href="#" onClick={goBack}> GO BACK</button>
+                                {!savedPropertyData && 
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="card mb-3">
+                                                <div className="card-body">
+                                                    <div className="new_search error_wrapper">
+                                                        <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
+                                                        <p>There are no branches available.</p>
+                                                        <button className="button_style" href="#" onClick={goBack}> GO BACK</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>}
+                                    </div>}
                             </div>
                         </div>
 
                     </div>
                 </div>
-
+                {resultSuccess &&
+                <SweetAlert show={resultSuccess}
+                    custom
+                    confirmBtnText="Ok"
+                    confirmBtnBsStyle="primary"
+                    title={"Deleted Successfully"}
+                    onConfirm={e => onConfirm1()}
+                >
+                </SweetAlert>}
                 <footer className="footer">
                     <div className="container-fluid">
                         <div className="row">

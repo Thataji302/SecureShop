@@ -190,22 +190,23 @@ const Header = (props) => {
 }
   return (
     <header id="page-topbar" >
-      <div className="navbar-header">
+      <div className="navbar-header inner_header">
 
         <div className="d-flex">
 
           <div className="navbar-brand-box">
             <a href="" className="logo logo-dark">
               <span className="logo-sm">
-                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
+                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} alt="" height="25" />
               </span>
               <span className="logo-lg">
-                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/brand-logo.png"} alt="" height="25" />
+                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} alt="" height="25" />
               </span>
             </a>
 
 
           </div>
+          
 
           <button type="button"
             className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
@@ -227,14 +228,21 @@ const Header = (props) => {
 
                         </button> */}
                     </div>}
-
+                   
         </div>
 
         <div className="d-flex">
+        <form class="app-search d-none d-lg-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="Search..."/>
+                                <span class="bx bx-search-alt"></span>
+                            </div>
+                        </form>
           {!token ?
             <div className="d-flex align-items-center">
               <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>
               <a className="register ms-2" href="#" onClick={handleSignup}>Sign Up</a></div> :
+              
             <div className="dropdown d-inline-block">
               <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

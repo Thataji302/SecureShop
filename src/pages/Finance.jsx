@@ -69,10 +69,11 @@ const Finance = (props) => {
         //    // setPropertyNameValue(propertyValue)
         // }
         const type = "finance";
-            GetPropertyData(type);
+        GetPropertyData(type);
     }, []);
     const GetPropertyData = (type) => {
-        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
@@ -103,6 +104,14 @@ const Finance = (props) => {
     let imageCloudfront;
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
+    }
+    const editClick = (e, item) => {
+        let type = item && item.type;
+        let id = item && item.lookupId;
+      //  localStorage.setItem("item", JSON.stringify(item));
+        //history.push("/lookupForm")
+        localStorage.removeItem("formType");
+        window.location = `/lookupForm?id=${id}&type=${type} `;
     }
     return (
 
@@ -135,52 +144,65 @@ const Finance = (props) => {
                         <div className="col-12">
                             <div className="card mb-3 card-height">
                                 <div className="card-body recent_property_values">
-                                {savedPropertyData && savedPropertyData?.finance && savedPropertyData?.finance?.length > 0 && savedPropertyData?.finance?.map((eachItem, key) => {
-                                                    return (
-                                    <div className="row mt-4" key={key}>
-                                        <div className="col-md-2">
+                                    {savedPropertyData && savedPropertyData?.finance && savedPropertyData?.finance?.length > 0 && savedPropertyData?.finance?.map((eachItem, key) => {
+                                        return (
+                                            <div className="row mt-4" key={key}>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Finance Name</label>
+                                                        <p>{eachItem?.name ? eachItem?.name : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
                                             <div className="form-group">
-                                                <label className="col-form-label">Finance Name</label>
-                                                <p>{eachItem?.name ? eachItem?.name : 'N/A'}</p>
+                                                <label className="col-form-label">Commission(%)</label>
+                                                <p>{eachItem?.commission ? eachItem?.commission : 'N/A'}</p>
                                             </div>
                                         </div>
-                                        <div className="col-md-2">
-                                            <div className="form-group">
-                                                <label className="col-form-label">Phone Number</label>
-                                                <p>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</p>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-2">
-                                            <div className="form-group">
-                                                <label className="col-form-label">Created</label>
-                                                <p>{eachItem?.created ? eachItem?.created : 'N/A'}</p>
-                                            </div>
-                                        </div>
-                                        {/* <div className="col-md-2">
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Phone Number</label>
+                                                        <p>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Created</label>
+                                                        <p>{eachItem?.created ? eachItem?.created : 'N/A'}</p>
+                                                    </div>
+                                                </div>
+                                                {/* <div className="col-md-2">
                                             <div className="form-group">
                                                 <label className="col-form-label">Address</label>
                                                 <p>{eachItem?.address ? eachItem?.address : 'N/A'}</p>
                                             </div>
                                         </div> */}
-                                    </div>
-                                     )
+                                                <div className="col-md-2">
+                                                    <div className="form-group">
+                                                        <label className="col-form-label">Actions</label>
+                                                        <button type="button" className="back" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined">edit</span>Edit</button>
+                                                        <button type="button" className="back" ><span className="material-symbols-outlined">delete</span>Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
 
                                     })}
                                 </div>
                                 {!savedPropertyData &&
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="card mb-3">
-                                            <div className="card-body">
-                                                <div className="new_search error_wrapper">
-                                                    <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                    <p>There are no finance available.</p>
-                                                    <button className="button_style" href="#" onClick={goBack}> GO BACK</button>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="card mb-3">
+                                                <div className="card-body">
+                                                    <div className="new_search error_wrapper">
+                                                        <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
+                                                        <p>There are no finance available.</p>
+                                                        <button className="button_style" href="#" onClick={goBack}> GO BACK</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>}
+                                    </div>}
                             </div>
                         </div>
 
