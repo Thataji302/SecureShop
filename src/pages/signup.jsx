@@ -470,7 +470,7 @@ const SignUp = () => {
       <div className="sign-wrapper">
         <div className="sign-header">
           <a href="/">
-        <img src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} class="logo"/></a>
+        <img src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} className="logo"/></a>
           <h1 className="mb-3">Create Account</h1>
           
         </div>
