@@ -91,9 +91,10 @@ const Lookups = () => {
         if (!localStorage.getItem("token")) {
             history.push("/");
         }
-        if (!urlParams) {
+       
             branchTab()
-        }
+            console.log("hiiiiiiiiiiiiiii")
+        
 
         // console.log('urlParams', urlParams)
         if (urlParams == "branches") {
@@ -318,7 +319,8 @@ const Lookups = () => {
                 "address": branchAddress,
                 "type": "branches",
                 "status": "Active",
-                "lookupId": lookupid
+                "lookupId": lookupid,
+                "userid": userid,
             };
             const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
@@ -342,10 +344,11 @@ const Lookups = () => {
                 "phoneNumber": phoneNumber,
                 "address": branchAddress,
                 "type": "branches",
-                "status": "Active"
+                "status": "Active",
+                "userid": userid,
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -376,7 +379,8 @@ const Lookups = () => {
                 "version": modelVersion,
                 "type": "models",
                 "status": "Active",
-                "lookupId": lookupid
+                "lookupId": lookupid,
+                "userid": userid,
             };
             const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
@@ -400,9 +404,10 @@ const Lookups = () => {
                 "version": modelVersion,
                 "type": "models",
                 "status": "Active",
+                "userid": userid,
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -432,7 +437,8 @@ const Lookups = () => {
                 "type": "insurance",
                 "status": "Active",
                 "commission": commission,
-                "lookupId": lookupid
+                "lookupId": lookupid,
+                "userid": userid,
             };
             const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
@@ -456,9 +462,10 @@ const Lookups = () => {
                 "type": "insurance",
                 "status": "Active",
                 "commission": commission,
+                "userid": userid,
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -488,6 +495,7 @@ const Lookups = () => {
                 "type": "finance",
                 "status": "Active",
                 "commission": commission,
+                "userid": userid,
                 "lookupId": lookupid
             };
             const urlLink = lambda + '/lookups?appname=' + appname;
@@ -512,9 +520,10 @@ const Lookups = () => {
                 "type": "finance",
                 "commission": commission,
                 "status": "Active",
+                "userid": userid,
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -544,7 +553,8 @@ const Lookups = () => {
                 "type": "fastag",
                 "status": "Active",
                 "commission": commission,
-                "lookupId": lookupid
+                "lookupId": lookupid,
+                "userid": userid,
             };
             const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
@@ -570,10 +580,11 @@ const Lookups = () => {
                 "type": "fastag",
                 "status": "Active",
                 "commission": commission,
+                "userid": userid,
 
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname + (userid ? "&userid=" + userid : "");
+            const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
