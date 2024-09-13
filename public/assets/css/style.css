@@ -937,6 +937,60 @@ input[type=checkbox]:before {
   margin-right: 5px;
   font-size: 22px;
 }
+.table-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.table-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%; /* Adjust width as needed */
+}
+
+.scroll-left, .scroll-right {
+cursor: pointer;
+border: none;
+background-color: #53535372;
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+z-index: 1;
+opacity: 0; /* Initially hidden */
+transition: opacity 0.3s; /* Smooth transition for showing/hiding */
+pointer-events: none; /* Prevents from interfering when hidden */
+width:40px;
+height: 70px;
+}
+.scroll-left {
+  left: 0;
+  border-radius: 0 75px 75px 0;
+}
+.scroll-right {
+  right: 0;
+  border-radius:  75px 0 0 75px ;
+}
+.button-container {
+display: flex;
+gap: 10px;
+justify-content: center;
+}
+
+.signup_section .sign-header img {max-height: 36px;}
+#layout-wrapper .dashboard { background-color: #f6f6fa !important;}
+.create_yellowform .form-header {display: flex; align-items: center; justify-content: space-between;}
+.create_yellowform .form-header h2 {color: rgba(42, 48, 66, 1); font-size: 16px; text-transform: uppercase; font-weight: 700; margin-bottom: 0;}
+.create_yellowform .form-header button {background-color: transparent; border: none; margin: 0; padding: 0;}
+.create_yellowform .form-header button span{color: rgba(82, 82, 82, 1);}
+.create_yellowform .md-container {padding: 32px 0 14px 0;}
+.create_yellowform .md-container {padding: 0; margin-top: 0;}
+
+
+
+
+
+
+
 
 
 /* Last Update on 03:47 PM 10-09-24 by VK*/
