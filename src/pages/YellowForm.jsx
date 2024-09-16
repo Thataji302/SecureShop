@@ -57,12 +57,12 @@ const Dashboard = (props) => {
     // console.log("props", props.menus);
     // const active = headerNav.findIndex((e) => e.path === pathname);
     useEffect(() => {
-        if (!localStorage.getItem("token")) {
-            history.push("/");
-        }
-        else if (menuList[1]?.id) {
-            setActiveId(menuList[1].id)
-        }
+        // if (!localStorage.getItem("token")) {
+        //     history.push("/");
+        // }
+        // else if (menuList[1]?.id) {
+        //     setActiveId(menuList[1].id)
+        // }
 
     }, []);
     useEffect(() => {
@@ -124,254 +124,507 @@ const Dashboard = (props) => {
 
         history.push(item.route)
     }
+    const createClick = () => {
+        history.push("/createForm");
+    }
+    
     return (
 
         <div className="dashboard">
-            <Header />
-            <div className="topnav">
-                <div className="container-fluid">
-                    <nav className="navbar navbar-light navbar-expand-lg topnav-menu">
+        <Header />
+        {/* <div className="topnav">
+            <div className="container-fluid">
+                <nav className="navbar navbar-light navbar-expand-lg topnav-menu">
 
-                        <div className="collapse navbar-collapse" id="topnav-menu-content">
-                            <ul className="navbar-nav">
+                    <div className="collapse navbar-collapse" id="topnav-menu-content">
+                        <ul className="navbar-nav">
 
-                                <li className="nav-item">
-                                    <a className="nav-link active" href="#" id="topnav-dashboard" role="button">Yellow Form</a>
-                                   </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" href="#" id="topnav-dashboard" role="button">Yellow Form</a>
+                               </li>
 
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">N.R.M</a>
-                                   </li>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">N.R.M</a>
+                               </li>
 
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">Monthly Sale</a>
-                                   </li>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Monthly Sale</a>
+                               </li>
 
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">Finance & Insurance Payout %</a>
-                                   </li>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Finance & Insurance Payout %</a>
+                               </li>
 
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">Claims summary Sheet</a>
-                                   </li>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Claims summary Sheet</a>
+                               </li>
 
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">Offers</a>
-                                   </li>
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">Summary</a>
-                                   </li>
-                                   <li className="nav-item">
-                                    <a className="nav-link" href="#" id="topnav-dashboard" role="button">Master Price  AMC EW</a>
-                                   </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Offers</a>
+                               </li>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Summary</a>
+                               </li>
+                               <li className="nav-item">
+                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Master Price  AMC EW</a>
+                               </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
-            <div className="main-content">
+        </div> */}
+        <div className="main-content">
 
-           
-                <div className="container-fluid">
-                     <div className="row">
-                        <div className="col-lg-12">
-                            <div className="card">
-                                <div className="card-body">
-                                   
-                                    <div className="table-responsive">
-                                        <table className="table align-middle table-nowrap mb-0">
-                                            <thead className="table-light">
-                                                <tr>
-                                                    
-                                                    <th className="align-middle">S No</th>
-                                                    <th className="align-middle">Doct No</th>
-                                                    <th className="align-middle">Exe. No</th>
-                                                    <th className="align-middle">Invoice No</th>
-                                                    <th className="align-middle">Inv Date</th>
-                                                    <th className="align-middle">Customer Name</th>
-                                                    <th className="align-middle">Ph Number</th>
-                                                    <th className="align-middle">Branch</th>
-                                                    <th className="align-middle">LOB</th>
-                                                    <th className="align-middle">PPL</th>
-                                                    <th className="align-middle">Model</th>
-                                                    <th className="align-middle">Chassis No</th>
-                                                    <th className="align-middle">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-                                       
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>559</td>
-<td>Tejaswani</td>
-<td>ISVRVS2122001013</td>
-<td>9-1-2021</td>
-<td>METLA  RAJYA LAKSHMI</td>
-<td>9640133459</td>
-<td>RJY</td>
-<td>UVs</td>
-<td>Harrier</td>
-<td>Harrier XZA+ Dark Edition</td>
-<td>MAT631543MPH79247</td>
-<td><div className="d-flex"><a className=" text-danger action-button"><i className="mdi mdi-pencil font-size-18"></i></a><a className=" text-success action-button"><i className="mdi mdi-delete font-size-18"></i></a></div></td>
-</tr>
-                                            </tbody>
-                                        </table>
+        <div className="page-content">
+            <div className="container-fluid">
+            <div className="breadcurmb">
+                                    <div className="title_block">
+                                        {/* <h5>Lookups</h5> */}
                                     </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  
-                    
-                </div> 
-             m,jkkbb
-            
-            <footer className="footer">
-                <div className="container-fluid">
-                    <div className="row">
+                                    <div className="buttons">
 
-                        <div className="col-sm-12 text-center">
-                            <div className="text-sm-center d-none d-sm-block text-center">
-                                2024 ALL RIGHTS RESERVED MOTOR SALES.
+                                        <button className=" btn-primary" onClick={createClick}>Create</button>
+                                    </div>
+                                </div>
+                 <div className="row">
+                    <div className="col-lg-12">
+                        <div className="card">
+                            <div className="card-body">
+                               
+                            <div className="table-responsive">
+                                        <table className="table table-bordered">
+                                           
+                                            <colgroup span="4"></colgroup>
+                                            <colgroup span="6"></colgroup>
+                                            <colgroup span="7"></colgroup>
+                                            <colgroup span="4"></colgroup>
+                                            <colgroup span="4"></colgroup>
+                                            <colgroup span="4"></colgroup>
+                                            <colgroup span="5"></colgroup>
+                                            <colgroup span="3"></colgroup>
+                                            <colgroup span="2"></colgroup>
+                                            <colgroup span="2"></colgroup>
+                                            <colgroup span="2"></colgroup>
+                                            <colgroup span="5"></colgroup>
+                                            <colgroup span="4"></colgroup>
+                                            <colgroup span="2"></colgroup>
+                                            <colgroup span="5"></colgroup>
+                                            <colgroup span="3"></colgroup>
+                                            <colgroup span="5"></colgroup>
+                                            <tr>
+                                              <th colspan="4" scope="colgroup">Customer Details</th>
+                                              <th colspan="6" scope="colgroup">Dealer Details</th>
+                                              <th colspan="7" scope="colgroup">Vehicle Details</th>
+                                              <th colspan="4" scope="colgroup">Exchange Details</th>
+                                              <th colspan="4" scope="colgroup">Corporate Details</th>
+                                              <th colspan="4" scope="colgroup">Consumer Details</th>
+                                              <th colspan="5" scope="colgroup">Spl Approval from Tata</th>
+                                              <th colspan="3" scope="colgroup">Accessories 18% Margin</th>
+                                              <th colspan="2" scope="colgroup">Extended Warranty</th>
+                                              <th colspan="2" scope="colgroup">A.M.C/P2P</th>
+                                              <th colspan="2" scope="colgroup">Fastag</th>
+                                              <th colspan="5" scope="colgroup">Finance Company</th>
+                                              <th colspan="4" scope="colgroup">Insurance Company</th>
+                                              <th colspan="2" scope="colgroup">Total dealer & Tml Share</th>
+                                              <th colspan="5" scope="colgroup">Income</th>
+                                              <th colspan="3" scope="colgroup">Net-Income</th>
+                                              <th colspan="5" scope="colgroup">Reciepts Details</th>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col">Doct No</th>
+                                              <th scope="col">Exe. Name</th>
+                                              <th scope="col">Customer Name</th>
+                                              <th scope="col">Phone Number</th>
+
+                                              <th scope="col">Dealer Invoice date</th>
+                                              <th scope="col">Branch</th>
+                                              <th scope="col">Tml Invoice date</th>
+                                              <th scope="col">Commercial Invoice</th>
+                                              <th scope="col">No of days Stock in hand</th>
+                                              <th scope="col">Dealer Invoice number</th>
+
+                                              <th scope="col">LOB</th>
+                                              <th scope="col">PPL</th>
+                                              <th scope="col">Model</th>
+                                              <th scope="col">Chassis Number</th>
+                                              <th scope="col">Purchase Price</th>
+                                              <th scope="col">Sale Price</th>
+                                              <th scope="col">Dealer Margin</th>
+
+                                              <th scope="col">Exchange Offer</th>
+                                              <th scope="col">TML Share</th>
+                                              <th scope="col">Dealer Share</th>
+                                              <th scope="col">Not Pass</th>
+
+                                              <th scope="col">Corporate Offer</th>
+                                              <th scope="col">TML Share</th>
+                                              <th scope="col">Dealer Share</th>
+                                              <th scope="col">Not Pass</th>
+
+                                              <th scope="col">Consumer Offer</th>
+                                              <th scope="col">TML Share</th>
+                                              <th scope="col">Dealer Share</th>
+                                              <th scope="col">Not Pass</th>
+
+                                              <th scope="col">Offer</th>
+                                              <th scope="col">TML Share</th>
+                                              <th scope="col">Dealer Share</th>
+                                              <th scope="col">Not Pass</th>
+                                              <th scope="col">E of Supply</th>
+
+                                              <th scope="col">Accessories</th>
+                                              <th scope="col">FOC</th>
+                                              <th scope="col">NET</th>
+
+                                              <th scope="col">E.W</th>
+                                              <th scope="col">Incentive</th>
+
+                                              <th scope="col">AMC</th>
+                                              <th scope="col">Incentive</th>
+
+                                              <th scope="col">Fastag</th>
+                                              <th scope="col">Commission</th>
+
+                                              <th scope="col">Finance</th>
+                                              <th scope="col">Finance amount</th>
+                                              <th scope="col">IN/OUT</th>
+                                              <th scope="col">Dealer commission%</th>
+                                              <th scope="col">Payout</th>
+
+                                              <th scope="col">Insurance</th>
+                                              <th scope="col">Insurance amount</th>
+                                              <th scope="col">Sub total addition</th>
+                                              <th scope="col">Payout</th>
+
+                                              <th scope="col">Total TML Share</th>
+                                              <th scope="col">Total Dealer share</th>
+
+                                              <th scope="col">Total Income</th>
+                                              <th scope="col">Offer not passed to customer</th>
+                                              <th scope="col">Other income as for tally</th>
+                                              <th scope="col">Offers from dealer</th>
+                                              <th scope="col">Net income before tax</th>
+
+                                              <th scope="col">Tax</th>
+                                              <th scope="col">Net income with dealer margin</th>
+                                              <th scope="col">Remarks</th>
+
+                                              <th scope="col">Cash</th>
+                                              <th scope="col">Bank</th>
+                                              <th scope="col">D.O</th>
+                                              <th scope="col">Total</th>
+                                              <th scope="col">Balance</th>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>559</td>
+                                                <td>Tejaswani</td>
+                                                <td>METLA RAJYA LAKSHMI</td>
+                                                <td>9640133459</td>
+                                                <td>9-1-2021</td>
+                                                <td>RJY</td>
+                                                <td>9-1-2021</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>5</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>NA</td>
+                                                <td>NA</td>
+                                                <td>Harrier XZA+ Dark Edition</td>
+                                                <td>MAT631543MPH79247</td>
+                                                <td>12,048</td>
+                                                <td>13,048</td>
+                                                <td>1000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>2 years</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>Tata Capital</td>
+                                                <td>8000</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>9000</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>5000</td>
+                                                <td>8000</td>
+                                                <td>60</td>
+                                                <td>NA</td>
+                                                <td>6000</td>
+                                                <td>2000</td>
+                                                <td>1000</td>
+                                                <td>90000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>559</td>
+                                                <td>Tejaswani</td>
+                                                <td>METLA RAJYA LAKSHMI</td>
+                                                <td>9640133459</td>
+                                                <td>9-1-2021</td>
+                                                <td>RJY</td>
+                                                <td>9-1-2021</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>5</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>NA</td>
+                                                <td>NA</td>
+                                                <td>Harrier XZA+ Dark Edition</td>
+                                                <td>MAT631543MPH79247</td>
+                                                <td>12,048</td>
+                                                <td>13,048</td>
+                                                <td>1000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>2 years</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>Tata Capital</td>
+                                                <td>8000</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>9000</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>5000</td>
+                                                <td>8000</td>
+                                                <td>60</td>
+                                                <td>NA</td>
+                                                <td>6000</td>
+                                                <td>2000</td>
+                                                <td>1000</td>
+                                                <td>90000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>559</td>
+                                                <td>Tejaswani</td>
+                                                <td>METLA RAJYA LAKSHMI</td>
+                                                <td>9640133459</td>
+                                                <td>9-1-2021</td>
+                                                <td>RJY</td>
+                                                <td>9-1-2021</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>5</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>NA</td>
+                                                <td>NA</td>
+                                                <td>Harrier XZA+ Dark Edition</td>
+                                                <td>MAT631543MPH79247</td>
+                                                <td>12,048</td>
+                                                <td>13,048</td>
+                                                <td>1000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>2 years</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>Tata Capital</td>
+                                                <td>8000</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>9000</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>5000</td>
+                                                <td>8000</td>
+                                                <td>60</td>
+                                                <td>NA</td>
+                                                <td>6000</td>
+                                                <td>2000</td>
+                                                <td>1000</td>
+                                                <td>90000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>559</td>
+                                                <td>Tejaswani</td>
+                                                <td>METLA RAJYA LAKSHMI</td>
+                                                <td>9640133459</td>
+                                                <td>9-1-2021</td>
+                                                <td>RJY</td>
+                                                <td>9-1-2021</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>5</td>
+                                                <td>ISVRVS2122001013</td>
+                                                <td>NA</td>
+                                                <td>NA</td>
+                                                <td>Harrier XZA+ Dark Edition</td>
+                                                <td>MAT631543MPH79247</td>
+                                                <td>12,048</td>
+                                                <td>13,048</td>
+                                                <td>1000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>N/A</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>2 years</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>50</td>
+                                                <td>Tata Capital</td>
+                                                <td>8000</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>60</td>
+                                                <td>9000</td>
+                                                <td>60</td>
+                                                <td>70</td>
+                                                <td>50</td>
+                                                <td>5000</td>
+                                                <td>8000</td>
+                                                <td>60</td>
+                                                <td>NA</td>
+                                                <td>6000</td>
+                                                <td>2000</td>
+                                                <td>1000</td>
+                                                <td>90000</td>
+                                                <td>1000</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                
+                                            </tr>
+                                          </table>
+                                        </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-            </footer>
-          
-        </div>
+              
                 
+            </div> 
+        </div>
+        
+        <footer className="footer">
+            <div className="container-fluid">
+                <div className="row">
+
+                    <div className="col-sm-12 text-center">
+                        <div className="text-sm-center d-none d-sm-block text-center">
+                            2024 ALL RIGHTS RESERVED MOTOR SALES.
+                        </div>
+                    </div>
+                </div>
             </div>
+        </footer>
+      
+    </div>
+            
+        </div>
         
     );
 };

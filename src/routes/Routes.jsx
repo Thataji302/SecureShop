@@ -100,6 +100,7 @@ import Models from "../pages/Models";
 import Insurance from "../pages/Insurance";
 import Finance from "../pages/Finance";
 import Fastag from "../pages/Fastag";
+import AddForm from "../pages/AddForm";
 
 const Routes = () => {
   return (
@@ -231,6 +232,7 @@ const Routes = () => {
       <Route path={`/insurance`} component={Insurance} />
       <Route path={`/finance`} component={Finance} />
       <Route path={`/fastag`} component={Fastag} />
+      <Route path={`/createForm`} component={AddForm} />
       {/* <Route path={`/landingPage`} component={landingPage} /> */}
 
       <Route path={`*`} component={NotFound} />

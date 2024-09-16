@@ -691,17 +691,32 @@ const Lookups = () => {
     console.log("imageCloudfront",imageCloudfront)
     const addClick = (e, item) => {
         setBranchStatus(true)
+        setName("")
+                    setBranchAddress("")
+                    setNumber("")
     }
     const modeladdClick = (e, item) => {
         setModelStatus(true)
+        setName("")
+                    setModelColor("")
+                    setModelVersion("")
     }
     const insuranceaddClick = (e, item) => {
         setInsuranceStatus(true)
+        setName("")
+                    setCommission("")
+                    setInsuranceNumber("")
     }
     const financeaddClick = (e, item) => {
         setFinanceStatus(true)
+        setName("")
+                    setCommission("")
+                    setFinanceNumber("")
     }
     const fastagaddClick = (e, item) => {
+        setName("")
+                    setCommission("")
+                    setFastagNumber("")
         setFastagStatus(true)
     }
     return (
@@ -729,31 +744,31 @@ const Lookups = () => {
                                         <ul className="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                                             <li className="nav-item" onClick={branchTab}>
                                                 <a className="nav-link active" data-bs-toggle="tab" href="#ENTITY" role="tab">
-                                                    <span className="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span className="d-block d-sm-none"><i className="fas fa-home"></i></span>
                                                     <span className="d-none d-sm-block">Branches</span>
                                                 </a>
                                             </li>
                                             <li className="nav-item" onClick={modelTab}>
                                                 <a className="nav-link " data-bs-toggle="tab" href="#APPLICANT" role="tab">
-                                                    <span className="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span className="d-block d-sm-none"><i className="fas fa-home"></i></span>
                                                     <span className="d-none d-sm-block">Models</span>
                                                 </a>
                                             </li>
                                             <li className="nav-item" onClick={insuranceTab}>
                                                 <a className="nav-link " data-bs-toggle="tab" href="#HMDA" role="tab">
-                                                    <span className="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span className="d-block d-sm-none"><i className="fas fa-home"></i></span>
                                                     <span className="d-none d-sm-block">Insurance</span>
                                                 </a>
                                             </li>
                                             <li className="nav-item" onClick={financeTab}>
                                                 <a className="nav-link " data-bs-toggle="tab" href="#fin" role="tab">
-                                                    <span className="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span className="d-block d-sm-none"><i className="fas fa-home"></i></span>
                                                     <span className="d-none d-sm-block">Finance</span>
                                                 </a>
                                             </li>
                                             <li className="nav-item" onClick={fastagTab}>
-                                                <a className="nav-link " data-bs-toggle="tab" href="#fin" role="tab">
-                                                    <span className="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                <a className="nav-link " data-bs-toggle="tab" href="#fas" role="tab">
+                                                    <span className="d-block d-sm-none"><i className="fas fa-home"></i></span>
                                                     <span className="d-none d-sm-block">Fastag</span>
                                                 </a>
                                             </li>
@@ -847,7 +862,7 @@ const Lookups = () => {
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
-                                                                    <label class="form-label form-label">Phone Number</label>
+                                                                    <label className="form-label form-label">Phone Number</label>
                                                                     <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={phoneNumber} onChange={e => checkInput(e)} autoComplete="on" />
                                                                 </div>
                                                             </div>
@@ -864,7 +879,7 @@ const Lookups = () => {
                                                     </div>}
                                             </div>
 
-                                            <div class="tab-pane models" id="APPLICANT" role="tabpanel">
+                                            <div className="tab-pane models" id="APPLICANT" role="tabpanel">
                                                 {!modelStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
@@ -982,7 +997,7 @@ const Lookups = () => {
 
 
 
-                                            <div class="tab-pane insurance" id="HMDA" role="tabpanel">
+                                            <div className="tab-pane insurance" id="HMDA" role="tabpanel">
                                                 {!insuranceStatus && 
                                                 <div className="breadcurmb">
                                                     <div className="title_block">
@@ -1079,7 +1094,7 @@ const Lookups = () => {
                                                 </div>}
 
                                             </div>
-                                            <div class="tab-pane finance" id="fin" role="tabpanel">
+                                            <div className="tab-pane finance" id="fin" role="tabpanel">
                                             {!financeStatus && 
                                                 <div className="breadcurmb">
                                                     <div className="title_block">
@@ -1160,7 +1175,7 @@ const Lookups = () => {
                                                         </div>
                                                         <div className="col-md-6">
                                                             <div className="mb-3 input-field">
-                                                                <label class="form-label form-label">Phone Number</label>
+                                                                <label className="form-label form-label">Phone Number</label>
                                                                 <div className="form-floating mb-3">
                                                         <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={financeNumber} onChange={e => checkInput2(e)} autoComplete="on" />
                                                         <label for="floatingInput">Phone Number</label>
@@ -1178,11 +1193,11 @@ const Lookups = () => {
                                                 </div>}
 
                                             </div>
-                                            <div class="tab-pane finance" id="fin" role="tabpanel">
+                                            <div className="tab-pane fastag" id="fas" role="tabpanel">
                                             {!fastagStatus && 
                                                 <div className="breadcurmb">
                                                     <div className="title_block">
-                                                        <h5>finance</h5>
+                                                        <h5>fastag</h5>
                                                     </div>
                                                     <div className="buttons">
 
@@ -1223,9 +1238,9 @@ const Lookups = () => {
                                                                     <div className="card-body">
                                                                         <div className="new_search error_wrapper">
                                                                             <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                            <p>There are no finance available.</p>
+                                                                            <p>There are no fastag available.</p>
                                                                             <br/>
-                                                                            <p>Please add finance.</p>
+                                                                            <p>Please add fastag.</p>
                                                                             {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
                                                                         </div>
                                                                     </div>
@@ -1238,7 +1253,7 @@ const Lookups = () => {
                                                 <div className="form_seciton">
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
-                                                            <h5>Add Finance</h5>
+                                                            <h5>Add Fastag</h5>
                                                         </div>
                                                         <div className="buttons">
 
@@ -1259,7 +1274,7 @@ const Lookups = () => {
                                                         </div>
                                                         <div className="col-md-6">
                                                             <div className="mb-3 input-field">
-                                                                <label class="form-label form-label">Phone Number</label>
+                                                                <label className="form-label form-label">Phone Number</label>
                                                                 <div className="form-floating mb-3">
                                                                 <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={fastagNumber} onChange={e => checkInput3(e)} autoComplete="on" />
                                                         <label for="floatingInput">Phone Number</label>
