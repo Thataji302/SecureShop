@@ -88,10 +88,12 @@ const AddForm = (props) => {
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
     }
-    const goBack = () => {
+    // const goBack = () => {
+    //     history.goBack();
+    // }
+    const closeClick = () => {
         history.goBack();
     }
-
     return (
         <div id="layout-wrapper">
             <div className="dashboard">
@@ -101,7 +103,7 @@ const AddForm = (props) => {
                             <div className="md-container">
                                 <div className="form-header">
                                     <h2>CREATE A YELLOW FORM</h2>
-                                    <button><span className="material-icons-outlined">close</span></button>
+                                    <button onClick={closeClick}><span className="material-icons-outlined">close</span></button>
                                 </div>
                                 <div className="card">
                                     <div className="card-body">

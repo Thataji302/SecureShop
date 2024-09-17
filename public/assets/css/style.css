@@ -848,11 +848,11 @@ input[type=checkbox]:before {
 .input-field .form-label {
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12px;
   text-transform: uppercase;
-  color: #3b3b3b;
-  text-transform: capitalize;
+  color: rgba(30, 38, 109, 1);
+ text-transform: capitalize;
   margin-bottom: 5px;
   position: relative;
 }
@@ -860,7 +860,9 @@ input[type=checkbox]:before {
   margin-bottom: 20px !important;
 }
 .input-field .form-control, .input-field .form-select {
-  border: 1px solid rgba(128, 128, 128, 1);
+  border: 1px solid #D4D4D4;
+  background-color: #F6F6FA;
+  color:#A9A9A9;
   border-radius: 5px;
   height: 40px;
   font-size: 13px;
@@ -947,7 +949,14 @@ input[type=checkbox]:before {
   white-space: nowrap;
   width: 100%; /* Adjust width as needed */
 }
-
+table {
+  width: max-content; /* Ensure the table content dictates the width */
+  border-collapse: collapse;
+}
+table th, table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
 .scroll-left, .scroll-right {
 cursor: pointer;
 border: none;
@@ -975,22 +984,72 @@ display: flex;
 gap: 10px;
 justify-content: center;
 }
+table tbody tr td {
+white-space: nowrap;
+font-weight: normal;
+}
+.table th {
+font-weight: 600;
+font-size: 12px;
+}
+.button-container {
+display: flex;
+gap: 10px;
+justify-content: center;
+}
 
 .signup_section .sign-header img {max-height: 36px;}
 #layout-wrapper .dashboard { background-color: #f6f6fa !important;}
-.create_yellowform .form-header {display: flex; align-items: center; justify-content: space-between;}
+.create_yellowform .form-header {display: flex; align-items: center; justify-content: space-between; margin: 30px 0 15px 0;}
 .create_yellowform .form-header h2 {color: rgba(42, 48, 66, 1); font-size: 16px; text-transform: uppercase; font-weight: 700; margin-bottom: 0;}
 .create_yellowform .form-header button {background-color: transparent; border: none; margin: 0; padding: 0;}
 .create_yellowform .form-header button span{color: rgba(82, 82, 82, 1);}
-.create_yellowform .md-container {padding: 32px 0 14px 0;}
+.create_yellowform .md-container {padding: 32px 0 14px 0; max-width: 1100px;}
 .create_yellowform .md-container {padding: 0; margin-top: 0;}
+.create_yellowform .footer {background-color: rgba(30, 38, 109, 1); height: auto; padding: 15px;}
+.create_yellowform .footer .btn-primary {background-color: #d4784f; border: 1px solid #d4784f; border-radius: 6px; display: flex; align-items: center; justify-content: center; padding: 12px 63px; font-weight: 600; font-size: 13.5px; text-transform: uppercase;}
+.create_yellowform .inner-wrapper {width: 100%; display: flex; align-items: flex-start; justify-content: flex-start; height: 100%;}
+.create_yellowform .inner-wrapper .left_nav {
+  width: 279px;
+  height: 100vh;
+  background-color: #f6f6f6;
+ } 
+ 
+.create_yellowform .left_nav ul li { background-color: #F6F6F6; color: #696E99; font-size: 16px; white-space: nowrap; display: flex; align-items: center;border-left: 5px solid transparent;}
+.create_yellowform .left_nav ul li:hover, .create_yellowform .left_nav ul .active { color: #1E266D; background-color: #fff; font-size: 16px; border-left: 5px solid #d4784f;}
+.create_yellowform .left_nav ul li .material-symbols-outlined { color: #e1b6a3;}
+.create_yellowform .left_nav ul li:hover .material-symbols-outlined, .create_yellowform .left_nav ul li.active .material-symbols-outlined{ color: #d4784f;}
+.dashboard .create_yellowform .create-content { padding-top: 30px !important; margin-top: 0;}
 
+.create_yellowform .inner-wrapper .form-section {width: calc(100% - 215px); padding: 19px 30px;     background-color: #f6f6f6; }
+.create_yellowform .page-content {
+  margin-top: 0;
+  padding: 0 !important;
+}
+.create_yellowform .left_nav ul {list-style: none; padding: 0; margin-bottom: 0;}
+.create_yellowform .left_nav ul li{border-bottom: 1px solid #e1e1e1; padding: 12px 18px; cursor: pointer;}
+.create_yellowform .left_nav ul li a{color: rgba(30, 38, 109, 1);
+  font-size: 12px;
+  text-transform: capitalize;
+  font-weight: 600;
 
-
-
-
-
-
-
-
-/* Last Update on 03:47 PM 10-09-24 by VK*/
+}
+.create_yellowform .inner-wrapper .form-section h4 {
+  font-size: 13px;
+    color: rgba(30, 38, 109, 1);
+     margin-bottom: 10px;
+    font-weight: 600;}
+  .create_yellowform .card-body {padding: 0;}
+  .create_yellowform .input-field {
+    margin-bottom: 10px !important;
+}
+.create_yellowform .card {box-shadow: none; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);}
+.btn-primary:focus {outline: none; box-shadow: none;}
+create_yellowform .input-field .form-control, create_yellowform .input-field .form-select {
+  border: 1px solid rgba(212, 212, 212, 1);
+  border-radius: 5px;
+  height: 40px;
+  font-size: 13px;
+  background-color: rgba(246, 246, 250, 0.48);
+}
+/* Last Update on 01:30 PM 16-09-24 by ADI*/
