@@ -66,12 +66,12 @@ const SignUp = () => {
 
   useEffect(() => {
     setLocData(JSON.parse(localStorage.getItem("loc")));
-    if (localStorage.getItem("loc") === null) {
-     // userAgent();
-      clientActivity();
-    } else {
-      clientActivity();
-    }
+    // if (localStorage.getItem("loc") === null) {
+    //  // userAgent();
+    //   clientActivity();
+    // } else {
+    //   clientActivity();
+    // }
     // GetCountries();
 
   }, []);
@@ -237,7 +237,7 @@ const SignUp = () => {
         setButtonText('VERIFY & CREATE');
         console.log('VERIFY & CONTINUE and signup triggered')
         if (activeLoad == "") {
-          clientActivity();
+          //clientActivity();
           signUp();
         }
       }

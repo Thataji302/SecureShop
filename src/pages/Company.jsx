@@ -227,7 +227,7 @@ const Company = () => {
             let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
             payload = {
                 "companyName": companyName,
-                "companyEmailId": emailid,
+                "companyEmailId": emailid ? emailid : companyEmailId,
                 "phoneNumber": phoneNumber,
                 "companyAddress": companyAddress
             };
@@ -248,7 +248,7 @@ const Company = () => {
             let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
             payload = {
                 "companyName": companyName,
-                "companyEmailId": emailid,
+                "companyEmailId": emailid ? emailid : companyEmailId ,
                 "phoneNumber": phoneNumber,
                 "companyAddress": companyAddress
             };
