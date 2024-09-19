@@ -183,7 +183,7 @@ const AddForm = (props) => {
                     // });
                     // lookupData[0][type] = resultArray
                     // console.log("resultArray ", resultArray)
-                    setSavedPropertyData(response.data.result && response.data.result.data && response.data.result.data[0])
+                    setSavedPropertyData(response.data.result && response.data.result.data)
                 }
             });
     }
@@ -192,13 +192,15 @@ const AddForm = (props) => {
         
         
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        formChange ["userid" ] = userid
         let payload = formChange;
-        payload ["userid" ] = userid
+        console.log("payload", payload)
+        // payload ["userid" ] = userid
         const urlLink = lambda + '/createForm?appname=' + appname;
         axios({
             method: 'POST',
             url: urlLink,
-            payload
+            data:payload
         })
             .then(function (response) {
                 if (response.data.result) {
@@ -387,7 +389,7 @@ const AddForm = (props) => {
                                                             {/* <input id="text" name="name" type="text" placeholder="Enter" className="form-control" /> */}
                                                             <select className="form-select" aria-label="Default select example" name="branchName" value={formChange?.branchName} onChange={handleChange}>
                                                                 <option value="">Select Branch </option>
-                                                                {savedPropertyData && savedPropertyData?.branches && savedPropertyData?.branches?.length > 0 && savedPropertyData?.branches?.map((eachItem, key) => {
+                                                                {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
                                                                     console.log("eachItem", eachItem)
                                                                     return (eachItem && eachItem.status == "Active" &&
                                                                         <option value={eachItem?.name ? eachItem?.name : 'N/A'}>{eachItem?.name ? eachItem?.name : 'N/A'} </option>
