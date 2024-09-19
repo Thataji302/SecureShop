@@ -475,7 +475,7 @@ const Profile = () => {
                 <h5>profile</h5>
              </div>
                         <div className="buttons">
-                        <button className=" btn-primary" type="button">Back</button>
+                        {/* <button className=" btn-primary" type="button">Back</button> */}
                        
                         </div>
                         </div>

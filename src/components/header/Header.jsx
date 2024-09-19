@@ -40,21 +40,26 @@ import { contentContext } from "../../context/contentContext";
 const menuList = [
   {
       id: '1',
-      labelName: 'Yellow Form',
+      labelName: 'Sales',
       route: "yellowForm"
   },
   {
-      id: '2',
-      labelName: 'Lookups',
-      route: "lookups"
-  },
+    id: '2',
+    labelName: 'Lookups',
+    route: "lookups"
+},
   {
       id: '3',
+      labelName: 'Purchases',
+     // route: "lookups"
+  },
+  {
+      id: '4',
       labelName: 'Reports',
       //route: "reports"
   },
   {
-      id: '4',
+      id: '5',
       labelName: 'Users',
       //route: "user"
   },

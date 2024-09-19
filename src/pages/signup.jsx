@@ -280,10 +280,10 @@ const SignUp = () => {
       "userType": "type",
      // "corporate": Corporate,
       "name": name,
-      "idc": values,
+     // "idc": values,
       "phone": number,
-      "companyName": companyName != "" && companyName !== undefined ? companyName : "",
-      "clienttype": "ONLINE",
+     // "companyName": companyName != "" && companyName !== undefined ? companyName : "",
+     // "clienttype": "ONLINE",
       "emailid": email,
     };
     const filteredObject = {};
@@ -320,13 +320,13 @@ const SignUp = () => {
       console.log('signup try block')
       setActiveLoad("signUpActive")
       const response = await tmdbApi.signUp({
-        "userType": type != "" && type !== undefined ? type : "SuperAdmin",
+        "userType": type != "" && type !== undefined ? type : "Admin",
         // "corporate": Corporate != "" && Corporate !== undefined ? Corporate : "",
         "name": name != "" && name !== undefined ? name : "",
-        "idc": values != "" && values !== undefined ? values : "",
+        //"idc": values != "" && values !== undefined ? values : "",
         "phone": number != "" && number !== undefined ? number : "",
-        "companyName": companyName != "" && companyName !== undefined ? companyName : "",
-        "clienttype": "ONLINE",
+        //"companyName": companyName != "" && companyName !== undefined ? companyName : "",
+        //"clienttype": "ONLINE",
         "emailid": email != "" && email !== undefined ? email : "",
         "useragent": locData?.headers !== undefined ? locData?.headers : {}
       });

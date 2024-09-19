@@ -47,6 +47,7 @@ const Lookups = () => {
     const [nameerror, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [resultSuccess, setResultSuccess] = useState(false);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [passwordInput, setPasswordInput] = useState({
         password: '',
         confirmPassword: ''
@@ -82,7 +83,8 @@ const Lookups = () => {
     const [financeStatus, setFinanceStatus] = useState(false);
     const [fastagStatus, setFastagStatus] = useState(false);
     const [vendorStatus, setVendorStatus] = useState(false);
-
+    const [deleteData, setDeleteData] = useState('');
+    const [dataType, setDataType] = useState('');
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -94,10 +96,10 @@ const Lookups = () => {
         if (!localStorage.getItem("token")) {
             history.push("/");
         }
-       
-            branchTab()
-            console.log("hiiiiiiiiiiiiiii")
-        
+
+        branchTab()
+        console.log("hiiiiiiiiiiiiiii")
+
 
         // console.log('urlParams', urlParams)
         if (urlParams == "branches") {
@@ -193,7 +195,7 @@ const Lookups = () => {
         // history.goBack();
         setVendorStatus(false)
     }
-    
+
     const handleMessage = (e) => {
         setNameError("");
     }
@@ -248,10 +250,11 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
-                    let branchesData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].branches && response.data.result.data[0].branches[0]
+                    let branchesData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(branchesData && branchesData.name)
                     setBranchAddress(branchesData && branchesData.address)
                     setNumber(branchesData && branchesData.phoneNumber)
+                    setDealerCode(branchesData && branchesData.dealerCode)
                 }
             });
 
@@ -266,7 +269,7 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
-                    let modelData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].models && response.data.result.data[0].models[0]
+                    let modelData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(modelData && modelData.name)
                     setModelColor(modelData && modelData.color)
                     setModelVersion(modelData && modelData.version)
@@ -282,7 +285,7 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
-                    let insuranceData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].insurance && response.data.result.data[0].insurance[0]
+                    let insuranceData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(insuranceData && insuranceData.name)
                     setCommission(insuranceData && insuranceData.commission)
                     setInsuranceNumber(insuranceData && insuranceData.phoneNumber)
@@ -298,7 +301,7 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
-                    let financeData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].finance && response.data.result.data[0].finance[0]
+                    let financeData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(financeData && financeData.name)
                     setCommission(financeData && financeData.commission)
                     setFinanceNumber(financeData && financeData.phoneNumber)
@@ -314,7 +317,7 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
-                    let fastagData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].fastag && response.data.result.data[0].fastag[0]
+                    let fastagData = response.data.result && response.data.result.data
                     setName(fastagData && fastagData.name)
                     setCommission(fastagData && fastagData.commission)
                     setFastagNumber(fastagData && fastagData.phoneNumber)
@@ -330,7 +333,7 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
-                    let vendorData = response.data.result && response.data.result.data && response.data.result.data[0] && response.data.result.data[0].vendor && response.data.result.data[0].vendor[0]
+                    let vendorData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(vendorData && vendorData.name)
                     setVendorNumber(vendorData && vendorData.Gst)
                 }
@@ -340,6 +343,7 @@ const Lookups = () => {
         let valid = formvalidation();
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        let companyId = localStorage.getItem("companyId")
         console.log("lookupid", lookupid)
         if (valid && lookupid) {
             let payload;
@@ -352,8 +356,10 @@ const Lookups = () => {
                 "status": "Active",
                 "lookupId": lookupid,
                 "userid": userid,
+                "companyId": companyId,
+                "dealerCode": dealerCode
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=branches" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -362,6 +368,7 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
+                        history.push("./lookups");
                         setBranchStatus(false)
                         branchTab()
 
@@ -377,6 +384,8 @@ const Lookups = () => {
                 "type": "branches",
                 "status": "Active",
                 "userid": userid,
+                "companyId": companyId,
+                "dealerCode": dealerCode
             };
             console.log('payload', payload)
             const urlLink = lambda + '/lookups?appname=' + appname;
@@ -413,7 +422,7 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=models" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -423,6 +432,7 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./models");
+                        history.push("./lookups");
                         setModelStatus(false)
                         modelTab()
                     }
@@ -471,7 +481,7 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=insurance" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -481,6 +491,7 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./insurance");
+                        history.push("./lookups");
                         setInsuranceStatus(false)
                         insuranceTab()
                     }
@@ -505,9 +516,9 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                       // history.push("./insurance");
-                       setInsuranceStatus(false)
-                       insuranceTab()
+                        // history.push("./insurance");
+                        setInsuranceStatus(false)
+                        insuranceTab()
                     }
                 });
         }
@@ -529,7 +540,7 @@ const Lookups = () => {
                 "userid": userid,
                 "lookupId": lookupid
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=finance" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -539,6 +550,7 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./finance");
+                        history.push("./lookups");
                         setFinanceStatus(false)
                         financeTab()
                     }
@@ -587,7 +599,7 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=fastag" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -596,9 +608,10 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                       // history.push("./fastag");
-                       setFastagStatus(false)
-                       fastagTab()
+                        // history.push("./fastag");
+                        history.push("./lookups");
+                        setFastagStatus(false)
+                        fastagTab()
 
                     }
                 });
@@ -624,9 +637,9 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                       // history.push("./fastag");
-                       setFastagStatus(false)
-                       fastagTab()
+                        // history.push("./fastag");
+                        setFastagStatus(false)
+                        fastagTab()
                     }
                 });
         }
@@ -647,7 +660,7 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=vendor" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -656,9 +669,10 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                       // history.push("./fastag");
-                       setVendorStatus(false)
-                       vendorTab()
+                        // history.push("./fastag");
+                        history.push("./lookups");
+                        setVendorStatus(false)
+                        vendorTab()
 
                     }
                 });
@@ -683,9 +697,9 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                       // history.push("./fastag");
-                       setVendorStatus(false)
-                       vendorTab()
+                        // history.push("./fastag");
+                        setVendorStatus(false)
+                        vendorTab()
                     }
                 });
         }
@@ -721,17 +735,17 @@ const Lookups = () => {
         GetPropertyData(type);
         setVendorStatus(false)
     }
-    
+
     const GetPropertyData = (type) => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + (userid ? "&userid=" + userid : "");
+        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
         })
             .then(function (response) {
                 if (response.data.result) {
-                    setSavedPropertyData(response.data.result && response.data.result.data && response.data.result.data[0])
+                    setSavedPropertyData(response.data.result && response.data.result.data)
                 }
             });
     }
@@ -745,6 +759,44 @@ const Lookups = () => {
         window.location = `/lookups?id=${id}&type=${type} `;
     }
     const deleteClick = (e, item) => {
+        setDeleteConfirm(true)
+        setDeleteData(item)
+
+    }
+    const modelDelete = (e, item) => {
+        setDeleteConfirm(true)
+        setDeleteData(item)
+
+    }
+    const insuranceDelete = (e, item) => {
+        setDeleteConfirm(true)
+        setDeleteData(item)
+
+    }
+    const financeDelete = (e, item) => {
+        setDeleteConfirm(true)
+        setDeleteData(item)
+
+    }
+    const fastagDelete = (e, item) => {
+        setDeleteConfirm(true)
+        setDeleteData(item)
+
+    }
+    const vendorDelete = (e, item) => {
+        setDeleteConfirm(true)
+        setDeleteData(item)
+
+    }
+    function onConfirm1() {
+        setResultSuccess(false)
+        const type = dataType;
+        GetPropertyData(type);
+    };
+    function onConfirm2() {
+        setDeleteConfirm(false)
+        let item = deleteData;
+        setDataType(item && item.type)
         let type = item && item.type;
         let id = item && item.lookupId;
         let lookupid = id;
@@ -759,9 +811,9 @@ const Lookups = () => {
                 "status": "Archive",
                 "lookupId": lookupid
             };
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/deletelookups?appname=' + appname + "&lookupId=" + lookupid;
             axios({
-                method: 'POST',
+                method: 'DELETE',
                 url: urlLink,
                 data: payload
             })
@@ -773,52 +825,50 @@ const Lookups = () => {
                     }
                 });
         }
-    }
-    function onConfirm1() {
-        setResultSuccess(false)
-        const type = "branches";
-        GetPropertyData(type);
+        // const type = "branches";
+        // GetPropertyData(type);
     };
     let type = localStorage.getItem("formType");
     let imageCloudfront;
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
     }
-    console.log("imageCloudfront",imageCloudfront)
+    console.log("imageCloudfront", imageCloudfront)
     const addClick = (e, item) => {
         setBranchStatus(true)
         setName("")
-                    setBranchAddress("")
-                    setNumber("")
+        setBranchAddress("")
+        setNumber("")
+        setDealerCode("")
     }
     const modeladdClick = (e, item) => {
         setModelStatus(true)
         setName("")
-                    setModelColor("")
-                    setModelVersion("")
+        setModelColor("")
+        setModelVersion("")
     }
     const insuranceaddClick = (e, item) => {
         setInsuranceStatus(true)
         setName("")
-                    setCommission("")
-                    setInsuranceNumber("")
+        setCommission("")
+        setInsuranceNumber("")
     }
     const financeaddClick = (e, item) => {
         setFinanceStatus(true)
         setName("")
-                    setCommission("")
-                    setFinanceNumber("")
+        setCommission("")
+        setFinanceNumber("")
     }
     const fastagaddClick = (e, item) => {
         setName("")
-                    setCommission("")
-                    setFastagNumber("")
+        setCommission("")
+        setFastagNumber("")
         setFastagStatus(true)
     }
     const vendoraddClick = (e, item) => {
         setName("")
         setVendorNumber("")
-                    setVendorStatus(true)
+        setVendorStatus(true)
     }
     return (
         <>
@@ -833,10 +883,10 @@ const Lookups = () => {
                                     <div className="title_block">
                                         <h5>Lookups</h5>
                                     </div>
-                                    <div className="buttons">
+                                    {/* <div className="buttons">
 
                                         <button className=" btn-primary">Back</button>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="card">
                                     <div className="card-body">
@@ -900,20 +950,23 @@ const Lookups = () => {
 
                                                                     {/* <th className="align-middle">S No</th> */}
                                                                     <th className="align-middle">Branch Name</th>
-                                                                    <th className="align-middle">Phone Number</th>
-                                                                    <th className="align-middle">Created</th>
                                                                     <th className="align-middle">Address</th>
+                                                                    <th className="align-middle">Phone Number</th>
+                                                                    <th className="align-middle">Dealer Code</th>
+                                                                    <th className="align-middle">Created</th>
                                                                     <th className="align-middle">Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                {savedPropertyData && savedPropertyData?.branches && savedPropertyData?.branches?.length > 0 ? savedPropertyData?.branches?.map((eachItem, key) => {
+                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
                                                                     return (eachItem && eachItem.status == "Active" &&
                                                                         <tr key={key}>
                                                                             <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                            <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
                                                                             <td>{eachItem?.address ? eachItem?.address : 'N/A'}</td>
+                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                            <td>{eachItem?.dealerCode ? eachItem?.dealerCode : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+
                                                                             <td><div className="d-flex">
                                                                                 <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
                                                                                 <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
@@ -925,20 +978,10 @@ const Lookups = () => {
                                                                 )
 
                                                                     :
-                                                                    <div className="row">
-                                                                        <div className="col-md-12">
-                                                                            <div className="card mb-3">
-                                                                                <div className="card-body">
-                                                                                    <div className="new_search error_wrapper">
-                                                                                        <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                                        <p>There are no branches available.</p>
-                                                                                        <br/>
-                                                                                        <p>Please add branches.</p>
-                                                                                        {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <div className="empty_page">
+                                                                        <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                        <p>There are no branches available.<br />Please add branches.</p>
+                                                                        {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
                                                                     </div>
                                                                 }
                                                             </tbody>
@@ -1012,41 +1055,33 @@ const Lookups = () => {
                                                                     {/* <th className="align-middle">S No</th> */}
                                                                     <th className="align-middle">Model Name</th>
                                                                     <th className="align-middle">Color</th>
+                                                                    <th className="align-middle">Version</th>
                                                                     <th className="align-middle">Created</th>
-                                                                    <th className="align-middle">version</th>
+
                                                                     <th className="align-middle">Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                {savedPropertyData && savedPropertyData?.models && savedPropertyData?.models?.length > 0 ? savedPropertyData?.models?.map((eachItem, key) => {
+                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
                                                                     return (eachItem && eachItem.status == "Active" &&
                                                                         <tr>
                                                                             {/* <td>1</td> */}
                                                                             <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
                                                                             <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
-                                                                            <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
                                                                             <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+
                                                                             <td><div className="d-flex">
                                                                                 <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
                                                                         </tr>)
 
                                                                 }) :
-                                                                    <div className="row">
-                                                                        <div className="col-md-12">
-                                                                            <div className="card mb-3">
-                                                                                <div className="card-body">
-                                                                                    <div className="new_search error_wrapper">
-                                                                                        <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                                        <p>There are no models available.</p>
-                                                                                        <br/>
-                                                                                        <p>Please add models.</p>
-                                                                                        {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                <div className="empty_page">
+                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <p>There are no models available.<br />Please add models.</p>
+                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                            </div>
                                                                 }
                                                             </tbody>
                                                         </table>
@@ -1066,39 +1101,39 @@ const Lookups = () => {
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Model Name</label>
                                                                     <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
-                                                            <span className="errormsg" style={{
-                                                                fontWeight: 'bold',
-                                                                color: 'red',
-                                                            }}>{nameerror}</span> : ""
-                                                        }
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{nameerror}</span> : ""
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Color</label>
                                                                     <select className="form-select" aria-label="Default select example" name="color" value={modelColor} onChange={(e) => setModelColor(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required>
-                                                            <option value="">Select Color </option>
-                                                            <option value="Red">Red </option>
-                                                            <option value="Black">Black</option>
-                                                            <option value="Yellow"> Yellow</option>
-                                                            <option value="White"> White</option>
-                                                            <option value="Blue"> Blue</option>
-                                                            <option value="Green"> Green</option>
-                                                            <option value="Silver"> Silver</option>
-                                                            <option value="Maroon"> Maroon</option>
-                                                        </select>
+                                                                        <option value="">Select Color </option>
+                                                                        <option value="Red">Red </option>
+                                                                        <option value="Black">Black</option>
+                                                                        <option value="Yellow"> Yellow</option>
+                                                                        <option value="White"> White</option>
+                                                                        <option value="Blue"> Blue</option>
+                                                                        <option value="Green"> Green</option>
+                                                                        <option value="Silver"> Silver</option>
+                                                                        <option value="Maroon"> Maroon</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Version</label>
                                                                     <select className="form-select" aria-label="Default select example" name="version" value={modelVersion} onChange={(e) => setModelVersion(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required>
-                                                            <option value="">Select Version </option>
-                                                            <option value="Low Version">Low Version </option>
-                                                            <option value="Mid Version">Mid Version</option>
-                                                            <option value="High Version"> High Version</option>
+                                                                        <option value="">Select Version </option>
+                                                                        <option value="Low Version">Low Version </option>
+                                                                        <option value="Mid Version">Mid Version</option>
+                                                                        <option value="High Version"> High Version</option>
 
-                                                        </select>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-12 mb-2">
@@ -1111,397 +1146,357 @@ const Lookups = () => {
 
 
                                             <div className="tab-pane insurance" id="HMDA" role="tabpanel">
-                                                {!insuranceStatus && 
-                                                <div className="breadcurmb">
-                                                    <div className="title_block">
-                                                        <h5>Insurance</h5>
-                                                    </div>
-                                                    <div className="buttons">
-
-                                                        <button className=" btn-primary" onClick={insuranceaddClick}>add</button>
-                                                    </div>
-                                                </div>}
-                                                {!insuranceStatus ?
-                                                <div className="table-responsive">
-                                                    <table className="table table-striped ">
-                                                        <thead>
-                                                            <tr>
-
-                                                                {/* <th className="align-middle">S No</th> */}
-                                                                <th className="align-middle">Insurance Name</th>
-                                                                <th className="align-middle">Commission</th>
-                                                                <th className="align-middle">Phone Number</th>
-                                                                <th className="align-middle">Created</th>
-                                                                <th className="align-middle">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {savedPropertyData && savedPropertyData?.insurance && savedPropertyData?.insurance?.length > 0 ? savedPropertyData?.insurance?.map((eachItem, key) => {
-                                                    return (
-                                                            <tr>
-                                                                {/* <td>1</td> */}
-                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
-                                                                <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
-                                                                <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
-                                                            </tr>
-                                                             )
-
-                                                            }):<div className="row">
-                                                            <div className="col-md-12">
-                                                                <div className="card mb-3">
-                                                                    <div className="card-body">
-                                                                        <div className="new_search error_wrapper">
-                                                                            <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                            <p>There are no insurance available.</p>
-                                                                            <br/>
-                                                                            <p>Please add insurance.</p>
-                                                                            {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>}
-                                                        </tbody>
-                                                    </table>
-                                                </div>:
-                                                <div className="form_seciton">
+                                                {!insuranceStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
-                                                            <h5>add insurance</h5>
+                                                            <h5>Insurance</h5>
                                                         </div>
                                                         <div className="buttons">
 
-                                                            <a href="#" className="back_btn" style={{ cursor: 'pointer' }} onClick={insuranceBack}><span className="material-icons icon"> arrow_back</span>BACK</a>
+                                                            <button className=" btn-primary" onClick={insuranceaddClick}>add</button>
                                                         </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Insurance Name</label>
-                                                                <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
-                                                            <span className="errormsg" style={{
-                                                                fontWeight: 'bold',
-                                                                color: 'red',
-                                                            }}>{nameerror}</span> : ""
-                                                        }
+                                                    </div>}
+                                                {!insuranceStatus ?
+                                                    <div className="table-responsive">
+                                                        <table className="table table-striped ">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    {/* <th className="align-middle">S No</th> */}
+                                                                    <th className="align-middle">Insurance Name</th>
+                                                                    <th className="align-middle">Commission</th>
+                                                                    <th className="align-middle">Phone Number</th>
+                                                                    <th className="align-middle">Created</th>
+                                                                    <th className="align-middle">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
+                                                                    return (
+                                                                        <tr>
+                                                                            {/* <td>1</td> */}
+                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                            <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
+                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => insuranceDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                        </tr>
+                                                                    )
+
+                                                                }) : <div className="empty_page">
+                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <p>There are no insurance available.<br />Please add insurance.</p>
+                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                            </div>}
+                                                            </tbody>
+                                                        </table>
+                                                    </div> :
+                                                    <div className="form_seciton">
+                                                        <div className="breadcurmb">
+                                                            <div className="title_block">
+                                                                <h5>add insurance</h5>
+                                                            </div>
+                                                            <div className="buttons">
+
+                                                                <a href="#" className="back_btn" style={{ cursor: 'pointer' }} onClick={insuranceBack}><span className="material-icons icon"> arrow_back</span>BACK</a>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Commission(%)</label>
-                                                                <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => Commission(e)} autoComplete="on" />
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Insurance Name</label>
+                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{nameerror}</span> : ""
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Commission(%)</label>
+                                                                    <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => Commission(e)} autoComplete="on" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Phone Number</label>
+                                                                    <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={insuranceNumber} onChange={e => checkInput1(e)} autoComplete="on" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-12 mb-2">
+                                                                <button className="update_btn" type="submit" onClick={e => insuranceUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Phone Number</label>
-                                                                <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={insuranceNumber} onChange={e => checkInput1(e)} autoComplete="on" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-12 mb-2">
-                                                            <button className="update_btn" type="submit" onClick={e => insuranceUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>}
+                                                    </div>}
 
                                             </div>
                                             <div className="tab-pane finance" id="fin" role="tabpanel">
-                                            {!financeStatus && 
-                                                <div className="breadcurmb">
-                                                    <div className="title_block">
-                                                        <h5>finance</h5>
-                                                    </div>
-                                                    <div className="buttons">
-
-                                                        <button className=" btn-primary" onClick={financeaddClick}>Add</button>
-                                                    </div>
-                                                </div>}
-                                                {!financeStatus ?
-                                                <div className="table-responsive">
-                                                    <table className="table table-striped ">
-                                                        <thead>
-                                                            <tr>
-
-                                                                {/* <th className="align-middle">S No</th> */}
-                                                                <th className="align-middle">Finance Name</th>
-                                                                <th className="align-middle">Commission</th>
-                                                                <th className="align-middle">Phone Number</th>
-                                                                <th className="align-middle">Created</th>
-                                                                <th className="align-middle">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                        {savedPropertyData && savedPropertyData?.finance && savedPropertyData?.finance?.length > 0 ? savedPropertyData?.finance?.map((eachItem, key) => {
-                                        return (
-                                                            <tr key ={key}>
-                                                                {/* <td>1</td> */}
-                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
-                                                                <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
-                                                                <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
-                                                            </tr>
-                                                             )
-
-                                                            }):<div className="row">
-                                                            <div className="col-md-12">
-                                                                <div className="card mb-3">
-                                                                    <div className="card-body">
-                                                                        <div className="new_search error_wrapper">
-                                                                            <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                            <p>There are no finance available.</p>
-                                                                            <br/>
-                                                                            <p>Please add finance.</p>
-                                                                            {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>}
-                                                        </tbody>
-                                                    </table>
-                                                </div>:
-                                                <div className="form_seciton">
+                                                {!financeStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
-                                                            <h5>Add Finance</h5>
+                                                            <h5>finance</h5>
                                                         </div>
                                                         <div className="buttons">
 
-                                                            <a href="#" className="back_btn" style={{ cursor: 'pointer' }} onClick={financeBack}><span className="material-icons icon"> arrow_back</span>BACK</a>
+                                                            <button className=" btn-primary" onClick={financeaddClick}>Add</button>
                                                         </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Finance Name</label>
-                                                                <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
-                                                            <span className="errormsg" style={{
-                                                                fontWeight: 'bold',
-                                                                color: 'red',
-                                                            }}>{nameerror}</span> : ""
-                                                        }
+                                                    </div>}
+                                                {!financeStatus ?
+                                                    <div className="table-responsive">
+                                                        <table className="table table-striped ">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    {/* <th className="align-middle">S No</th> */}
+                                                                    <th className="align-middle">Finance Name</th>
+                                                                    <th className="align-middle">Commission</th>
+                                                                    <th className="align-middle">Phone Number</th>
+                                                                    <th className="align-middle">Created</th>
+                                                                    <th className="align-middle">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
+                                                                    return (
+                                                                        <tr key={key}>
+                                                                            {/* <td>1</td> */}
+                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                            <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
+                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => financeDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                        </tr>
+                                                                    )
+
+                                                                }) : <div className="empty_page">
+                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <p>There are no finance available.<br />Please add finance.</p>
+                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                            </div>}
+                                                            </tbody>
+                                                        </table>
+                                                    </div> :
+                                                    <div className="form_seciton">
+                                                        <div className="breadcurmb">
+                                                            <div className="title_block">
+                                                                <h5>Add Finance</h5>
+                                                            </div>
+                                                            <div className="buttons">
+
+                                                                <a href="#" className="back_btn" style={{ cursor: 'pointer' }} onClick={financeBack}><span className="material-icons icon"> arrow_back</span>BACK</a>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Phone Number</label>
-                                                                <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={financeNumber} onChange={e => checkInput2(e)} autoComplete="on" />
-                                                        {/* <label for="floatingInput">Phone Number</label> */}
-                                                    </div>
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Finance Name</label>
+                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{nameerror}</span> : ""
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Phone Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={financeNumber} onChange={e => checkInput2(e)} autoComplete="on" />
+                                                                        {/* <label for="floatingInput">Phone Number</label> */}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="form-floating mb-3">
+                                                                <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => financeCommission(e)} autoComplete="on" />
+                                                                <label for="floatingInput">Commission %</label>
+                                                            </div>
+                                                            <div className="col-md-12 mb-2">
+                                                                <button className="update_btn" type="submit" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
                                                             </div>
                                                         </div>
-                                                        <div className="form-floating mb-3">
-                                                        <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => financeCommission(e)} autoComplete="on" />
-                                                        <label for="floatingInput">Commission %</label>
-                                                    </div>
-                                                        <div className="col-md-12 mb-2">
-                                                            <button className="update_btn" type="submit" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>}
+                                                    </div>}
 
                                             </div>
                                             <div className="tab-pane fastag" id="fas" role="tabpanel">
-                                            {!fastagStatus && 
-                                                <div className="breadcurmb">
-                                                    <div className="title_block">
-                                                        <h5>fastag</h5>
-                                                    </div>
-                                                    <div className="buttons">
-
-                                                        <button className=" btn-primary" onClick={fastagaddClick}>Add</button>
-                                                    </div>
-                                                </div>}
-                                                {!fastagStatus ?
-                                                <div className="table-responsive">
-                                                    <table className="table table-striped ">
-                                                        <thead>
-                                                            <tr>
-
-                                                                {/* <th className="align-middle">S No</th> */}
-                                                                <th className="align-middle">Fastag Name</th>
-                                                                <th className="align-middle">Commission</th>
-                                                                <th className="align-middle">Phone Number</th>
-                                                                <th className="align-middle">Created</th>
-                                                                <th className="align-middle">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                        {savedPropertyData && savedPropertyData?.fastag && savedPropertyData?.fastag?.length > 0 ? savedPropertyData?.fastag?.map((eachItem, key) => {
-                                        return (
-                                                            <tr key ={key}>
-                                                                {/* <td>1</td> */}
-                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
-                                                                <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
-                                                                <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
-                                                            </tr>
-                                                             )
-
-                                                            }):<div className="row">
-                                                            <div className="col-md-12">
-                                                                <div className="card mb-3">
-                                                                    <div className="card-body">
-                                                                        <div className="new_search error_wrapper">
-                                                                            <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                            <p>There are no fastag available.</p>
-                                                                            <br/>
-                                                                            <p>Please add fastag.</p>
-                                                                            {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>}
-                                                        </tbody>
-                                                    </table>
-                                                </div>:
-                                                <div className="form_seciton">
+                                                {!fastagStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
-                                                            <h5>Add Fastag</h5>
+                                                            <h5>fastag</h5>
                                                         </div>
                                                         <div className="buttons">
 
-                                                            <a href="#" className="back_btn" onClick={fastagBack} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
+                                                            <button className=" btn-primary" onClick={fastagaddClick}>Add</button>
                                                         </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Fastag Name</label>
-                                                                <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
-                                                            <span className="errormsg" style={{
-                                                                fontWeight: 'bold',
-                                                                color: 'red',
-                                                            }}>{nameerror}</span> : ""
-                                                        }
+                                                    </div>}
+                                                {!fastagStatus ?
+                                                    <div className="table-responsive">
+                                                        <table className="table table-striped ">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    {/* <th className="align-middle">S No</th> */}
+                                                                    <th className="align-middle">Fastag Name</th>
+                                                                    <th className="align-middle">Commission</th>
+                                                                    <th className="align-middle">Phone Number</th>
+                                                                    <th className="align-middle">Created</th>
+                                                                    <th className="align-middle">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
+                                                                    return (
+                                                                        <tr key={key}>
+                                                                            {/* <td>1</td> */}
+                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                            <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
+                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => fastagDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                        </tr>
+                                                                    )
+
+                                                                }) : <div className="empty_page">
+                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <p>There are no fastags available.<br />Please add fastags.</p>
+                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                            </div>}
+                                                            </tbody>
+                                                        </table>
+                                                    </div> :
+                                                    <div className="form_seciton">
+                                                        <div className="breadcurmb">
+                                                            <div className="title_block">
+                                                                <h5>Add Fastag</h5>
+                                                            </div>
+                                                            <div className="buttons">
+
+                                                                <a href="#" className="back_btn" onClick={fastagBack} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Phone Number</label>
-                                                                <div className="form-floating mb-3">
-                                                                <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={fastagNumber} onChange={e => checkInput3(e)} autoComplete="on" />
-                                                        {/* <label for="floatingInput">Phone Number</label> */}
-                                                    </div>
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Fastag Name</label>
+                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{nameerror}</span> : ""
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Phone Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={fastagNumber} onChange={e => checkInput3(e)} autoComplete="on" />
+                                                                        {/* <label for="floatingInput">Phone Number</label> */}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Commission</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => fastagCommission(e)} autoComplete="on" />
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div className="col-md-12 mb-2">
+                                                                <button className="update_btn" type="submit" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
-                                                        <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Commission</label>
-                                                                <div className="form-floating mb-3">
-                                                                <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => fastagCommission(e)} autoComplete="on" />
-                                                    </div>
-                                                            </div>
-                                                        
-                                                        
-                                                    </div>
-                                                        <div className="col-md-12 mb-2">
-                                                            <button className="update_btn" type="submit" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>}
+                                                    </div>}
 
                                             </div>
                                             <div className="tab-pane vendor" id="ven" role="tabpanel">
-                                            {!vendorStatus && 
-                                                <div className="breadcurmb">
-                                                    <div className="title_block">
-                                                        <h5>vendor</h5>
-                                                    </div>
-                                                    <div className="buttons">
-
-                                                        <button className=" btn-primary" onClick={vendoraddClick}>Add</button>
-                                                    </div>
-                                                </div>}
-                                                {!vendorStatus ?
-                                                <div className="table-responsive">
-                                                    <table className="table table-striped ">
-                                                        <thead>
-                                                            <tr>
-
-                                                                {/* <th className="align-middle">S No</th> */}
-                                                                <th className="align-middle">Vendor Name</th>
-                                                                <th className="align-middle">GST Number</th>
-                                                                <th className="align-middle">Created</th>
-                                                                <th className="align-middle">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                        {savedPropertyData && savedPropertyData?.vendor && savedPropertyData?.vendor?.length > 0 ? savedPropertyData?.vendor?.map((eachItem, key) => {
-                                        return (
-                                                            <tr key ={key}>
-                                                                {/* <td>1</td> */}
-                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                <td>{eachItem?.Gst ? eachItem?.Gst : 'N/A'}</td>
-                                                                <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
-                                                                <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
-                                                            </tr>
-                                                             )
-
-                                                            }):<div className="row">
-                                                            <div className="col-md-12">
-                                                                <div className="card mb-3">
-                                                                    <div className="card-body">
-                                                                        <div className="new_search error_wrapper">
-                                                                            <img src={imageCloudfront + "propertyCalculator/images/not-found.png"} height="300px" />
-                                                                            <p>There are no vendors available.</p>
-                                                                            <br/>
-                                                                            <p>Please add vendors.</p>
-                                                                            {/* <button className="button_style" href="#" onClick={goBack}> GO BACK</button> */}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>}
-                                                        </tbody>
-                                                    </table>
-                                                </div>:
-                                                <div className="form_seciton">
+                                                {!vendorStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
-                                                            <h5>Add Vendor</h5>
+                                                            <h5>vendor</h5>
                                                         </div>
                                                         <div className="buttons">
 
-                                                            <a href="#" className="back_btn" onClick={vendorBack} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
+                                                            <button className=" btn-primary" onClick={vendoraddClick}>Add</button>
                                                         </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Vendor Name</label>
-                                                                <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
-                                                            <span className="errormsg" style={{
-                                                                fontWeight: 'bold',
-                                                                color: 'red',
-                                                            }}>{nameerror}</span> : ""
-                                                        }
+                                                    </div>}
+                                                {!vendorStatus ?
+                                                    <div className="table-responsive">
+                                                        <table className="table table-striped ">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    {/* <th className="align-middle">S No</th> */}
+                                                                    <th className="align-middle">Vendor Name</th>
+                                                                    <th className="align-middle">GST Number</th>
+                                                                    <th className="align-middle">Created</th>
+                                                                    <th className="align-middle">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
+                                                                    return (
+                                                                        <tr key={key}>
+                                                                            {/* <td>1</td> */}
+                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                            <td>{eachItem?.Gst ? eachItem?.Gst : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => vendorDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                        </tr>
+                                                                    )
+
+                                                                }) : <div className="empty_page">
+                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <p>There are no vendors available.<br />Please add vendors.</p>
+                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                            </div>}
+                                                            </tbody>
+                                                        </table>
+                                                    </div> :
+                                                    <div className="form_seciton">
+                                                        <div className="breadcurmb">
+                                                            <div className="title_block">
+                                                                <h5>Add Vendor</h5>
+                                                            </div>
+                                                            <div className="buttons">
+
+                                                                <a href="#" className="back_btn" onClick={vendorBack} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3 input-field">
-                                                                <label className="form-label form-label">Gst Number</label>
-                                                                <div className="form-floating mb-3">
-                                                                <input type="text" className="form-control" id="companyNumber" placeholder="Enter Gst Number" name="Gst" value={vendorNumber} onChange={e => checkInput4(e)} autoComplete="on" />
-                                                        
-                                                    </div>
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Vendor Name</label>
+                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={name} onChange={(e) => setName(e.target.value)} onFocus={(e) => handleMessage(e)} autoComplete="on" required /> {nameerror != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{nameerror}</span> : ""
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Gst Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="companyNumber" placeholder="Enter Gst Number" name="Gst" value={vendorNumber} onChange={e => checkInput4(e)} autoComplete="on" />
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-12 mb-2">
+                                                                <button className="update_btn" type="submit" onClick={e => vendorUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-12 mb-2">
-                                                            <button className="update_btn" type="submit" onClick={e => vendorUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>}
+                                                    </div>}
 
                                             </div>
                                         </div>
@@ -1520,6 +1515,24 @@ const Lookups = () => {
                                 confirmBtnBsStyle="primary"
                                 title={"Deleted Successfully"}
                                 onConfirm={e => onConfirm1()}
+                            >
+                            </SweetAlert>}
+                            {/* {resultSuccess &&
+                            <SweetAlert show={resultSuccess}
+                                custom
+                                confirmBtnText="Ok"
+                                confirmBtnBsStyle="primary"
+                                title={"Deleted Successfully"}
+                                onConfirm={e => onConfirm1()}
+                            >
+                            </SweetAlert>} */}
+                        {deleteConfirm &&
+                            <SweetAlert show={deleteConfirm}
+                                custom
+                                confirmBtnText="Ok"
+                                confirmBtnBsStyle="primary"
+                                title={"Are you sure want to delete?"}
+                                onConfirm={e => onConfirm2()}
                             >
                             </SweetAlert>}
                         <footer className="footer">

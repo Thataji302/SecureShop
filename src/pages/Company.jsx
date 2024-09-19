@@ -61,6 +61,7 @@ const Company = () => {
     const [name, setName] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [emailid, setCompanyEmail] = useState("");
+    const [companyEmailId, setCompanyEmailId] = useState("");
     const [companyNumber, setCompanyNumber] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
     const [companyResult, setCompanyResult] = useState("");
@@ -96,7 +97,10 @@ const Company = () => {
             getCompany()
         }
         //  setCompanyEmail(localStorage.getItem("email"))
-        GetUserData();
+        setTimeout(function () {
+            GetUserData();
+            }, 5000);
+       
         // //  GetCountries();
         userActivity();
     }, []);
@@ -223,7 +227,7 @@ const Company = () => {
             let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
             payload = {
                 "companyName": companyName,
-                "emailid": emailid,
+                "companyEmailId": emailid,
                 "phoneNumber": phoneNumber,
                 "companyAddress": companyAddress
             };
@@ -235,7 +239,7 @@ const Company = () => {
             })
                 .then(function (response) {
                     if (response.data.result) {
-                        // localStorage.setItem("previousid", response.data.result)
+                         localStorage.setItem("companyId", response.data.result.companyId)
                         history.push("./yellowForm");
                     }
                 });
@@ -244,7 +248,7 @@ const Company = () => {
             let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
             payload = {
                 "companyName": companyName,
-                "emailid": emailid,
+                "companyEmailId": emailid,
                 "phoneNumber": phoneNumber,
                 "companyAddress": companyAddress
             };
@@ -257,6 +261,7 @@ const Company = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
+                        localStorage.setItem("companyId", response.data.result.companyId)
                         history.push("./yellowForm");
                     }
                 });
@@ -275,7 +280,7 @@ const Company = () => {
                 if (response.data.result) {
                     // localStorage.setItem("previousid", response.data.result)
                     setCompanyName(response.data.result && response.data.result[0].companyName)
-                    setCompanyEmail(response.data.result && response.data.result[0].emailid)
+                    setCompanyEmailId(response.data.result && response.data.result[0].companyEmailId)
                     setNumber(response.data.result && response.data.result[0].phoneNumber)
                     setCompanyAddress(response.data.result && response.data.result[0].companyAddress)
                     setCompanyResult(response.data.result && response.data.result[0])
@@ -317,7 +322,7 @@ const Company = () => {
                                                     <label for="floatingInput">Company Name</label>
                                                 </div>
                                                 <div className="form-floating mb-3">
-                                                    <input type="text" className="form-control" id="companyEmail" placeholder="Enter Company Email" name="emailid" value={emailid} onChange={(e) => setCompanyEmail(e.target.value)} onFocus={(e) => handleEmailMessage(e)} autoComplete="on" required /> {emailError != "" ?
+                                                    <input type="text" className="form-control" id="companyEmail" placeholder="Enter Company Email" name="emailid" value={companyEmailId ? companyEmailId : emailid} onChange={(e) => setCompanyEmail(e.target.value)} onFocus={(e) => handleEmailMessage(e)} autoComplete="on" required /> {emailError != "" ?
                                                         <span className="errormsg" style={{
                                                             fontWeight: 'bold',
                                                             color: 'red',
