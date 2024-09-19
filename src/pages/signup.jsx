@@ -42,7 +42,7 @@ const SignUp = () => {
   const [nameerror, setNameError] = useState('');
   const history = useHistory();
 
-  const [buttonText, setButtonText] = useState("CONTINUE");
+  const [buttonText, setButtonText] = useState("VERIFY & CONTINUE");
   const [validation, setValidation] = useState(false);
   const [isLoadVerify, SetIsLoadVerify] = useState(false);
   const [otperror, setOtpError] = useState('');
@@ -338,26 +338,21 @@ const SignUp = () => {
       } else if (response.result === "User already exists") {
         setShow(false);
         setError("Email Already Exist. Please Enter another Email");
-        if (verificationRequired === false) {
-          setButtonText("CONTINUE");
-        } else {
           setButtonText("VERIFY & CONTINUE");
-
-        }
       }
       else if (response.result === "PENDING VERIFICATION") {
         setShow(true);
       }
-      else if (response.result === "PENDING APPROVAL") {
-        setError("Please Wait For Admin Approval");
-        setTimeout(function () { history.push("/message") }, 3000);
+      // else if (response.result === "PENDING APPROVAL") {
+      //   setError("Please Wait For Admin Approval");
+      //   setTimeout(function () { history.push("/message") }, 3000);
 
-      }
+      // }
 
-      else if (response.result === "PENDING TERMS") {
-        history.push("./terms/" + email);
+      // else if (response.result === "PENDING TERMS") {
+      //   history.push("./terms/" + email);
 
-      }
+      // }
       else {
         setError("Something Went Wrong Please Try Again");
 
