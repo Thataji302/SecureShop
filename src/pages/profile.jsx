@@ -523,7 +523,7 @@ const Profile = () => {
                                                 <div className="avatar-block">
                                                     <div className="avatar-header">
                                                         <div className="avatar-img-block">
-                                                            <p>VK</p>
+                                                            {/* <p>VK</p> */}
                                                         </div>
                                                     </div>
                                                     <div className="avatar-body">
