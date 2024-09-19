@@ -51,7 +51,7 @@ const Dashboard = (props) => {
     // const headerRef = useRef(null);
     // const [scroll, setScroll] = useState(false);
     const history = useHistory();
-    const [propertyData, setPropertyData] = useState({})
+    const [formData, setFormData] = useState({})
     const [config, setConfig] = useState({});
     const [activeId, setActiveId] = useState();
     // console.log("props", props.menus);
@@ -73,24 +73,26 @@ const Dashboard = (props) => {
 
     }, [window.site]);
     useEffect(() => {
-        // if (!localStorage.getItem("token")) {
-        //     history.push("/");
-        // }else{
-        //   GetPropertyData();
-        // }
+        if (!localStorage.getItem("token")) {
+            history.push("/");
+        }else{
+          GetPropertyData();
+        }
 
     }, []);
     const GetPropertyData = () => {
-        const token = localStorage.getItem("token");
-        const userid = localStorage.getItem("userId")
-        const urlLink = lambda + '/getProperties?appname=' + appname + "&token=" + token + "&userid=" + userid;
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        // let payload = formChange;
+        // payload ["userid" ] = userid
+        const urlLink = lambda + '/getForm?appname=' + appname + (userid ? "&userid=" + userid : "");
         axios({
-            method: 'POST',
+            method: 'GET',
             url: urlLink,
         })
             .then(function (response) {
                 if (response.data.result) {
-                    setPropertyData(response.data.result)
+                    //history.push("./yellowForm");
+                    setFormData(response.data.result && response.data.result)
                 }
             });
     }
@@ -205,7 +207,7 @@ const Dashboard = (props) => {
 
 
     return (
-
+        <div id="layout-wrapper">
         <div className="dashboard">
             <Header />
             {/* <div className="topnav">
@@ -249,17 +251,18 @@ const Dashboard = (props) => {
                 </nav>
             </div>
         </div> */}
-            <div className="main-content">
+            <div className="main-content yellow_form">
 
                 <div className="page-content">
                     <div className="container-fluid">
                         <div className="breadcurmb">
                             <div className="title_block">
-                                {/* <h5>Lookups</h5> */}
+                                <h5>yellow form</h5>
+                                <button className="btn-primary ms-3" onClick={createClick}>Create</button>
                             </div>
                             <div className="buttons">
-
-                                <button className=" btn-primary" onClick={createClick}>Create</button>
+                            <button className=" btn-primary">import</button>
+                            <button className=" btn-primary">export</button>
                             </div>
                         </div>
                         <div className="row">
@@ -295,7 +298,7 @@ const Dashboard = (props) => {
                                                     <colgroup span="5"></colgroup>
                                                     <colgroup span="3"></colgroup>
                                                     <colgroup span="5"></colgroup>
-                                                    <tr>
+                                                    <tr className="title_header">
                                                         <th colspan="4" scope="colgroup">Customer Details</th>
                                                         <th colspan="6" scope="colgroup">Dealer Details</th>
                                                         <th colspan="7" scope="colgroup">Vehicle Details</th>
@@ -318,14 +321,14 @@ const Dashboard = (props) => {
                                                         <th scope="col">Doct No</th>
                                                         <th scope="col">Exe. Name</th>
                                                         <th scope="col">Customer Name</th>
-                                                        <th scope="col">Phone Number</th>
+                                                        <th scope="col" className="border-right">Phone Number</th>
 
                                                         <th scope="col">Dealer Invoice date</th>
                                                         <th scope="col">Branch</th>
                                                         <th scope="col">Tml Invoice date</th>
                                                         <th scope="col">Commercial Invoice</th>
                                                         <th scope="col">No of days Stock in hand</th>
-                                                        <th scope="col">Dealer Invoice number</th>
+                                                        <th scope="col" className="border-right">Dealer Invoice number</th>
 
                                                         <th scope="col">LOB</th>
                                                         <th scope="col">PPL</th>
@@ -333,354 +336,153 @@ const Dashboard = (props) => {
                                                         <th scope="col">Chassis Number</th>
                                                         <th scope="col">Purchase Price</th>
                                                         <th scope="col">Sale Price</th>
-                                                        <th scope="col">Dealer Margin</th>
+                                                        <th scope="col" className="border-right">Dealer Margin</th>
 
                                                         <th scope="col">Exchange Offer</th>
                                                         <th scope="col">TML Share</th>
                                                         <th scope="col">Dealer Share</th>
-                                                        <th scope="col">Not Pass</th>
+                                                        <th scope="col" className="border-right">Not Pass</th>
 
                                                         <th scope="col">Corporate Offer</th>
                                                         <th scope="col">TML Share</th>
                                                         <th scope="col">Dealer Share</th>
-                                                        <th scope="col">Not Pass</th>
+                                                        <th scope="col" className="border-right">Not Pass</th>
 
                                                         <th scope="col">Consumer Offer</th>
                                                         <th scope="col">TML Share</th>
                                                         <th scope="col">Dealer Share</th>
-                                                        <th scope="col">Not Pass</th>
+                                                        <th scope="col" className="border-right">Not Pass</th>
 
                                                         <th scope="col">Offer</th>
                                                         <th scope="col">TML Share</th>
                                                         <th scope="col">Dealer Share</th>
                                                         <th scope="col">Not Pass</th>
-                                                        <th scope="col">E of Supply</th>
+                                                        <th scope="col" className="border-right">E of Supply</th>
 
                                                         <th scope="col">Accessories</th>
                                                         <th scope="col">FOC</th>
-                                                        <th scope="col">NET</th>
+                                                        <th scope="col" className="border-right">NET</th>
 
                                                         <th scope="col">E.W</th>
-                                                        <th scope="col">Incentive</th>
+                                                        <th scope="col" className="border-right">Incentive</th>
 
                                                         <th scope="col">AMC</th>
-                                                        <th scope="col">Incentive</th>
+                                                        <th scope="col" className="border-right">Incentive</th>
 
                                                         <th scope="col">Fastag</th>
-                                                        <th scope="col">Commission</th>
+                                                        <th scope="col" className="border-right">Commission</th>
 
                                                         <th scope="col">Finance</th>
                                                         <th scope="col">Finance amount</th>
                                                         <th scope="col">IN/OUT</th>
                                                         <th scope="col">Dealer commission%</th>
-                                                        <th scope="col">Payout</th>
+                                                        <th scope="col" className="border-right">Payout</th>
 
                                                         <th scope="col">Insurance</th>
                                                         <th scope="col">Insurance amount</th>
                                                         <th scope="col">Sub total addition</th>
-                                                        <th scope="col">Payout</th>
+                                                        <th scope="col" className="border-right">Payout</th>
 
                                                         <th scope="col">Total TML Share</th>
-                                                        <th scope="col">Total Dealer share</th>
+                                                        <th scope="col" className="border-right">Total Dealer share</th>
 
                                                         <th scope="col">Total Income</th>
                                                         <th scope="col">Offer not passed to customer</th>
                                                         <th scope="col">Other income as for tally</th>
                                                         <th scope="col">Offers from dealer</th>
-                                                        <th scope="col">Net income before tax</th>
+                                                        <th scope="col" className="border-right">Net income before tax</th>
 
                                                         <th scope="col">Tax</th>
                                                         <th scope="col">Net income with dealer margin</th>
-                                                        <th scope="col">Remarks</th>
+                                                        <th scope="col" className="border-right">Remarks</th>
 
                                                         <th scope="col">Cash</th>
                                                         <th scope="col">Bank</th>
                                                         <th scope="col">D.O</th>
                                                         <th scope="col">Total</th>
-                                                        <th scope="col">Balance</th>
+                                                        <th scope="col" className="border-right">Balance</th>
+                                                        <th scope="col" className="border-right">Created</th>
 
                                                     </tr>
-
-                                                    <tr>
-                                                        <td>559</td>
-                                                        <td>Tejaswani</td>
-                                                        <td>METLA RAJYA LAKSHMI</td>
-                                                        <td>9640133459</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>RJY</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>5</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>NA</td>
-                                                        <td>NA</td>
-                                                        <td>Harrier XZA+ Dark Edition</td>
-                                                        <td>MAT631543MPH79247</td>
-                                                        <td>12,048</td>
-                                                        <td>13,048</td>
-                                                        <td>1000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>2 years</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>Tata Capital</td>
-                                                        <td>8000</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>9000</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>5000</td>
-                                                        <td>8000</td>
-                                                        <td>60</td>
-                                                        <td>NA</td>
-                                                        <td>6000</td>
-                                                        <td>2000</td>
-                                                        <td>1000</td>
-                                                        <td>90000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>559</td>
-                                                        <td>Tejaswani</td>
-                                                        <td>METLA RAJYA LAKSHMI</td>
-                                                        <td>9640133459</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>RJY</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>5</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>NA</td>
-                                                        <td>NA</td>
-                                                        <td>Harrier XZA+ Dark Edition</td>
-                                                        <td>MAT631543MPH79247</td>
-                                                        <td>12,048</td>
-                                                        <td>13,048</td>
-                                                        <td>1000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>2 years</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>Tata Capital</td>
-                                                        <td>8000</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>9000</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>5000</td>
-                                                        <td>8000</td>
-                                                        <td>60</td>
-                                                        <td>NA</td>
-                                                        <td>6000</td>
-                                                        <td>2000</td>
-                                                        <td>1000</td>
-                                                        <td>90000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
+                                                    {formData &&  formData?.length > 0 && formData?.map((eachItem, key) => {
+                                                                    return (
+                                                    <tr key={key}>
+                                                        <td>{eachItem?.docNo ? eachItem?.docNo : 'N/A'}</td>
+                                                        <td>{eachItem?.executiveName ? eachItem?.executiveName : 'N/A'}</td>
+                                                        <td>{eachItem?.customerName ? eachItem?.customerName : 'N/A'}</td>
+                                                        <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                        <td>{eachItem?.dealerInvoiceDate ? eachItem?.dealerInvoiceDate : 'N/A'}</td>
+                                                        <td>{eachItem?.branchName ? eachItem?.branchName : 'N/A'}</td>
+                                                        <td>{eachItem?.tmlInvoiceDate ? eachItem?.tmlInvoiceDate : 'N/A'}</td>
+                                                        <td>{eachItem?.commercialInvoice ? eachItem?.commercialInvoice : 'N/A'}</td>
+                                                        <td>{eachItem?.stock ? eachItem?.stock : 'N/A'}</td>
+                                                        <td>{eachItem?.dealerInvoiceNumber ? eachItem?.dealerInvoiceNumber : 'N/A'}</td>
+                                                        <td>{eachItem?.LOB ? eachItem?.LOB : 'N/A'}</td>
+                                                        <td>{eachItem?.PPl ? eachItem?.PPl : 'N/A'}</td>
+                                                        <td>{eachItem?.modelName ? eachItem?.modelName : 'N/A'}</td>
+                                                        <td>{eachItem?.chassisNumber ? eachItem?.chassisNumber : 'N/A'}</td>
+                                                        <td>{eachItem?.purchasePrice ? eachItem?.purchasePrice : 'N/A'}</td>
+                                                        <td>{eachItem?.salePrice ? eachItem?.salePrice : 'N/A'}</td>
+                                                        <td>{eachItem?.dealerMargin ? eachItem?.dealerMargin : 'N/A'}</td>
+                                                        <td>{eachItem?.exchangeOffer ? eachItem?.exchangeOffer : 'N/A'}</td>
+                                                        <td>{eachItem?.exchangeTmlShare ? eachItem?.exchangeTmlShare : 'N/A'}</td>
+                                                        <td>{eachItem?.exchangeDealerShare ? eachItem?.exchangeDealerShare : 'N/A'}</td>
+                                                        <td>{eachItem?.exchangeNotPass ? eachItem?.exchangeNotPass : 'N/A'}</td>
+                                                        <td>{eachItem?.corporateOffer ? eachItem?.corporateOffer : 'N/A'}</td>
+                                                        <td>{eachItem?.corporateTmlShare ? eachItem?.corporateTmlShare : 'N/A'}</td>
+                                                        <td>{eachItem?.corporateDealerShare ? eachItem?.corporateDealerShare : 'N/A'}</td>
+                                                        <td>{eachItem?.corporateNotPass ? eachItem?.corporateNotPass : 'N/A'}</td>
+                                                        <td>{eachItem?.consumerOffer ? eachItem?.consumerOffer : 'N/A'}</td>
+                                                        <td>{eachItem?.consumerTmlShare ? eachItem?.consumerTmlShare : 'N/A'}</td>
+                                                        <td>{eachItem?.consumerDealerShare ? eachItem?.consumerDealerShare : 'N/A'}</td>
+                                                        <td>{eachItem?.consumerNotPass ? eachItem?.consumerNotPass : 'N/A'}</td>
+                                                        <td>{eachItem?.splOffer ? eachItem?.splOffer : 'N/A'}</td>
+                                                        <td>{eachItem?.splTmlShare ? eachItem?.splTmlShare : 'N/A'}</td>
+                                                        <td>{eachItem?.splNotPass ? eachItem?.splNotPass : 'N/A'}</td>
+                                                        <td>{eachItem?.splDealerShare ? eachItem?.splDealerShare : 'N/A'}</td>
+                                                        <td>{eachItem?.supply ? eachItem?.supply : 'N/A'}</td>
+                                                        <td>{eachItem?.accessories ? eachItem?.accessories : 'N/A'}</td>
+                                                        <td>{eachItem?.FOC ? eachItem?.FOC : 'N/A'}</td>
+                                                        <td>{eachItem?.NET ? eachItem?.NET : 'N/A'}</td>
+                                                        <td>{eachItem?.extendedWarranty ? eachItem?.extendedWarranty : 'N/A'}</td>
+                                                        <td>{eachItem?.incentive ? eachItem?.incentive : 'N/A'}</td>
+                                                        <td>{eachItem?.AMC ? eachItem?.AMC : 'N/A'}</td>
+                                                        <td>{eachItem?.amcIncentive ? eachItem?.amcIncentive : 'N/A'}</td>
+                                                        <td>{eachItem?.fastagName ? eachItem?.fastagName : 'N/A'}</td>
+                                                        <td>{eachItem?.fastagCommission ? eachItem?.fastagCommission : 'N/A'}</td>
+                                                        <td>{eachItem?.financeName ? eachItem?.financeName : 'N/A'}</td>
+                                                        <td>{eachItem?.financeAmount ? eachItem?.financeAmount : 'N/A'}</td>
+                                                        <td>{eachItem?.INOUT ? eachItem?.INOUT : 'N/A'}</td>
+                                                        <td>{eachItem?.dealerCommission ? eachItem?.dealerCommission : 'N/A'}</td>
+                                                        <td>{eachItem?.financePayout ? eachItem?.financePayout : 'N/A'}</td>
+                                                        <td>{eachItem?.insuranceName ? eachItem?.insuranceName : 'N/A'}</td>
+                                                        <td>{eachItem?.insuranceAmount ? eachItem?.insuranceAmount : 'N/A'}</td>
+                                                        <td>{eachItem?.subTotal ? eachItem?.subTotal : 'N/A'}</td>
+                                                        <td>{eachItem?.insurancePayout ? eachItem?.insurancePayout : 'N/A'}</td>
+                                                        <td>{eachItem?.totalTmlShare ? eachItem?.totalTmlShare : 'N/A'}</td>
+                                                        <td>{eachItem?.totalDealerShare ? eachItem?.totalDealerShare : 'N/A'}</td>
+                                                        <td>{eachItem?.totalIncome ? eachItem?.totalIncome : 'N/A'}</td>
+                                                        <td>{eachItem?.offerNotPassed ? eachItem?.offerNotPassed : 'N/A'}</td>
+                                                        <td>{eachItem?.offerFromDealer ? eachItem?.offerFromDealer : 'N/A'}</td>
+                                                        <td>{eachItem?.otherIncome ? eachItem?.otherIncome : 'N/A'}</td>
+                                                        <td>{eachItem?.netIncome ? eachItem?.netIncome : 'N/A'}</td>
+                                                        <td>{eachItem?.tax ? eachItem?.tax : 'N/A'}</td>
+                                                        <td>{eachItem?.netIncomeDealerMargin ? eachItem?.netIncomeDealerMargin : 'N/A'}</td>
+                                                        <td>{eachItem?.remarks ? eachItem?.remarks : 'N/A'}</td>
+                                                        <td>{eachItem?.cash ? eachItem?.cash : 'N/A'}</td>
+                                                        <td>{eachItem?.bank ? eachItem?.bank : 'N/A'}</td>
+                                                        <td>{eachItem?.DO ? eachItem?.DO : 'N/A'}</td>
+                                                        <td>{eachItem?.total ? eachItem?.total : 'N/A'}</td>
+                                                        <td>{eachItem?.balance ? eachItem?.balance : 'N/A'}</td>
+                                                        <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
 
                                                     </tr>
-                                                    <tr>
-                                                        <td>559</td>
-                                                        <td>Tejaswani</td>
-                                                        <td>METLA RAJYA LAKSHMI</td>
-                                                        <td>9640133459</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>RJY</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>5</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>NA</td>
-                                                        <td>NA</td>
-                                                        <td>Harrier XZA+ Dark Edition</td>
-                                                        <td>MAT631543MPH79247</td>
-                                                        <td>12,048</td>
-                                                        <td>13,048</td>
-                                                        <td>1000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>2 years</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>Tata Capital</td>
-                                                        <td>8000</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>9000</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>5000</td>
-                                                        <td>8000</td>
-                                                        <td>60</td>
-                                                        <td>NA</td>
-                                                        <td>6000</td>
-                                                        <td>2000</td>
-                                                        <td>1000</td>
-                                                        <td>90000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
+                                                    )
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td>559</td>
-                                                        <td>Tejaswani</td>
-                                                        <td>METLA RAJYA LAKSHMI</td>
-                                                        <td>9640133459</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>RJY</td>
-                                                        <td>9-1-2021</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>5</td>
-                                                        <td>ISVRVS2122001013</td>
-                                                        <td>NA</td>
-                                                        <td>NA</td>
-                                                        <td>Harrier XZA+ Dark Edition</td>
-                                                        <td>MAT631543MPH79247</td>
-                                                        <td>12,048</td>
-                                                        <td>13,048</td>
-                                                        <td>1000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>N/A</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>2 years</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>50</td>
-                                                        <td>Tata Capital</td>
-                                                        <td>8000</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>60</td>
-                                                        <td>9000</td>
-                                                        <td>60</td>
-                                                        <td>70</td>
-                                                        <td>50</td>
-                                                        <td>5000</td>
-                                                        <td>8000</td>
-                                                        <td>60</td>
-                                                        <td>NA</td>
-                                                        <td>6000</td>
-                                                        <td>2000</td>
-                                                        <td>1000</td>
-                                                        <td>90000</td>
-                                                        <td>1000</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
-                                                        <td>100</td>
+                                                }
 
-                                                    </tr>
+                                                )
+                                            }
                                                 </table>
                                             </div>
                                             <button className="scroll-right" onMouseOver={scrollRight()} onMouseOut={stopScroll()}><span className="material-symbols-outlined">
@@ -712,6 +514,7 @@ const Dashboard = (props) => {
             </div>
 
         </div>
+         </div>
 
     );
 };

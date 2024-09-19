@@ -586,7 +586,7 @@ table thead tr th {color: #4E4E4E;
   box-shadow: 0 0 30px rgb(214 215 216 / 60%);
 }
 .avatar-block .avatar-header {
-  background-image: url(https://orasimedia.imgix.net/orasi/client/resources/orasiv1/images/bg-pattern.jpg);
+  background-color: #2a3042;
   background-size: 100%;
   position: relative;
   height: 100px;
@@ -757,7 +757,7 @@ input[type=checkbox]:before {
   padding: calc(55px + 24px) calc(24px* .5) 60px calc(24px* .5);
 }
 .inner_header .header-item:hover, .inner_header .header-item:focus, .inner_header .header-item.active {
-  color: #d4784f !important;
+  color: #e9ecef !important;
 }
 .page-content {
   margin-top: 70px;
@@ -775,7 +775,7 @@ input[type=checkbox]:before {
     align-items: center;
    }
     .breadcurmb .title_block h5{color: rgba(42, 48, 66, 1);
-      font-size: 12px;
+      font-size: 14px;
       text-transform: uppercase;
       white-space: nowrap;
       margin-bottom: 0;
@@ -797,15 +797,15 @@ input[type=checkbox]:before {
         .breadcurmb .buttons .btn-primary {
           background-color: #d4784f;
           border: 1px solid #d4784f;
-          border-radius: 5px;
+          border-radius: 3px;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 5px 15px;
-          font-size: 12px;
+          padding: 5px 14px;
+          font-size: 11px;
           font-weight: 600;
-          height: 38px;
-          margin-left: 14px;
+          height: 35px;
+          margin-left: 9px;
           text-transform: uppercase;
         }
         .breadcurmb .buttons .btn-primary span {
@@ -990,7 +990,7 @@ font-weight: normal;
 }
 .table th {
 font-weight: 600;
-font-size: 12px;
+font-size: 11.5px;
 }
 .button-container {
 display: flex;
@@ -1000,7 +1000,7 @@ justify-content: center;
 
 .signup_section .sign-header img {max-height: 36px;}
 #layout-wrapper .dashboard { background-color: #f6f6fa !important;}
-.create_yellowform .form-header {display: flex; align-items: center; justify-content: space-between; margin: 30px 0 15px 0;}
+.create_yellowform .form-header {display: flex; align-items: center; justify-content: space-between; margin: 17px 0 15px 0}
 .create_yellowform .form-header h2 {color: rgba(42, 48, 66, 1); font-size: 16px; text-transform: uppercase; font-weight: 700; margin-bottom: 0;}
 .create_yellowform .form-header button {background-color: transparent; border: none; margin: 0; padding: 0;}
 .create_yellowform .form-header button span{color: rgba(82, 82, 82, 1);}
@@ -1010,29 +1010,30 @@ justify-content: center;
 .create_yellowform .footer .btn-primary {background-color: #d4784f; border: 1px solid #d4784f; border-radius: 6px; display: flex; align-items: center; justify-content: center; padding: 12px 63px; font-weight: 600; font-size: 13.5px; text-transform: uppercase;}
 .create_yellowform .inner-wrapper {width: 100%; display: flex; align-items: flex-start; justify-content: flex-start; height: 100%;}
 .create_yellowform .inner-wrapper .left_nav {
-  width: 279px;
-  height: 100vh;
+  width: 225px;
+  max-height: calc(100vh - 160px);
   background-color: #f6f6f6;
+  overflow-y: auto;
  } 
  
-.create_yellowform .left_nav ul li { background-color: #F6F6F6; color: #696E99; font-size: 16px; white-space: nowrap; display: flex; align-items: center;border-left: 5px solid transparent;}
-.create_yellowform .left_nav ul li:hover, .create_yellowform .left_nav ul .active { color: #1E266D; background-color: #fff; font-size: 16px; border-left: 5px solid #d4784f;}
+.create_yellowform .left_nav ul li { background-color: #F6F6F6; color: #696E99; font-size: 16px; white-space: nowrap; display: flex; align-items: center;border-left: 5px solid transparent; font-size: 12.5px;}
+.create_yellowform .left_nav ul li:hover, .create_yellowform .left_nav ul li.active { color: #1E266D; background-color: #fff; border-left: 5px solid #d4784f; font-weight: 600;}
 .create_yellowform .left_nav ul li .material-symbols-outlined { color: #e1b6a3;}
 .create_yellowform .left_nav ul li:hover .material-symbols-outlined, .create_yellowform .left_nav ul li.active .material-symbols-outlined{ color: #d4784f;}
-.dashboard .create_yellowform .create-content { padding-top: 30px !important; margin-top: 0;}
+.dashboard .create_yellowform .create-content { padding-top: 0px !important; margin-top: 0;}
 
-.create_yellowform .inner-wrapper .form-section {width: calc(100% - 215px); padding: 19px 30px;     background-color: #f6f6f6; }
+.create_yellowform .inner-wrapper .form-section {width: calc(100% - 225px); padding: 19px 30px; max-height: calc(100vh - 160px); overflow-y: auto;}
+.create_yellowform .inner-wrapper .form-section hr{height: 0.5px; border-bottom: 1px solid rgba(231, 231, 231, 1); opacity: 1; }
 .create_yellowform .page-content {
   margin-top: 0;
   padding: 0 !important;
 }
 .create_yellowform .left_nav ul {list-style: none; padding: 0; margin-bottom: 0;}
-.create_yellowform .left_nav ul li{border-bottom: 1px solid #e1e1e1; padding: 12px 18px; cursor: pointer;}
+.create_yellowform .left_nav ul li{padding: 14px 18px; cursor: pointer; font-size: 12.5px;}
+.create_yellowform .left_nav ul li .material-symbols-outlined.me-3{font-size: 20px; margin-right: 6px !important;}
 .create_yellowform .left_nav ul li a{color: rgba(30, 38, 109, 1);
-  font-size: 12px;
-  text-transform: capitalize;
-  font-weight: 600;
-
+  display: flex;
+  align-items: center;
 }
 .create_yellowform .inner-wrapper .form-section h4 {
   font-size: 13px;
@@ -1052,4 +1053,99 @@ create_yellowform .input-field .form-control, create_yellowform .input-field .fo
   font-size: 13px;
   background-color: rgba(246, 246, 250, 0.48);
 }
-/* Last Update on 01:30 PM 16-09-24 by ADI*/
+
+.dropdown-menu-end .dropdown-item {font-size: 12.5px;}
+.dropdown-item:active {
+  color: #1e2125;
+  background-color: #e9ecef;
+}
+.navbar-header .dropdown .show.header-item {
+  background-color: transparent;
+}
+.table-container .table th  {background-color: rgba(245, 245, 245, 1);}
+.table-container .table .title_header th  {border-right: 1px solid #ccc; text-transform: uppercase; font-size: 11px;}
+.table-container .table th:last-child, .table td:last-child {
+  color: #091B51 !important;
+}
+.table-container .table td {font-size: 11.5px;}
+.table-container .table tr .border-right  {border-right: 1px solid #ccc;}
+.table-responsive .table {margin-bottom: 10px;}
+.table-wrapper::-webkit-scrollbar {height: 8px !important; width:8px}
+.table-wrapper::-webkit-scrollbar-thumb { background: #cbc9c9; border-radius: 6px;}
+.table-wrapper::-webkit-scrollbar-track { background: #e7e7e7; border-radius: 6px;}
+.table-wrapper::-webkit-scrollbar-thumb:hover { background: #b3b2b2; border-radius: 6px;}
+.table-container .table {margin-bottom: 5px;} 
+.btn-primary:active:focus {box-shadow: none;}
+.title_block .btn-primary {
+  background-color: #d4784f;
+  border: 1px solid #d4784f;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  height: 35px;
+  margin-left: 9px;
+  text-transform: uppercase;
+}
+.dashboard .main-content .page-content .card {min-height: calc(100vh - 219px);}
+.create_yellowform .inner-wrapper .left_nav::-webkit-scrollbar {height: 8px !important; width:8px}
+.create_yellowform .inner-wrapper .left_nav::-webkit-scrollbar-thumb { background: #cbc9c9; border-radius: 6px;}
+.create_yellowform .inner-wrapper .left_nav::-webkit-scrollbar-track { background: #e7e7e7; border-radius: 6px;}
+.create_yellowform .inner-wrapper .left_nav::-webkit-scrollbar-thumb:hover { background: #b3b2b2; border-radius: 6px;}
+.create_yellowform .inner-wrapper .form-section::-webkit-scrollbar {height: 8px !important; width:8px}
+.create_yellowform .inner-wrapper .form-section::-webkit-scrollbar-thumb { background: #cbc9c9; border-radius: 6px;}
+.create_yellowform .inner-wrapper .form-section::-webkit-scrollbar-track { background: #e7e7e7; border-radius: 6px;}
+.create_yellowform .inner-wrapper .form-section::-webkit-scrollbar-thumb:hover { background: #b3b2b2; border-radius: 6px;}
+.empty_page {height: calc(100vh - 316px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;}
+  .empty_page span {color: #fff;
+    width: 167px;
+    height: 167px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ECF0FA;
+    border-radius: 100%;
+    margin: 0 auto;
+    font-size: 52px;
+    font-weight: normal;
+    margin-bottom: 25px;}
+    .empty_page span img {max-width: 44%;
+      max-height: 44%;
+      width: auto;
+      height: auto;}
+
+.empty_page p {
+  color: rgba(42, 48, 66, 1);
+    font-weight: 500;
+    font-size: 15.5px;
+    margin-bottom: 15px;
+    text-align: center;
+    line-height: 20px;
+}
+.empty_page .btn-primary {
+  padding: 11px 34px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 11px;
+    background-color: #d4784f;
+    border: 1px solid #d4784f;
+    border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+
+/* Last Update on 07:31 AM 18-09-24 by ADI*/
