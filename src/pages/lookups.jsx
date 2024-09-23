@@ -797,7 +797,7 @@ const Lookups = () => {
     function closePopup() {
         setDeleteConfirm(false)
     };
-    
+
     function onConfirm2() {
         setDeleteConfirm(false)
         let item = deleteData;
@@ -937,7 +937,7 @@ const Lookups = () => {
                                         </ul>
                                         <div className="tab-content pt-15 text-muted">
                                             <div className="tab-pane active branches" id="ENTITY" role="tabpanel">
-                                                {!branchStatus &&
+                                                {/* {!branchStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>branches</h5>
@@ -946,52 +946,57 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={addClick}>add</button>
                                                         </div>
-                                                    </div>}
+                                                    </div>} */}
                                                 {!branchStatus ?
-                                                    <div className="table-responsive">
-                                                        <table className="table table-striped ">
-                                                            <thead>
-                                                                <tr>
+                                                    <div>
+                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
+                                                                        <tr>
 
-                                                                    {/* <th className="align-middle">S No</th> */}
-                                                                    <th className="align-middle">Branch Name</th>
-                                                                    <th className="align-middle">Address</th>
-                                                                    <th className="align-middle">Phone Number</th>
-                                                                    <th className="align-middle">Dealer Code</th>
-                                                                    <th className="align-middle">Created</th>
-                                                                    <th className="align-middle">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
-                                                                    return (eachItem && eachItem.status == "Active" &&
-                                                                        <tr key={key}>
-                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.address ? eachItem?.address : 'N/A'}</td>
-                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                            <td>{eachItem?.dealerCode ? eachItem?.dealerCode : 'N/A'}</td>
-                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-
-                                                                            <td><div className="d-flex">
-                                                                                <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                <a className="action-button delete tooltip-container"  onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Branch Name</th>
+                                                                            <th className="align-middle">Address</th>
+                                                                            <th className="align-middle">Phone Number</th>
+                                                                            <th className="align-middle">Dealer Code</th>
+                                                                            <th className="align-middle">Created</th>
+                                                                            <th className="align-middle">Action</th>
                                                                         </tr>
-                                                                    )
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (eachItem && eachItem.status == "Active" &&
+                                                                                <tr key={key}>
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.address ? eachItem?.address : 'N/A'}</td>
+                                                                                    <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                                    <td>{eachItem?.dealerCode ? eachItem?.dealerCode : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
-                                                                }
+                                                                                    <td><div className="d-flex">
+                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
+                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                </tr>
+                                                                            )
 
-                                                                )
+                                                                        }
 
-                                                                    :
-                                                                    <div className="empty_page">
-                                                                        <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
-                                                                        <p>There are no branches available.<br />Please add branches.</p>
-                                                                        {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                                    </div>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </div> :
+                                                                        )
+
+
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            :
+                                                            <div className="form_section"><div className="empty_page">
+                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <p>There are no branches available.<br />Please add branches.</p>
+                                                                <a className="btn btn-primary" onClick={addClick}>ADD</a>
+                                                            </div> </div>}
+                                                    </div>
+                                                    :
 
                                                     <div className="form_seciton">
                                                         <div className="breadcurmb">
@@ -1041,7 +1046,7 @@ const Lookups = () => {
                                             </div>
 
                                             <div className="tab-pane models" id="APPLICANT" role="tabpanel">
-                                                {!modelStatus &&
+                                                {/* {!modelStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>Models</h5>
@@ -1050,47 +1055,53 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={modeladdClick}>add</button>
                                                         </div>
-                                                    </div>}
+                                                    </div>} */}
+
                                                 {!modelStatus ?
-                                                    <div className="table-responsive">
-                                                        <table className="table table-striped ">
-                                                            <thead>
-                                                                <tr>
+                                                    <div>
+                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                        <div className="table-responsive">
+                                                            <table className="table table-striped ">
+                                                                <thead>
+                                                                    <tr>
 
-                                                                    {/* <th className="align-middle">S No</th> */}
-                                                                    <th className="align-middle">Model Name</th>
-                                                                    <th className="align-middle">Color</th>
-                                                                    <th className="align-middle">Version</th>
-                                                                    <th className="align-middle">Created</th>
+                                                                        {/* <th className="align-middle">S No</th> */}
+                                                                        <th className="align-middle">Model Name</th>
+                                                                        <th className="align-middle">Color</th>
+                                                                        <th className="align-middle">Version</th>
+                                                                        <th className="align-middle">Created</th>
 
-                                                                    <th className="align-middle">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
-                                                                    return (eachItem && eachItem.status == "Active" &&
-                                                                        <tr>
-                                                                            {/* <td>1</td> */}
-                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
-                                                                            <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
-                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                        <th className="align-middle">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                        return (eachItem && eachItem.status == "Active" &&
+                                                                            <tr>
+                                                                                {/* <td>1</td> */}
+                                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
+                                                                                <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
+                                                                                <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
-                                                                            <td><div className="d-flex">
-                                                                                <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
-                                                                        </tr>)
+                                                                                <td><div className="d-flex">
+                                                                                    <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
+                                                                                    <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                            </tr>)
 
-                                                                }) :
-                                                                <div class="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
-                                                                <p>There are no models available.<br />Please add models.</p>
-                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div></div>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </div> :
+                                                                    })
+
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>:
+                                                        <div className="form_section"><div className="empty_page">
+                                                            <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                            <p>There are no models available.<br />Please add models.</p>
+                                                            <a className="btn btn-primary" onClick={modeladdClick}>ADD</a>
+                                                        </div> </div>}
+                                                    </div>
+                                                    :
                                                     <div className="form_seciton">
                                                         <div className="breadcurmb">
                                                             <div className="title_block">
@@ -1151,7 +1162,7 @@ const Lookups = () => {
 
 
                                             <div className="tab-pane insurance" id="HMDA" role="tabpanel">
-                                                {!insuranceStatus &&
+                                                {/* {!insuranceStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>Insurance</h5>
@@ -1160,41 +1171,45 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={insuranceaddClick}>add</button>
                                                         </div>
-                                                    </div>}
+                                                    </div>} */}
                                                 {!insuranceStatus ?
-                                                    <div className="table-responsive">
-                                                        <table className="table table-striped ">
-                                                            <thead>
-                                                                <tr>
-
-                                                                    {/* <th className="align-middle">S No</th> */}
-                                                                    <th className="align-middle">Insurance Name</th>
-                                                                    <th className="align-middle">Commission</th>
-                                                                    <th className="align-middle">Phone Number</th>
-                                                                    <th className="align-middle">Created</th>
-                                                                    <th className="align-middle">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
-                                                                    return (
+                                                    <div>
+                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
                                                                         <tr>
-                                                                            {/* <td>1</td> */}
-                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
-                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => insuranceDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
-                                                                        </tr>
-                                                                    )
 
-                                                                }) : <div class="form_section"><div className="empty_page">
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Insurance Name</th>
+                                                                            <th className="align-middle">Commission</th>
+                                                                            <th className="align-middle">Phone Number</th>
+                                                                            <th className="align-middle">Created</th>
+                                                                            <th className="align-middle">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (
+                                                                                <tr>
+                                                                                    {/* <td>1</td> */}
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
+                                                                                    <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => insuranceDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                </tr>
+                                                                            )
+
+                                                                        })}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> : <div className="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no insurance available.<br />Please add insurance.</p>
-                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div></div>}
-                                                            </tbody>
-                                                        </table>
+                                                                <a className="btn btn-primary" onClick={insuranceaddClick}>ADD</a>
+                                                            </div> </div>}
+
                                                     </div> :
                                                     <div className="form_seciton">
                                                         <div className="breadcurmb">
@@ -1238,7 +1253,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane finance" id="fin" role="tabpanel">
-                                                {!financeStatus &&
+                                                {/* {!financeStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>finance</h5>
@@ -1247,42 +1262,45 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={financeaddClick}>Add</button>
                                                         </div>
-                                                    </div>}
+                                                    </div>} */}
                                                 {!financeStatus ?
-                                                    <div className="table-responsive">
-                                                        <table className="table table-striped ">
-                                                            <thead>
-                                                                <tr>
+                                                    <div>
+                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
+                                                                        <tr>
 
-                                                                    {/* <th className="align-middle">S No</th> */}
-                                                                    <th className="align-middle">Finance Name</th>
-                                                                    <th className="align-middle">Commission</th>
-                                                                    <th className="align-middle">Phone Number</th>
-                                                                    <th className="align-middle">Created</th>
-                                                                    <th className="align-middle">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
-                                                                    return (
-                                                                        <tr key={key}>
-                                                                            {/* <td>1</td> */}
-                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
-                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => financeDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Finance Name</th>
+                                                                            <th className="align-middle">Commission</th>
+                                                                            <th className="align-middle">Phone Number</th>
+                                                                            <th className="align-middle">Created</th>
+                                                                            <th className="align-middle">Action</th>
                                                                         </tr>
-                                                                    )
+                                                                    </thead>
+                                                                    <tbody>
 
-                                                                }) :<div class="form_section"> <div className="empty_page">
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (
+                                                                                <tr key={key}>
+                                                                                    {/* <td>1</td> */}
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
+                                                                                    <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => financeDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                </tr>
+                                                                            )
+
+                                                                        })}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> : <div class="form_section"> <div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no finance available.<br />Please add finance.</p>
-                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                                <a className="btn btn-primary" onClick={financeaddClick}>ADD</a>
                                                             </div></div>}
-                                                            </tbody>
-                                                        </table>
                                                     </div> :
                                                     <div className="form_seciton">
                                                         <div className="breadcurmb">
@@ -1327,7 +1345,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane fastag" id="fas" role="tabpanel">
-                                                {!fastagStatus &&
+                                                {/* {!fastagStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>fastag</h5>
@@ -1336,43 +1354,46 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={fastagaddClick}>Add</button>
                                                         </div>
-                                                    </div>}
+                                                    </div>} */}
                                                 {!fastagStatus ?
-                                                    <div className="table-responsive">
-                                                        <table className="table table-striped ">
-                                                            <thead>
-                                                                <tr>
+                                                    <div>
+                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
+                                                                        <tr>
 
-                                                                    {/* <th className="align-middle">S No</th> */}
-                                                                    <th className="align-middle">Fastag Name</th>
-                                                                    <th className="align-middle">Commission</th>
-                                                                    <th className="align-middle">Phone Number</th>
-                                                                    <th className="align-middle">Created</th>
-                                                                    <th className="align-middle">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
-                                                                    return (
-                                                                        <tr key={key}>
-                                                                            {/* <td>1</td> */}
-                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
-                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => fastagDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Fastag Name</th>
+                                                                            <th className="align-middle">Commission</th>
+                                                                            <th className="align-middle">Phone Number</th>
+                                                                            <th className="align-middle">Created</th>
+                                                                            <th className="align-middle">Action</th>
                                                                         </tr>
-                                                                    )
+                                                                    </thead>
+                                                                    <tbody>
 
-                                                                }) : <div class="form_section"><div className="empty_page">
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (
+                                                                                <tr key={key}>
+                                                                                    {/* <td>1</td> */}
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
+                                                                                    <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => fastagDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                </tr>
+                                                                            )
+
+                                                                        })}
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> : <div class="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no fastags available.<br />Please add fastags.</p>
-                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
+                                                                <a className="btn btn-primary" onClick={fastagaddClick}>ADD</a>
                                                             </div></div>}
-                                                            
-                                                            </tbody>
-                                                        </table>
                                                     </div> :
                                                     <div className="form_seciton">
                                                         <div className="breadcurmb">
@@ -1423,7 +1444,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane vendor" id="ven" role="tabpanel">
-                                                {!vendorStatus &&
+                                                {/* {!vendorStatus &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>vendor</h5>
@@ -1432,41 +1453,46 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={vendoraddClick}>Add</button>
                                                         </div>
-                                                    </div>}
+                                                    </div>} */}
                                                 {!vendorStatus ?
-                                                    <div className="table-responsive">
-                                                        <table className="table table-striped ">
-                                                            <thead>
-                                                                <tr>
+                                                    <div>
+                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
+                                                                        <tr>
 
-                                                                    {/* <th className="align-middle">S No</th> */}
-                                                                    <th className="align-middle">Vendor Name</th>
-                                                                    <th className="align-middle">GST Number</th>
-                                                                    <th className="align-middle">Created</th>
-                                                                    <th className="align-middle">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                                {savedPropertyData && savedPropertyData?.length > 0 ? savedPropertyData?.map((eachItem, key) => {
-                                                                    return (
-                                                                        <tr key={key}>
-                                                                            {/* <td>1</td> */}
-                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                            <td>{eachItem?.Gst ? eachItem?.Gst : 'N/A'}</td>
-                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => vendorDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Vendor Name</th>
+                                                                            <th className="align-middle">GST Number</th>
+                                                                            <th className="align-middle">Created</th>
+                                                                            <th className="align-middle">Action</th>
                                                                         </tr>
-                                                                    )
+                                                                    </thead>
+                                                                    <tbody>
 
-                                                                }) : <div class="form_section"><div className="empty_page">
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (
+                                                                                <tr key={key}>
+                                                                                    {/* <td>1</td> */}
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.Gst ? eachItem?.Gst : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => vendorDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                </tr>
+                                                                            )
+
+                                                                        })}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> :
+                                                            <div className="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no vendors available.<br />Please add vendors.</p>
-                                                                {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div></div>}
-                                                            </tbody>
-                                                        </table>
-                                                    </div> :
+                                                                <a className="btn btn-primary" onClick={vendoraddClick}>ADD</a>
+                                                            </div> </div>}
+                                                    </div>
+                                                    :
                                                     <div className="form_seciton">
                                                         <div className="breadcurmb">
                                                             <div className="title_block">
@@ -1523,7 +1549,7 @@ const Lookups = () => {
                                 onConfirm={e => onConfirm1()}
                             >
                             </SweetAlert>}
-                            {/* {resultSuccess &&
+                        {/* {resultSuccess &&
                             <SweetAlert show={resultSuccess}
                                 custom
                                 confirmBtnText="Ok"
@@ -1573,22 +1599,22 @@ const Lookups = () => {
                             </div>
                         </div>} */}
                         {deleteConfirm &&
-                        <Modal className="access-denied" show={deleteConfirm}>
+                            <Modal className="access-denied delete_popup" show={deleteConfirm}>
 
-                    <div className="modal-body">
-                        <div className="container">
-                            <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
-                            <span className="material-icons access-denied-icon">delete_outline</span>
-                            <h3>Delete</h3>
-                            <p>This action cannot be undone.</p>
-                            <p>Are you sure you want to delete ?</p>
-                            <div className="popup-footer">
-                                <button className="fill_btn " onClick={e => onConfirm2()}> Yes, Delete</button>
-                            </div>
-                        </div>
-                    </div>
+                                <div className="modal-body">
+                                    <div className="container">
+                                        <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
+                                        <span className="material-icons access-denied-icon">delete_outline</span>
+                                        <h3>Delete</h3>
+                                        <p>This action cannot be undone.</p>
+                                        <p>Are you sure you want to delete ?</p>
+                                        <div className="popup-footer">
+                                            <button className="fill_btn " onClick={e => onConfirm2()}> Yes, Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
 
-                </Modal>}
+                            </Modal>}
                     </div>
 
                 </div>

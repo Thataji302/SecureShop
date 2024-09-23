@@ -43,16 +43,17 @@ const menuList = [
       labelName: 'Sales',
       route: "yellowForm"
   },
+ 
   {
-    id: '2',
-    labelName: 'Lookups',
-    route: "lookups"
-},
-  {
-      id: '3',
+      id: '2',
       labelName: 'Purchases',
      // route: "lookups"
   },
+  {
+    id: '3',
+    labelName: 'Lookups',
+    route: "lookups"
+},
   {
       id: '4',
       labelName: 'Reports',
@@ -237,12 +238,12 @@ const Header = (props) => {
         </div>
 
         <div className="d-flex">
-        <form class="app-search d-none d-lg-block">
+        {/* <form class="app-search d-none d-lg-block">
                             <div class="position-relative">
                                 <input type="text" class="form-control" placeholder="Search..."/>
                                 <span class="bx bx-search-alt"></span>
                             </div>
-                        </form>
+                        </form> */}
           {!token ?
             <div className="d-flex align-items-center">
               <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>

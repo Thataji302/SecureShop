@@ -343,6 +343,7 @@ align-items: center;
   margin-bottom: 20px;
   margin-top: 20px;
   box-shadow: 0px 0px 6px rgb(0 0 0 / 17%);
+  margin: 20px;
 }
 .otp-block p {
   text-align: center;
@@ -440,6 +441,59 @@ align-items: center;
     position: fixed;
     right: 0;
     top: 0;
+}
+@keyframes animate {
+	0% {
+		box-shadow: 0 0 0 0 #df4343;
+	}
+	40% {
+		box-shadow: 0 0 0 15px rgba(255, 26, 67, 0);
+	}
+	80% {
+		box-shadow: 0 0 0 15px rgba(255, 206, 67, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 rgba(255, 206, 67, 0);
+	}
+}
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes beat {
+  0%, 50%, 100% { transform: scale(1, 1) rotate(0deg); }
+  30%, 80% { transform: scale(0.8, 0.8) rotate(360deg); }
 }
 @keyframes rotate {0%{ transform: rotate(0deg); }100%{ transform:rotate(360deg); }}
 .navbar>ul>li>a:before {
@@ -1211,5 +1265,29 @@ create_yellowform .input-field .form-control, create_yellowform .input-field .fo
   color: #0a0a0a;
   font-size: 17px;
 }
+.sweet-alert {
+  width: 350px !important;
+}
+.sweet-alert h2 {
+  color: rgba(42, 48, 66, 1);
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+.sweet-alert p {
+  margin: 1em auto 0px !important;
+}
+.sweet-alert p .btn-primary {
+  box-shadow: none !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 5px;
+  margin: 0;
+  background-color: #d4784f;
+    border: 1px solid #d4784f;
+    color: #fff;
+    border-color: #d4784f !important;
+    margin-right: 0 !important;
+}
 
-/* Last Update on 08:31 PM 20-09-24 by ADI*/
+/* Last Update on 03:21 PM 23-09-24 by ADI*/
