@@ -22,6 +22,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import SessionPopup from "./SessionPopup"
 import { useHistory, Link } from "react-router-dom";
 import * as Config from "../constants/Config";
+import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import axios from 'axios';
 import { removeSpecialCharecters, location } from '././../utils/commonUtils';
@@ -793,6 +794,10 @@ const Lookups = () => {
         const type = dataType;
         GetPropertyData(type);
     };
+    function closePopup() {
+        setDeleteConfirm(false)
+    };
+    
     function onConfirm2() {
         setDeleteConfirm(false)
         let item = deleteData;
@@ -969,7 +974,7 @@ const Lookups = () => {
 
                                                                             <td><div className="d-flex">
                                                                                 <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                <a className="action-button delete tooltip-container"  onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
                                                                         </tr>
                                                                     )
 
@@ -1077,11 +1082,11 @@ const Lookups = () => {
                                                                         </tr>)
 
                                                                 }) :
-                                                                <div className="empty_page">
+                                                                <div class="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no models available.<br />Please add models.</p>
                                                                 {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div>
+                                                            </div></div>
                                                                 }
                                                             </tbody>
                                                         </table>
@@ -1183,11 +1188,11 @@ const Lookups = () => {
                                                                         </tr>
                                                                     )
 
-                                                                }) : <div className="empty_page">
+                                                                }) : <div class="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no insurance available.<br />Please add insurance.</p>
                                                                 {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div>}
+                                                            </div></div>}
                                                             </tbody>
                                                         </table>
                                                     </div> :
@@ -1271,11 +1276,11 @@ const Lookups = () => {
                                                                         </tr>
                                                                     )
 
-                                                                }) : <div className="empty_page">
+                                                                }) :<div class="form_section"> <div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no finance available.<br />Please add finance.</p>
                                                                 {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div>}
+                                                            </div></div>}
                                                             </tbody>
                                                         </table>
                                                     </div> :
@@ -1360,11 +1365,12 @@ const Lookups = () => {
                                                                         </tr>
                                                                     )
 
-                                                                }) : <div className="empty_page">
+                                                                }) : <div class="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no fastags available.<br />Please add fastags.</p>
                                                                 {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div>}
+                                                            </div></div>}
+                                                            
                                                             </tbody>
                                                         </table>
                                                     </div> :
@@ -1453,11 +1459,11 @@ const Lookups = () => {
                                                                         </tr>
                                                                     )
 
-                                                                }) : <div className="empty_page">
+                                                                }) : <div class="form_section"><div className="empty_page">
                                                                 <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                                 <p>There are no vendors available.<br />Please add vendors.</p>
                                                                 {/* <a className="btn btn-primary" onClick={addClick}>ADD</a> */}
-                                                            </div>}
+                                                            </div></div>}
                                                             </tbody>
                                                         </table>
                                                     </div> :
@@ -1526,7 +1532,7 @@ const Lookups = () => {
                                 onConfirm={e => onConfirm1()}
                             >
                             </SweetAlert>} */}
-                        {deleteConfirm &&
+                        {/* {deleteConfirm &&
                             <SweetAlert show={deleteConfirm}
                                 custom
                                 confirmBtnText="Ok"
@@ -1534,7 +1540,7 @@ const Lookups = () => {
                                 title={"Are you sure want to delete?"}
                                 onConfirm={e => onConfirm2()}
                             >
-                            </SweetAlert>}
+                            </SweetAlert>} */}
                         <footer className="footer">
                             <div className="container-fluid">
                                 <div className="row">
@@ -1547,7 +1553,42 @@ const Lookups = () => {
                                 </div>
                             </div>
                         </footer>
+                        {/* {deleteConfirm &&
+                        <div className="modal delete_popup">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                   
+                                    <div className="modal-body">
+                                    <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
+                                    <span className="material-icons access-denied-icon">delete_outline</span>
+                                    <h3>Delete</h3>
+                                    <p>This action cannot be undone.</p>
+                                    <p>Are you sure you want to delete?</p>
+                                    <div className="popup-footer">
+                                    <button className="fill_btn" onClick={e => onConfirm2()}>Yes, Delete</button>
+                                    </div>
+                                  </div>
 
+                                </div>
+                            </div>
+                        </div>} */}
+                        {deleteConfirm &&
+                        <Modal className="access-denied" show={deleteConfirm}>
+
+                    <div className="modal-body">
+                        <div className="container">
+                            <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
+                            <span className="material-icons access-denied-icon">delete_outline</span>
+                            <h3>Delete</h3>
+                            <p>This action cannot be undone.</p>
+                            <p>Are you sure you want to delete ?</p>
+                            <div className="popup-footer">
+                                <button className="fill_btn " onClick={e => onConfirm2()}> Yes, Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </Modal>}
                     </div>
 
                 </div>
