@@ -62,7 +62,7 @@ const menuList = [
   {
       id: '5',
       labelName: 'Users',
-      //route: "user"
+      route: "user"
   },
 
 ]
@@ -86,9 +86,9 @@ const Header = (props) => {
     if (!localStorage.getItem("token")) {
         history.push("/");
     } 
-    else if(menuList[0]?.id){
-       setActiveId(menuList[0].id)
-    }
+    // else if(menuList[0]?.id){
+    //    setActiveId(menuList[0].id)
+    // }
 
 }, []);
   //console.log('token', token)

@@ -884,15 +884,12 @@ const Lookups = () => {
 
                         <div className="page-content">
                             <div className="container-fluid">
-                                <div className="breadcurmb">
+                                {/* <div className="breadcurmb">
                                     <div className="title_block">
                                         <h5>Lookups</h5>
                                     </div>
-                                    {/* <div className="buttons">
-
-                                        <button className=" btn-primary">Back</button>
-                                    </div> */}
-                                </div>
+                                    
+                                </div> */}
                                 <div className="card">
                                     <div className="card-body">
 
@@ -937,7 +934,7 @@ const Lookups = () => {
                                         </ul>
                                         <div className="tab-content pt-15 text-muted">
                                             <div className="tab-pane active branches" id="ENTITY" role="tabpanel">
-                                                {/* {!branchStatus &&
+                                                {!branchStatus  && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>branches</h5>
@@ -946,7 +943,7 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={addClick}>add</button>
                                                         </div>
-                                                    </div>} */}
+                                                    </div>}
                                                 {!branchStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
@@ -1046,7 +1043,7 @@ const Lookups = () => {
                                             </div>
 
                                             <div className="tab-pane models" id="APPLICANT" role="tabpanel">
-                                                {/* {!modelStatus &&
+                                                {!modelStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>Models</h5>
@@ -1055,7 +1052,7 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={modeladdClick}>add</button>
                                                         </div>
-                                                    </div>} */}
+                                                    </div>}
 
                                                 {!modelStatus ?
                                                     <div>
@@ -1162,7 +1159,7 @@ const Lookups = () => {
 
 
                                             <div className="tab-pane insurance" id="HMDA" role="tabpanel">
-                                                {/* {!insuranceStatus &&
+                                                {!insuranceStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>Insurance</h5>
@@ -1171,7 +1168,7 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={insuranceaddClick}>add</button>
                                                         </div>
-                                                    </div>} */}
+                                                    </div>}
                                                 {!insuranceStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
@@ -1253,7 +1250,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane finance" id="fin" role="tabpanel">
-                                                {/* {!financeStatus &&
+                                                {!financeStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>finance</h5>
@@ -1262,7 +1259,7 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={financeaddClick}>Add</button>
                                                         </div>
-                                                    </div>} */}
+                                                    </div>}
                                                 {!financeStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
@@ -1345,7 +1342,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane fastag" id="fas" role="tabpanel">
-                                                {/* {!fastagStatus &&
+                                                {!fastagStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>fastag</h5>
@@ -1354,7 +1351,7 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={fastagaddClick}>Add</button>
                                                         </div>
-                                                    </div>} */}
+                                                    </div>}
                                                 {!fastagStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
@@ -1444,7 +1441,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane vendor" id="ven" role="tabpanel">
-                                                {/* {!vendorStatus &&
+                                                {!vendorStatus&& savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>vendor</h5>
@@ -1453,7 +1450,7 @@ const Lookups = () => {
 
                                                             <button className=" btn-primary" onClick={vendoraddClick}>Add</button>
                                                         </div>
-                                                    </div>} */}
+                                                    </div>}
                                                 {!vendorStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
