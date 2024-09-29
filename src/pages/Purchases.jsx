@@ -62,7 +62,7 @@ const Purchases = () => {
         if (!localStorage.getItem("token")) {
             history.push("/");
         }
-        // console.log('urlParams', urlParams)
+         console.log('id', id)
         if (id) {
             userClick()
             setBranchStatus(true)
@@ -173,8 +173,8 @@ const Purchases = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./user");
-                        window.location = "/user"
-                        setBranchStatus(false)
+                      //  window.location = "/user"
+                       // setBranchStatus(false)
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -198,7 +198,7 @@ const Purchases = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
-                        setBranchStatus(false)
+                       
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -231,8 +231,8 @@ const Purchases = () => {
         let id = item && item.purchaseId;
         //localStorage.setItem("item", JSON.stringify(item));
         //history.push("/lookupForm")
-        localStorage.removeItem("formType");
-        window.location = `/purchase?id=${id} `;
+        //localStorage.removeItem("formType");
+        window.location = `/purchases?id=${id} `;
     }
     const deleteClick = (e, item) => {
         setDeleteConfirm(true)
@@ -245,9 +245,11 @@ const Purchases = () => {
         // const type = "companyUser";
         setUserSuccess(false)
         getUser();
+        setBranchStatus(false)
     };
     function closePopup() {
         setDeleteConfirm(false)
+        history.push("./purchase");
     };
 
     function onConfirm2() {
@@ -255,11 +257,11 @@ const Purchases = () => {
         let item = deleteData;
         setDataType(item && item.type)
         let type = item && item.type;
-        let id = item && item.userId;
+        let id = item && item.purchaseId;
         //let lookupid = id;
         if (id) {
             //let payload;
-            // let userid = localStorage.getItem("userid")
+            let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
             //formChange ["status" ] = "Archive"
             let companyId = localStorage.getItem("companyId")
             let payload =
@@ -271,9 +273,11 @@ const Purchases = () => {
                 "vendorName": formChange?.vendorName,
                 "type": type,
                 "purchaseId": id,
+                "status":"Archive",
+                "userId":userid
             }
 
-            const urlLink = lambda + '/deletePurchase?appname=' + appname + "&purchaseId=" + id + "&type=" + type;
+            const urlLink = lambda + '/deletePurchase?appname=' + appname + "&purchaseId=" + id + "&userId=" + userid + "&type=" + type;
             axios({
                 method: 'DELETE',
                 url: urlLink,
@@ -282,7 +286,7 @@ const Purchases = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                        // history.push("./fastag");
+                    // history.push("./fastag");
                         setResultSuccess(true)
                     }
                 });
@@ -404,30 +408,28 @@ const Purchases = () => {
                                                                             <th className="align-middle">Model Name</th>
                                                                             <th className="align-middle">Chassis Number</th>
                                                                             <th className="align-middle">Vendor Name</th>
-                                                                            <th className="align-middle">GST Number</th>
+                                                                            {/* <th className="align-middle">GST Number</th> */}
                                                                             <th className="align-middle">Created</th>
                                                                             <th className="align-middle">Action</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         {savedPropertyData?.map((eachItem, key) => {
-                                                                            return (eachItem && eachItem.status != "Archive" ?
+                                                                            return (eachItem && eachItem.status != "Archive" &&
                                                                                 <tr key={key}>
+                                                                                    <td>{moment(eachItem?.invoiceDate).format('DD-MM-YYYY')}</td>
+                                                                                    <td>{eachItem?.invoiceNumber ? eachItem?.invoiceNumber : 'N/A'}</td>
                                                                                     <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                                    <td>{eachItem?.emailId ? eachItem?.emailId : 'N/A'}</td>
-                                                                                    <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                                    <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td>
+                                                                                    <td>{eachItem?.chassisNumber ? eachItem?.chassisNumber : 'N/A'}</td>
+                                                                                    <td>{eachItem?.vendorName ? eachItem?.vendorName : 'N/A'}</td>
+                                                                                    {/* <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td> */}
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
                                                                                     <td><div className="d-flex">
                                                                                         <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
                                                                                         <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
                                                                                 </tr>
-                                                                                : <div className="form_section"><div className="empty_page">
-                                                                                    <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
-                                                                                    <p>There are no purchases available.<br />Please add purchases.</p>
-                                                                                    <a className="btn btn-primary" onClick={addClick}>ADD</a>
-                                                                                </div> </div>)
+                                                                                )
 
                                                                         }
 
@@ -459,7 +461,7 @@ const Purchases = () => {
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Invoice Date</label>
-                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Date" name="invoiceDate" value={formChange?.invoiceDate} onChange={(e) => handleChange(e)} required />
+                                                                    <input type="date" className="form-control" id="name" placeholder="Enter Date" name="invoiceDate" value={formChange?.invoiceDate} onChange={(e) => handleChange(e)} required />
                                                                     {nameerror != "" ?
                                                                         <span className="errormsg" style={{
                                                                             fontWeight: 'bold',
@@ -504,7 +506,7 @@ const Purchases = () => {
                                                                     <label className="form-label form-label">Vendor Name</label>
                                                                     {/* <input type="text" className="form-control" id="name" placeholder="Enter Name" name="vendorName" value={formChange?.vendorName} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
                                                                     <select className="form-select" aria-label="Default select example" name="vendorName" value={formChange?.vendorName} onChange={handleChange}>
-                                                                        <option value="">Select Models </option>
+                                                                        <option value="">Select Vendors </option>
                                                                         {vendorResultData && vendorResultData?.length > 0 && vendorResultData?.map((eachItem, key) => {
                                                                             console.log("eachItem", eachItem)
                                                                             return (eachItem && eachItem.status == "Active" &&
