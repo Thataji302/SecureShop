@@ -157,7 +157,7 @@ const Purchases = () => {
                 "invoiceDate": formChange?.invoiceDate,
                 "invoiceNumber": formChange?.invoiceNumber,
                 "chassisNumber": formChange?.chassisNumber,
-                "vendorName": vendorName,
+                "vendorName": formChange?.vendorName,
                 "type": "purchase",
                 "purchaseId": id,
                 "userId":userid
@@ -268,7 +268,7 @@ const Purchases = () => {
                 "invoiceDate": formChange?.invoiceDate,
                 "invoiceNumber": formChange?.invoiceNumber,
                 "chassisNumber": formChange?.chassisNumber,
-                "vendorName": vendorName,
+                "vendorName": formChange?.vendorName,
                 "type": type,
                 "purchaseId": id,
             }
