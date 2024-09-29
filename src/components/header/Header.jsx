@@ -47,7 +47,7 @@ const menuList = [
   {
       id: '2',
       labelName: 'Purchases',
-     // route: "lookups"
+     route: "purchases"
   },
   {
     id: '3',
