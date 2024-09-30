@@ -258,11 +258,11 @@ const Dashboard = (props) => {
                         <div className="breadcurmb">
                             <div className="title_block">
                                 <h5>yellow form</h5>
-                                <button className="btn-primary ms-3" onClick={createClick}>Create</button>
+                                <button className="btn-primary ms-3" onClick={createClick}><span className="material-symbols-outlined">add</span>Create</button>
                             </div>
                             <div className="buttons">
-                            <button className=" btn-primary">import</button>
-                            <button className=" btn-primary">export</button>
+                            <button className=" btn-primary"><span class="material-symbols-outlined">south_west</span>import</button>
+                            <button className=" btn-primary"><span class="material-symbols-outlined">north_east</span>export</button>
                             </div>
                         </div>
                         <div className="row">
@@ -274,6 +274,7 @@ const Dashboard = (props) => {
                                             <button onclick={scrollToColumn(20)}>Scroll to Column 3</button>
                                             <button onclick={scrollToColumn(30)}>Scroll to Column 5</button>
                                         </div> */}
+                                        {formData &&  formData?.length > 0 ?
                                         <div className="table-container">
                                             <button className="scroll-left" onMouseOver={scrollLeft()} onMouseOut={stopScroll()}><span className="material-symbols-outlined">
                                                 chevron_left
@@ -488,7 +489,12 @@ const Dashboard = (props) => {
                                             <button className="scroll-right" onMouseOver={scrollRight()} onMouseOut={stopScroll()}><span className="material-symbols-outlined">
                                                     chevron_right
                                                     </span></button>
-                                        </div>
+                                        </div>:
+                                        <div className="empty_page">
+                                        <span><img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} /></span>
+                                        <p>There are no sales list available.<br />Please add sales form.</p>
+                                        <a className="btn btn-primary" onClick={createClick}>ADD</a>
+                                    </div>}
                                     </div>
                                 </div>
                             </div>

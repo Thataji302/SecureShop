@@ -239,7 +239,7 @@ const SignInOtp = () => {
       <div className="signup_section">
         <button className="close-btn" onClick={handleClose}><span className="material-icons">close</span></button>
         <div className="signin-wrapper">
-          <a href="/"><img className="logo" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} /></a>
+          <a href="/"><img className="logo" src={imageCloudfront + "propertyCalculator/images/mainlogo.png"} /></a>
           <div className="signin-body">
             <div className="signin-graphic">
               <img src={imageCloudfront + "propertyCalculator/images/signin-graphic.jpeg"} />

@@ -523,7 +523,8 @@ const Profile = () => {
                                                 <div className="avatar-block">
                                                     <div className="avatar-header">
                                                         <div className="avatar-img-block">
-                                                            {/* <p>VK</p> */}
+                                                            <p>{name && name.length > 1 ? name && name.length > 0 && name[0]?.slice(0, 1)?.toUpperCase() + name[1]?.slice(0, 1)?.toUpperCase()
+                  : name && name?.slice(0, 2)?.toUpperCase()}</p>
                                                         </div>
                                                     </div>
                                                     <div className="avatar-body">

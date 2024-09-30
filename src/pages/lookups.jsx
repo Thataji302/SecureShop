@@ -86,6 +86,8 @@ const Lookups = () => {
     const [vendorStatus, setVendorStatus] = useState(false);
     const [deleteData, setDeleteData] = useState('');
     const [dataType, setDataType] = useState('');
+    const [submitButton, setSubmitButton] = useState(false);
+    const [userSuccess, setUserSuccess] = useState(false);
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -347,6 +349,7 @@ const Lookups = () => {
         let companyId = localStorage.getItem("companyId")
         console.log("lookupid", lookupid)
         if (valid && lookupid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
             payload = {
@@ -369,13 +372,15 @@ const Lookups = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                        history.push("./lookups");
-                        setBranchStatus(false)
-                        branchTab()
-
+                        // history.push("./lookups");
+                        // setBranchStatus(false)
+                     //   branchTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         } else if (valid) {
+            setSubmitButton(true)
             let payload;
 
             payload = {
@@ -399,8 +404,10 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
-                        setBranchStatus(false)
-                        branchTab()
+                       // setBranchStatus(false)
+                       // branchTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         }
@@ -412,6 +419,7 @@ const Lookups = () => {
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         if (valid && lookupid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
             payload = {
@@ -433,12 +441,15 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./models");
-                        history.push("./lookups");
-                        setModelStatus(false)
-                        modelTab()
+                        // history.push("./lookups");
+                        // setModelStatus(false)
+                       // modelTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         } else if (valid) {
+            setSubmitButton(true)
             let payload;
             payload = {
                 "name": name,
@@ -459,8 +470,10 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./models");
-                        setModelStatus(false)
-                        modelTab()
+                        //setModelStatus(false)
+                      //  modelTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         }
@@ -471,6 +484,7 @@ const Lookups = () => {
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         if (valid && lookupid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
             payload = {
@@ -492,12 +506,15 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./insurance");
-                        history.push("./lookups");
-                        setInsuranceStatus(false)
-                        insuranceTab()
+                        // history.push("./lookups");
+                        // setInsuranceStatus(false)
+                      //  insuranceTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         } else if (valid) {
+            setSubmitButton(true)
             let payload;
             payload = {
                 "name": name,
@@ -518,8 +535,10 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./insurance");
-                        setInsuranceStatus(false)
-                        insuranceTab()
+                       // setInsuranceStatus(false)
+                     //   insuranceTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         }
@@ -530,6 +549,7 @@ const Lookups = () => {
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         if (valid && lookupid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
             payload = {
@@ -551,12 +571,15 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./finance");
-                        history.push("./lookups");
-                        setFinanceStatus(false)
-                        financeTab()
+                        // history.push("./lookups");
+                        // setFinanceStatus(false)
+                       // financeTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         } else if (valid) {
+            setSubmitButton(true)
             let payload;
             payload = {
                 "name": name,
@@ -577,8 +600,10 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./finance");
-                        setFinanceStatus(false)
-                        financeTab()
+                       // setFinanceStatus(false)
+                      //  financeTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         }
@@ -589,6 +614,7 @@ const Lookups = () => {
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         if (valid && lookupid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
             payload = {
@@ -610,13 +636,16 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
-                        history.push("./lookups");
-                        setFastagStatus(false)
-                        fastagTab()
+                        // history.push("./lookups");
+                        // setFastagStatus(false)
+                       // fastagTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
 
                     }
                 });
         } else if (valid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
             payload = {
@@ -639,8 +668,10 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
-                        setFastagStatus(false)
-                        fastagTab()
+                        //setFastagStatus(false)
+                       // fastagTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         }
@@ -651,6 +682,7 @@ const Lookups = () => {
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         if (valid && lookupid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
             payload = {
@@ -671,13 +703,16 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
-                        history.push("./lookups");
-                        setVendorStatus(false)
-                        vendorTab()
+                        // history.push("./lookups");
+                        // setVendorStatus(false)
+                      //  vendorTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
 
                     }
                 });
         } else if (valid) {
+            setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
             payload = {
@@ -699,8 +734,10 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
-                        setVendorStatus(false)
-                        vendorTab()
+                      //  setVendorStatus(false)
+                       // vendorTab()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
                     }
                 });
         }
@@ -794,6 +831,14 @@ const Lookups = () => {
         const type = dataType;
         GetPropertyData(type);
     };
+    function onUpdate() {
+        // setResultSuccess(false)
+       // setBranchStatus(false)
+         setUserSuccess(false)
+         // const type = "companyUser";
+        // getUser();
+         window.location = "/lookups"
+     };
     function closePopup() {
         setDeleteConfirm(false)
     };
@@ -972,8 +1017,8 @@ const Lookups = () => {
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
                                                                                     <td><div className="d-flex">
-                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
+                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                             )
 
@@ -988,7 +1033,7 @@ const Lookups = () => {
                                                             </div>
                                                             :
                                                             <div className="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                               <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no branches available.<br />Please add branches.</p>
                                                                 <a className="btn btn-primary" onClick={addClick}>ADD</a>
                                                             </div> </div>}
@@ -1036,7 +1081,7 @@ const Lookups = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>save</button>
+                                                                <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
                                                         </div>
                                                     </div>}
@@ -1082,8 +1127,8 @@ const Lookups = () => {
                                                                                 <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
                                                                                 <td><div className="d-flex">
-                                                                                    <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                    <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                    <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
+                                                                                    <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                             </tr>)
 
                                                                     })
@@ -1093,7 +1138,7 @@ const Lookups = () => {
                                                             </table>
                                                         </div>:
                                                         <div className="form_section"><div className="empty_page">
-                                                            <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                            <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                             <p>There are no models available.<br />Please add models.</p>
                                                             <a className="btn btn-primary" onClick={modeladdClick}>ADD</a>
                                                         </div> </div>}
@@ -1150,7 +1195,7 @@ const Lookups = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => modelUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
+                                                                <button className="update_btn" type="submit" onClick={e => modelUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
                                                         </div>
                                                     </div>}
@@ -1194,7 +1239,7 @@ const Lookups = () => {
                                                                                     <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
                                                                                     <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => insuranceDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => insuranceDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                             )
 
@@ -1202,7 +1247,7 @@ const Lookups = () => {
                                                                     </tbody>
                                                                 </table>
                                                             </div> : <div className="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no insurance available.<br />Please add insurance.</p>
                                                                 <a className="btn btn-primary" onClick={insuranceaddClick}>ADD</a>
                                                             </div> </div>}
@@ -1243,7 +1288,7 @@ const Lookups = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => insuranceUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
+                                                                <button className="update_btn" type="submit" onClick={e => insuranceUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
                                                         </div>
                                                     </div>}
@@ -1286,7 +1331,7 @@ const Lookups = () => {
                                                                                     <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
                                                                                     <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => financeDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => financeDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                             )
 
@@ -1294,7 +1339,7 @@ const Lookups = () => {
                                                                     </tbody>
                                                                 </table>
                                                             </div> : <div class="form_section"> <div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no finance available.<br />Please add finance.</p>
                                                                 <a className="btn btn-primary" onClick={financeaddClick}>ADD</a>
                                                             </div></div>}
@@ -1335,7 +1380,7 @@ const Lookups = () => {
                                                                 <label for="floatingInput">Commission %</label>
                                                             </div>
                                                             <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
+                                                                <button className="update_btn" type="submit" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
                                                         </div>
                                                     </div>}
@@ -1378,7 +1423,7 @@ const Lookups = () => {
                                                                                     <td>{eachItem?.commission ? eachItem?.commission : 'N/A'}</td>
                                                                                     <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => fastagDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => fastagDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                             )
 
@@ -1387,7 +1432,7 @@ const Lookups = () => {
                                                                     </tbody>
                                                                 </table>
                                                             </div> : <div class="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no fastags available.<br />Please add fastags.</p>
                                                                 <a className="btn btn-primary" onClick={fastagaddClick}>ADD</a>
                                                             </div></div>}
@@ -1434,7 +1479,7 @@ const Lookups = () => {
 
                                                             </div>
                                                             <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
+                                                                <button className="update_btn" type="submit" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
                                                         </div>
                                                     </div>}
@@ -1475,7 +1520,7 @@ const Lookups = () => {
                                                                                     <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
                                                                                     <td>{eachItem?.Gst ? eachItem?.Gst : 'N/A'}</td>
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
-                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a><a className="action-button delete tooltip-container" onClick={e => vendorDelete(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => vendorDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                             )
 
@@ -1484,7 +1529,7 @@ const Lookups = () => {
                                                                 </table>
                                                             </div> :
                                                             <div className="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no vendors available.<br />Please add vendors.</p>
                                                                 <a className="btn btn-primary" onClick={vendoraddClick}>ADD</a>
                                                             </div> </div>}
@@ -1522,7 +1567,7 @@ const Lookups = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => vendorUpdate(e)} style={{ cursor: 'pointer' }}>Save</button>
+                                                                <button className="update_btn" type="submit" onClick={e => vendorUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
                                                         </div>
                                                     </div>}
@@ -1544,6 +1589,15 @@ const Lookups = () => {
                                 confirmBtnBsStyle="primary"
                                 title={"Deleted Successfully"}
                                 onConfirm={e => onConfirm1()}
+                            >
+                            </SweetAlert>}
+                            {userSuccess &&
+                            <SweetAlert show={userSuccess}
+                                custom
+                                confirmBtnText="Ok"
+                                confirmBtnBsStyle="primary"
+                                title={"Updated Successfully"}
+                                onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}
                         {/* {resultSuccess &&

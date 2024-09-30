@@ -155,8 +155,8 @@ const User = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./user");
-                        window.location = "/user"
-                        setBranchStatus(false)
+                        
+                     //   setBranchStatus(false)
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -178,7 +178,7 @@ const User = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
-                        setBranchStatus(false)
+                        
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -221,9 +221,18 @@ const User = () => {
 
     function onConfirm1() {
         setResultSuccess(false)
-        setUserSuccess(false)
+      //  setUserSuccess(false)
         // const type = "companyUser";
         getUser();
+       // window.location = "/user"
+    };
+    function onUpdate() {
+       // setResultSuccess(false)
+       setBranchStatus(false)
+        setUserSuccess(false)
+        // const type = "companyUser";
+       // getUser();
+        window.location = "/user"
     };
     function closePopup() {
         setDeleteConfirm(false)
@@ -361,9 +370,7 @@ const User = () => {
                                                                                     <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td>
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
-                                                                                    <td><div className="d-flex">
-                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                             )
 
@@ -376,7 +383,7 @@ const User = () => {
                                                             </div>
                                                             :
                                                             <div className="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                                <span><img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} /></span>
                                                                 <p>There are no users available.<br />Please add users.</p>
                                                                 <a className="btn btn-primary" onClick={addClick}>ADD</a>
                                                             </div> </div>}
@@ -463,7 +470,7 @@ const User = () => {
                                 confirmBtnText="Ok"
                                 confirmBtnBsStyle="primary"
                                 title={"Updated Successfully"}
-                                onConfirm={e => onConfirm1()}
+                                onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}
                         {/* {resultSuccess &&

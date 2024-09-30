@@ -203,10 +203,10 @@ const Header = (props) => {
           <div className="navbar-brand-box">
             <a href="" className="logo logo-dark">
               <span className="logo-sm">
-                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} alt="" height="25" />
+                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/mainlogo.png"} alt="" height="25" />
               </span>
               <span className="logo-lg">
-                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/dealerbrand-logo.png"} alt="" height="25" />
+                <img className="w-100" src={imageCloudfront + "propertyCalculator/images/mainlogo.png"} alt="" height="25" />
               </span>
             </a>
 
