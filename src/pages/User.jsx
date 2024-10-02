@@ -47,6 +47,7 @@ const User = () => {
     const [deleteData, setDeleteData] = useState('');
     const [dataType, setDataType] = useState('');
     const [submitButton, setSubmitButton] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("Update Successfully");
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -155,8 +156,9 @@ const User = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./user");
-                        
-                     //   setBranchStatus(false)
+
+                        //   setBranchStatus(false)
+                        setSuccessMessage("Updated Successfully")
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -175,10 +177,17 @@ const User = () => {
                 data: payload
             })
                 .then(function (response) {
-                    if (response.data.statusCode === 200) {
+                    if (response.data.statusCode === 200 && response.data.result === "User already exists") {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
-                        
+                        console.log("response.data.result", response.data.result)
+                        setSuccessMessage(response.data.result)
+                        getUser()
+                        setSubmitButton(false)
+                        setUserSuccess(true)
+
+                    } else {
+                        setSuccessMessage("Updated Successfully")
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -221,17 +230,17 @@ const User = () => {
 
     function onConfirm1() {
         setResultSuccess(false)
-      //  setUserSuccess(false)
+        //  setUserSuccess(false)
         // const type = "companyUser";
         getUser();
-       // window.location = "/user"
+        // window.location = "/user"
     };
     function onUpdate() {
-       // setResultSuccess(false)
-       setBranchStatus(false)
+        // setResultSuccess(false)
+        setBranchStatus(false)
         setUserSuccess(false)
         // const type = "companyUser";
-       // getUser();
+        // getUser();
         window.location = "/user"
     };
     function closePopup() {
@@ -422,10 +431,10 @@ const User = () => {
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Email Id</label>
                                                                     <input type="text" className="form-control" id="name" placeholder="Enter Email" name="emailId" value={formChange?.emailId} onChange={(e) => handleChange(e)} autoComplete="on" />
-                                                                    {emailError != "" ?   <span className="errormsg" style={{
+                                                                    {emailError != "" ? <span className="errormsg" style={{
                                                                         fontWeight: 'bold',
                                                                         color: 'red',
-                                                                    }}>{emailError}</span>: ""}
+                                                                    }}>{emailError}</span> : ""}
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
@@ -464,12 +473,12 @@ const User = () => {
                                 onConfirm={e => onConfirm1()}
                             >
                             </SweetAlert>}
-                            {userSuccess &&
+                        {userSuccess &&
                             <SweetAlert show={userSuccess}
                                 custom
                                 confirmBtnText="Ok"
                                 confirmBtnBsStyle="primary"
-                                title={"Updated Successfully"}
+                                title={successMessage}
                                 onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}

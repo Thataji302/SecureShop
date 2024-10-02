@@ -247,7 +247,7 @@ const Company = () => {
         }else if(valid){
             let payload;
             let userid = localStorage.getItem("userId") || localStorage.getItem("userid")
-            localStorage.setItem("companyId", companyResult?.companyId)
+           // localStorage.setItem("companyId", companyResult?.companyId)
             payload = {
                 "companyName": companyName,
                 "companyEmailId": emailid ? emailid : companyEmailId ,
