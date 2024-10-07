@@ -367,7 +367,7 @@ const Purchases = () => {
             <div id="layout-wrapper">
                 <div className="dashboard">
                     <Header />
-                    <div className="main-content look_ups">
+                    <div className="main-content look_ups purchases">
 
                         <div className="page-content">
                             <div className="container-fluid">
@@ -382,8 +382,8 @@ const Purchases = () => {
 
 
 
-                                        <div className="tab-content pt-15 text-muted">
-                                            <div className="tab-pane active branches" id="ENTITY" role="tabpanel">
+                                        
+                                          
                                                 {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
@@ -426,8 +426,8 @@ const Purchases = () => {
                                                                                     <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
                                                                                     <td><div className="d-flex">
-                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Edit</span>edit</span></a>
-                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-icons"><span className="tooltip">Delete</span>delete</span></a></div></td>
+                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
+                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                                 </tr>
                                                                                 )
 
@@ -531,8 +531,8 @@ const Purchases = () => {
                                                             </div>
                                                         </div>
                                                     </div>}
-                                            </div>
-                                        </div>
+                                            
+                                        
                                     </div>
                                 </div>
 
