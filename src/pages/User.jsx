@@ -105,7 +105,7 @@ const User = () => {
     function formvalidation() {
         let formIsValid = true;
         let errors = {};
-        console.log('formChange', formChange.name)
+        console.log('formChange', formChange)
         const regEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,8}(.[a-zA-Z{2,8}])?/g;
         // if (regEx.test(emailId)) {
         //     setEmailError("");
@@ -113,15 +113,19 @@ const User = () => {
         //     setEmailError("Email is Not Valid");
         //     formIsValid = false;
         // }
-        if (formChange?.name == "" || formChange?.name == "undefined" || formChange?.name == undefined) {
+        if (formChange?.name === "" || formChange?.name === "undefined" || formChange?.name === undefined) {
             // errors.emailid = "First Name is required";
             setNameError("Please Enter Name");
             formIsValid = false;
         }
-        if (formChange?.emailId === "" || formChange?.emailId === "undefined" || formChange?.emailId === undefined) {
-            setEmailError("Please Enter Email");
+
+        if (regEx.test(formChange?.emailId)) {
+            setEmailError("");
+        } else if (!regEx.test(formChange?.emailId) && formChange?.emailId !== "") {
+            setEmailError("Email is Not Valid");
             formIsValid = false;
         }
+
         return formIsValid;
 
 
@@ -295,6 +299,7 @@ const User = () => {
     console.log("imageCloudfront", imageCloudfront)
     const addClick = (e, item) => {
         setBranchStatus(true)
+        setFormChange("")
         // setName("")
         // setBranchAddress("")
         // setNumber("")
@@ -313,6 +318,14 @@ const User = () => {
         if (value === '') {
             console.log('Input cleared');
         }
+        if (name === "phoneNumber") {
+            const onlyDigits = e.target.value.replace(/\D/g, "");
+            setFormChange({
+                ...formChange,
+                onlyDigits,
+                [name]: value
+            });
+        }
         setFormChange({
             ...formChange,
             [name]: value
@@ -325,7 +338,7 @@ const User = () => {
             <div id="layout-wrapper">
                 <div className="dashboard">
                     <Header />
-                    <div className="main-content look_ups">
+                    <div className="main-content look_ups purchases">
 
                         <div className="page-content">
                             <div className="container-fluid">
@@ -340,8 +353,8 @@ const User = () => {
 
 
 
-                                        <div className="tab-content pt-15 text-muted">
-                                            <div className="tab-pane active branches" id="ENTITY" role="tabpanel">
+                                      
+                                           
                                                 {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
@@ -454,8 +467,8 @@ const User = () => {
                                                             </div>
                                                         </div>
                                                     </div>}
-                                            </div>
-                                        </div>
+                                          
+                                       
                                     </div>
                                 </div>
 

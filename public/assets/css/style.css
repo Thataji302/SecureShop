@@ -90,7 +90,7 @@ body { background-color: #fff !important; font-family: 'Montserrat', sans-serif;
 a {text-decoration: none;}
 .fixed-top {position: relative;}
 .signin-wrapper{ width: 100%; max-width: 800px; margin: 25px auto; text-align: center;}
-.signin-wrapper .logo{ height: 45px!important; max-height: 45px!important;}
+.signin-wrapper .logo{ height: 55px!important; max-height: 55px!important;}
 .signin-body{ display: flex; align-items: stretch; flex-direction: row; width: 100%; min-height: calc(100vh - 210px); margin-top: 20px; margin-bottom: 20px; background-color: #fff; border-radius: 5px; overflow: hidden;}
 .signin-body .signin-graphic{ width: 234px;   position: relative; overflow: hidden;}
 .signin-body .signin-graphic h2{ color: #fff; line-height: 31px; text-shadow: 1px 2px 2px rgb(0 0 0 / 10%); position: absolute; top: 27%; font-size: 25px; font-weight: bold; text-align: center; width: 100%;}
@@ -810,9 +810,9 @@ input[type=checkbox]:before {
   margin-top: 70px;
   padding: calc(55px + 24px) calc(24px* .5) 60px calc(24px* .5);
 }
-.inner_header .header-item:hover, .inner_header .header-item:focus, .inner_header .header-item.active {
+/* .inner_header .header-item:hover, .inner_header .header-item:focus, .inner_header .header-item.active {
   color: #e9ecef !important;
-}
+} */
 .page-content {
   margin-top: 70px;
   padding: calc(-9px + 24px) calc(24px / 2) 60px calc(24px / 2) !important;
@@ -1065,7 +1065,7 @@ gap: 10px;
 justify-content: center;
 }
 
-.signup_section .sign-header img {max-height: 36px;}
+.signup_section .sign-header img {max-height: 50px;}
 #layout-wrapper .dashboard { background-color: #f6f6fa !important;}
 .create_yellowform .form-header {display: flex; align-items: center; justify-content: space-between; margin: 17px 0 15px 0}
 .create_yellowform .form-header h2 {color: rgba(42, 48, 66, 1); font-size: 16px; text-transform: uppercase; font-weight: 700; margin-bottom: 0;}
@@ -1449,7 +1449,7 @@ section.pricing {
 .branches .table thead tr th:nth-child(5), .branches .table tbody tr td:nth-child(5) {width: 12%;}
 .tab-pane .table thead tr th:last-child, .tab-pane .table tbody tr td:last-child {width: 0;}
 .tab-pane .table thead tr th:last-child {text-align: center;}
-.tab-pane table th, .look_ups .tab-pane table td { border: none;}
+.tab-pane table th, .tab-pane table td { border: none; border-bottom: 1px solid #ccc !important;}
 .tab-pane table {border: 1px solid #ccc;}
 table th, table td { padding: 10px !important;}
 .tab-pane table th {padding: 12px 10px !important;}
@@ -1458,4 +1458,14 @@ table th, table td { padding: 10px !important;}
 .models .table thead tr th:nth-child(3), .models .table tbody tr td:nth-child(3) {width: 22%;}
 .models .table thead tr th:nth-child(4), .models .table tbody tr td:nth-child(4) {width: 18%;}
 
-/* Last Update on 09:08 PM 27-09-24 by ADI*/
+.navbar-brand-box .logo img {height: 35px;}
+.pricing .container .card:hover {margin-bottom: 24px;margin-top: 0;}
+.purchases .table thead tr th:last-child, .tab-pane .table tbody tr td:last-child {width: 0;}
+.purchases .table thead tr th:last-child {text-align: center;}
+.purchases table th, .purchases table td { border: none; border-bottom: 1px solid #ccc !important;}
+.purchases table {border: 1px solid #ccc;}
+.purchases table th, .purchases table td { padding: 10px !important;}
+.purchases table th {padding: 12px 10px !important;}
+.profile .breadcurmb .buttons .btn-primary {padding-left: 14px;}
+
+/* Last Update on 04:55 PM 01-10-24 by ADI*/

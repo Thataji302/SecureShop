@@ -99,7 +99,7 @@ const Company = () => {
         //  setCompanyEmail(localStorage.getItem("email"))
         setTimeout(function () {
             GetUserData();
-            }, 5000);
+            }, 2000);
        
         // //  GetCountries();
         userActivity();

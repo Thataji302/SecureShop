@@ -237,9 +237,9 @@ const LandingPage = (props) => {
             <div className="estimate_calculator">
                 <div className="container">
                     <div className="estimate_price">
-                        <h1>Efficiently Launch Talent with <br/> Freelance Platforms</h1>
+                        <h1>Simplify the Way You Create, Edit, and <br/>Maintain Sales & Service Reports</h1>
                         <div className="d-flex align-items-start mt-3 mb-4 justify-content-between">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p>Managing your business data shouldn’t be complicated. At [Your Company Name], we provide an intuitive platform to streamline the creation, editing, and maintenance of your company’s sales and service reports, so you can focus on what really matters—growing your business.</p>
                             <div className="d-flex align-items-center">
                                 <a className="register">Get Started</a>
                                 {/* <a className="register btn-outline ms-2">Contact Us</a> */}
@@ -324,7 +324,7 @@ const LandingPage = (props) => {
                 Reports</li>
             </ul>
             <div className="d-grid">
-              <a href="#" className="btn btn-primary text-uppercase">Button</a>
+              <a href="#" className="btn btn-primary text-uppercase">select</a>
             </div>
           </div>
         </div>
@@ -348,7 +348,7 @@ const LandingPage = (props) => {
                 Reports</li>
             </ul>
             <div className="d-grid">
-              <a href="#" className="btn btn-primary text-uppercase">Button</a>
+              <a href="#" className="btn btn-primary text-uppercase">select</a>
             </div>
           </div>
         </div>
@@ -373,7 +373,7 @@ const LandingPage = (props) => {
               <li><span className="fa-li"><i className="fas fa-check"></i></span>Monthly Status Reports</li>
             </ul>
             <div className="d-grid">
-              <a href="#" className="btn btn-primary text-uppercase">Button</a>
+              <a href="#" className="btn btn-primary text-uppercase">select</a>
             </div>
           </div>
         </div>

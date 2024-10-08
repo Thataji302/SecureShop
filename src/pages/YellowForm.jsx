@@ -491,7 +491,7 @@ const Dashboard = (props) => {
                                                     </span></button>
                                         </div>:
                                         <div className="empty_page">
-                                        <span><img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} /></span>
+                                        <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                         <p>There are no sales list available.<br />Please add sales form.</p>
                                         <a className="btn btn-primary" onClick={createClick}>ADD</a>
                                     </div>}
