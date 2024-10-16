@@ -169,7 +169,7 @@ const Header = (props) => {
     // signoutsession();
     setUserData([])
     history.push("/");
-    localStorage.clear("");
+    //localStorage.clear("token");
 
 
   }

@@ -74,7 +74,8 @@ const User = () => {
         history.goBack();
     }
     const userClick = () => {
-        const urlLink = lambda + '/userInfo?appname=' + appname + "&userId=" + id + "&type=companyUser";
+        let userId = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/userInfo?appname=' + appname + "&id=" + id + "&userId=" + userId + "&type=companyUser";
         axios({
             method: 'GET',
             url: urlLink,
@@ -134,7 +135,7 @@ const User = () => {
     const handleUpdate = (e) => {
         let valid = formvalidation();
         // let id = id;
-        // let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         let companyId = localStorage.getItem("companyId")
         // console.log("id", id)
         if (valid && id) {
@@ -147,10 +148,11 @@ const User = () => {
                 "phoneNumber": formChange?.phoneNumber,
                 "companyId": companyId,
                 "type": "companyUser",
-                "userId": id,
+                "id": id,
+                "userId": userid,
             }
             console.log("payload", payload)
-            const urlLink = lambda + '/updateUser?appname=' + appname + "&userId=" + id + "&type=companyUser";
+            const urlLink = lambda + '/updateUser?appname=' + appname + "&id=" + id + "&type=companyUser";
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -172,6 +174,7 @@ const User = () => {
             setSubmitButton(true)
             formChange["companyId"] = companyId
             formChange["type"] = "companyUser"
+            formChange["userId"] = userid
             let payload = formChange;
             console.log("payload", payload)
             const urlLink = lambda + '/addUser?appname=' + appname;
@@ -203,7 +206,8 @@ const User = () => {
     }
     const getUser = (e) => {
         let companyId = localStorage.getItem("companyId")
-        const urlLink = lambda + '/userInfo?appname=' + appname + "&type=companyUser";
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/userInfo?appname=' + appname + "&type=companyUser" + "&userId=" + userid;
         axios({
             method: 'GET',
             url: urlLink,
@@ -220,7 +224,7 @@ const User = () => {
 
     const editClick = (e, item) => {
         let type = item && item.type;
-        let id = item && item.userId;
+        let id = item && item.id;
         //localStorage.setItem("item", JSON.stringify(item));
         //history.push("/lookupForm")
         localStorage.removeItem("formType");

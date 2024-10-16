@@ -49,6 +49,10 @@ const Purchases = () => {
     const [vendorResultData, setVendorResultData] = useState({})
     const [submitButton, setSubmitButton] = useState(false);
     const [userSuccess, setUserSuccess] = useState(false);
+    const [invoiceDateError, setInvoiceDateError] = useState('');
+    const [invoiceNumberError, setInvoiceNumberError] = useState('');
+    const [vendorNameError, setVendorNameError] = useState('');
+    const [chassisNumberError, setChassisNumberError] = useState('');
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -78,7 +82,8 @@ const Purchases = () => {
         history.goBack();
     }
     const userClick = () => {
-        const urlLink = lambda + '/purchase?appname=' + appname + "&purchaseId=" + id + "&type=purchase";
+        let userId = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/purchase?appname=' + appname + "&purchaseId=" + id + "&userId=" + userId + "&type=purchase";
         axios({
             method: 'GET',
             url: urlLink,
@@ -125,8 +130,24 @@ const Purchases = () => {
         //   setCategoryError("Please Select Corporate");
         //   formIsValid = false;
         // }
-        if (formChange?.name === "") {
+        if (formChange?.name === "" || formChange?.name === "undefined" || formChange?.name === undefined) {
             setNameError("Please Enter Name");
+            formIsValid = false;
+        }
+        if (formChange?.chassisNumber === "" || formChange?.chassisNumber === "undefined" || formChange?.chassisNumber === undefined) {
+            setChassisNumberError("Please Enter Chassis Number");
+            formIsValid = false;
+        }
+        if (formChange?.vendorName === "" || formChange?.vendorName === "undefined" || formChange?.vendorName === undefined) {
+            setVendorNameError("Please Enter Vendor Name");
+            formIsValid = false;
+        }
+        if (formChange?.invoiceDate === "" || formChange?.invoiceDate === "undefined" || formChange?.invoiceDate === undefined) {
+            setInvoiceDateError("Please Enter Invoice Date");
+            formIsValid = false;
+        }
+        if (formChange?.invoiceNumber === "" || formChange?.invoiceNumber === "undefined" || formChange?.invoiceNumber === undefined) {
+            setInvoiceNumberError("Please Enter Invoice Number");
             formIsValid = false;
         }
         // if (emailid === "") {
@@ -462,11 +483,11 @@ const Purchases = () => {
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Invoice Date</label>
                                                                     <input type="date" className="form-control" id="name" placeholder="Enter Date" name="invoiceDate" value={formChange?.invoiceDate} onChange={(e) => handleChange(e)} required />
-                                                                    {nameerror != "" ?
+                                                                    {invoiceDateError != "" ?
                                                                         <span className="errormsg" style={{
                                                                             fontWeight: 'bold',
                                                                             color: 'red',
-                                                                        }}>{nameerror}</span> : ""
+                                                                        }}>{invoiceDateError}</span> : ""
                                                                     }
                                                                 </div>
                                                             </div>
@@ -474,6 +495,12 @@ const Purchases = () => {
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Invoice Number</label>
                                                                     <input type="number" className="form-control" id="companyNumber" placeholder="Enter Number" name="invoiceNumber" value={formChange?.invoiceNumber} onChange={e => handleChange(e)} autoComplete="on" />
+                                                                    {invoiceNumberError != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{invoiceNumberError}</span> : ""
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
@@ -493,12 +520,24 @@ const Purchases = () => {
                                                                         )
                                                                         }
                                                                     </select>
+                                                                    {nameerror != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{nameerror}</span> : ""
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Chassis Number</label>
                                                                     <input type="text" className="form-control" id="name" placeholder="Enter Number" name="chassisNumber" value={formChange?.chassisNumber} onChange={(e) => handleChange(e)} autoComplete="on" />
+                                                                    {chassisNumberError != "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{chassisNumberError}</span> : ""
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
@@ -518,6 +557,12 @@ const Purchases = () => {
                                                                         )
                                                                         }
                                                                     </select>
+                                                                    {vendorNameError!= "" ?
+                                                                        <span className="errormsg" style={{
+                                                                            fontWeight: 'bold',
+                                                                            color: 'red',
+                                                                        }}>{vendorNameError}</span> : ""
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             {/* <div className="col-md-6">
