@@ -247,8 +247,6 @@ const User = () => {
         // setResultSuccess(false)
         setBranchStatus(false)
         setUserSuccess(false)
-        // const type = "companyUser";
-        // getUser();
         window.location = "/user"
     };
     function closePopup() {
