@@ -430,7 +430,7 @@ const AddForm = (props) => {
                                                     <div className="col-md-6">
                                                         <div className="input-field">
                                                             <label className="form-label form-label">Dealer Invoice number</label>
-                                                            <input id="number" name="dealerInvoiceNumber" type="number" placeholder="Enter" className="form-control" onChange={handleChange} value={formChange?.dealerInvoiceNumber} />
+                                                            <input id="number" name="dealerInvNo" type="number" placeholder="Enter" className="form-control" onChange={handleChange} value={formChange?.dealerInvNo} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -835,6 +835,12 @@ const AddForm = (props) => {
 
                                                 <div className="row">
                                                     <h4>Reciepts Details</h4>
+                                                    <div className="col-md-6">
+                                                        <div className="input-field">
+                                                            <label className="form-label form-label">On Road</label>
+                                                            <input id="text" name="onRoad" type="number" placeholder="Enter" className="form-control" onChange={handleChange} value={formChange?.onRoad} />
+                                                        </div>
+                                                    </div>
                                                     <div className="col-md-6">
                                                         <div className="input-field">
                                                             <label className="form-label form-label">Cash</label>

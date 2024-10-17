@@ -17,7 +17,12 @@ import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import Header from ".././components/header/Header";
 import Sidebar from ".././components/dashboard/sidebar";
+import SweetAlert from 'react-bootstrap-sweetalert';
 import axios from 'axios';
+import ReactFileReader from 'react-file-reader';
+import * as XLSX from "xlsx";
+import moment from "moment";
+const csv = require('csvtojson')
 // import * as Config from "./../../constants/Config";
 let { lambda, appname } = window.app
 const menuList = [
@@ -54,6 +59,7 @@ const Dashboard = (props) => {
     const [formData, setFormData] = useState({})
     const [config, setConfig] = useState({});
     const [activeId, setActiveId] = useState();
+    const [importSuccess, setImportSuccess] = useState(false);
     // console.log("props", props.menus);
     // const active = headerNav.findIndex((e) => e.path === pathname);
     useEffect(() => {
@@ -84,7 +90,7 @@ const Dashboard = (props) => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         // let payload = formChange;
         // payload ["userid" ] = userid
-        const urlLink = lambda + '/getForm?appname=' + appname + (userid ? "&userid=" + userid : "");
+        const urlLink = lambda + '/getForm?appname=' + appname + (userid ? "&userId=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
@@ -162,95 +168,81 @@ const Dashboard = (props) => {
         clearInterval(scrollInterval);
     }
 
-    // // // Show or hide scroll buttons based on mouse position
-    // // wrapper.addEventListener('mousemove', (event) => {
-    // //     const mouseX = event.clientX - wrapper.getBoundingClientRect().left; // Mouse position relative to wrapper
-    // //     const wrapperWidth = wrapper.clientWidth;
-    // //     const threshold = 50; // Pixels from the edges where buttons should appear
+    const handleFiles = (event) => {
+        var self = this;
+        var file = event[0];
+        var fileExt = file && file.name && file.name.split('.').pop();
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            let assetsData;
+            let data = event.target.result;
+            switch (fileExt) {
+                case 'csv':
+                    csv({})
+                        .fromString(data)
+                        .then((csvRow) => {
+                            assetsData = csvRow;
+                            console.log("csvRow",assetsData)
+                            // self.setState({ loader: true, fileType: fileExt });
+                            // self.handleDisplay(assetsData)
+                        })
+                    break;
+                case 'xlsx':
+                case 'xls':
+                    let workbook = XLSX.read(data, { type: "binary" });
+                    workbook.SheetNames.forEach(sheet => {
+                        assetsData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+                        console.log("XLSX",assetsData)
+                        // self.setState({ loader: true, fileType: fileExt });
+                        handleDisplay(assetsData)
+                    });
+                    break;
+                case 'json':
+                    assetsData = data;
+                    console.log("json",assetsData)
+                    // self.setState({ loader: true, fileType: fileExt });
+                    // self.handleDisplay(assetsData)
+                    break;
+                   
+            }
+        };
+        if (fileExt == 'json') {
+            reader.readAsText(file);
+        } else {
+            reader.readAsBinaryString(file);
+        }
+    }
+    const handleDisplay = (assetsList) => {
+        let importAsset = JSON.stringify(assetsList)
+      //  console.log("importAsset", importAsset)
+        if (assetsList && assetsList.length > 0) {
+            let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        const urlLink = lambda + '/import?appname=' + appname + (userid ? "&userId=" + userid : "");
+        axios({
+            method: 'POST',
+            url: urlLink,
+            data: assetsList
+        })
+            .then(function (response) {
+                if (response.data.result) {
+                    //history.push("./yellowForm");
+                    setFormData(response.data.result && response.data.result)
+                    setImportSuccess(true)
+                   // GetPropertyData()
+                }
+            });
+        }
 
-    // //     if (mouseX < threshold) {
-    // //         scrollLeftBtn.style.opacity = 1;
-    // //         scrollLeftBtn.style.pointerEvents = 'auto';
-    // //     } else {
-    // //         scrollLeftBtn.style.opacity = 0;
-    // //         scrollLeftBtn.style.pointerEvents = 'none';
-    // //     }
-
-    // //     if (mouseX > wrapperWidth - threshold) {
-    // //         scrollRightBtn.style.opacity = 1;
-    // //         scrollRightBtn.style.pointerEvents = 'auto';
-    // //     } else {
-    // //         scrollRightBtn.style.opacity = 0;
-    // //         scrollRightBtn.style.pointerEvents = 'none';
-    // //     }
-    // // });
-
-    // // // Event listeners for buttons
-    // // scrollLeftBtn.addEventListener('mouseover', scrollLeft);
-    // // scrollLeftBtn.addEventListener('mouseout', stopScroll);
-    // // scrollRightBtn.addEventListener('mouseover', scrollRight);
-    // // scrollRightBtn.addEventListener('mouseout', stopScroll);
-    // function scrollToColumn(colIndex) {
-    //     const table = document.getElementById("myTable");
-    //     const cell = table.rows[1].cells[colIndex]; // Get the cell of the first data row in the specified column
-    //     const tableContainer = document.querySelector(".table-container");
-
-    //     // Calculate the position of the column
-    //     const scrollPos = cell.offsetLeft;
-
-    //     // Scroll the table container horizontally
-    //     tableContainer.scroll({
-    //         left: scrollPos,
-    //         behavior: "smooth"
-    //     });
-    // }
-
-
+    }
+    const onConfirm = () => {
+        setImportSuccess(false)
+        GetPropertyData()
+    }
+    
     return (
         <div id="layout-wrapper">
         <div className="dashboard">
             <Header />
-            {/* <div className="topnav">
-            <div className="container-fluid">
-                <nav className="navbar navbar-light navbar-expand-lg topnav-menu">
-
-                    <div className="collapse navbar-collapse" id="topnav-menu-content">
-                        <ul className="navbar-nav">
-
-                            <li className="nav-item">
-                                <a className="nav-link active" href="#" id="topnav-dashboard" role="button">Yellow Form</a>
-                               </li>
-
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">N.R.M</a>
-                               </li>
-
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Monthly Sale</a>
-                               </li>
-
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Finance & Insurance Payout %</a>
-                               </li>
-
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Claims summary Sheet</a>
-                               </li>
-
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Offers</a>
-                               </li>
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Summary</a>
-                               </li>
-                               <li className="nav-item">
-                                <a className="nav-link" href="#" id="topnav-dashboard" role="button">Master Price  AMC EW</a>
-                               </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div> */}
             <div className="main-content yellow_form">
 
                 <div className="page-content">
@@ -261,8 +253,13 @@ const Dashboard = (props) => {
                                 <button className="btn-primary ms-3" onClick={createClick}><span className="material-symbols-outlined">add</span>Create</button>
                             </div>
                             <div className="buttons">
-                            <button className=" btn-primary"><span class="material-symbols-outlined">south_west</span>import</button>
-                            <button className=" btn-primary"><span class="material-symbols-outlined">north_east</span>export</button>
+                            <ReactFileReader handleFiles={e => handleFiles(e)} fileTypes={[".xlsx", ".xls", ".csv", ".json"]}>
+                                        <button type="button" className="btn-primary" ><span className="material-symbols-outlined">
+                                        south_west
+                                        </span><span>import</span></button>
+                                    </ReactFileReader>
+                            {/* <button className=" btn-primary"><span class="material-symbols-outlined">south_west</span>import</button> */}
+                            {/* <button className=" btn-primary"><span class="material-symbols-outlined">north_east</span>export</button> */}
                             </div>
                         </div>
                         <div className="row">
@@ -396,7 +393,7 @@ const Dashboard = (props) => {
                                                         <th scope="col">Tax</th>
                                                         <th scope="col">Net income with dealer margin</th>
                                                         <th scope="col" className="border-right">Remarks</th>
-
+                                                        <th scope="col">On Road</th>
                                                         <th scope="col">Cash</th>
                                                         <th scope="col">Bank</th>
                                                         <th scope="col">D.O</th>
@@ -417,7 +414,7 @@ const Dashboard = (props) => {
                                                         <td>{eachItem?.tmlInvoiceDate ? eachItem?.tmlInvoiceDate : 'N/A'}</td>
                                                         <td>{eachItem?.commercialInvoice ? eachItem?.commercialInvoice : 'N/A'}</td>
                                                         <td>{eachItem?.stock ? eachItem?.stock : 'N/A'}</td>
-                                                        <td>{eachItem?.dealerInvoiceNumber ? eachItem?.dealerInvoiceNumber : 'N/A'}</td>
+                                                        <td>{eachItem?.dealerInvNo ? eachItem?.dealerInvNo : 'N/A'}</td>
                                                         <td>{eachItem?.LOB ? eachItem?.LOB : 'N/A'}</td>
                                                         <td>{eachItem?.PPl ? eachItem?.PPl : 'N/A'}</td>
                                                         <td>{eachItem?.modelName ? eachItem?.modelName : 'N/A'}</td>
@@ -439,8 +436,8 @@ const Dashboard = (props) => {
                                                         <td>{eachItem?.consumerNotPass ? eachItem?.consumerNotPass : 'N/A'}</td>
                                                         <td>{eachItem?.splOffer ? eachItem?.splOffer : 'N/A'}</td>
                                                         <td>{eachItem?.splTmlShare ? eachItem?.splTmlShare : 'N/A'}</td>
-                                                        <td>{eachItem?.splNotPass ? eachItem?.splNotPass : 'N/A'}</td>
                                                         <td>{eachItem?.splDealerShare ? eachItem?.splDealerShare : 'N/A'}</td>
+                                                        <td>{eachItem?.splNotPass ? eachItem?.splNotPass : 'N/A'}</td>
                                                         <td>{eachItem?.supply ? eachItem?.supply : 'N/A'}</td>
                                                         <td>{eachItem?.accessories ? eachItem?.accessories : 'N/A'}</td>
                                                         <td>{eachItem?.FOC ? eachItem?.FOC : 'N/A'}</td>
@@ -464,18 +461,19 @@ const Dashboard = (props) => {
                                                         <td>{eachItem?.totalDealerShare ? eachItem?.totalDealerShare : 'N/A'}</td>
                                                         <td>{eachItem?.totalIncome ? eachItem?.totalIncome : 'N/A'}</td>
                                                         <td>{eachItem?.offerNotPassed ? eachItem?.offerNotPassed : 'N/A'}</td>
-                                                        <td>{eachItem?.offerFromDealer ? eachItem?.offerFromDealer : 'N/A'}</td>
                                                         <td>{eachItem?.otherIncome ? eachItem?.otherIncome : 'N/A'}</td>
+                                                        <td>{eachItem?.offerFromDealer ? eachItem?.offerFromDealer : 'N/A'}</td>
                                                         <td>{eachItem?.netIncome ? eachItem?.netIncome : 'N/A'}</td>
                                                         <td>{eachItem?.tax ? eachItem?.tax : 'N/A'}</td>
                                                         <td>{eachItem?.netIncomeDealerMargin ? eachItem?.netIncomeDealerMargin : 'N/A'}</td>
                                                         <td>{eachItem?.remarks ? eachItem?.remarks : 'N/A'}</td>
+                                                        <td>{eachItem?.onRoad ? eachItem?.onRoad : 'N/A'}</td>
                                                         <td>{eachItem?.cash ? eachItem?.cash : 'N/A'}</td>
                                                         <td>{eachItem?.bank ? eachItem?.bank : 'N/A'}</td>
                                                         <td>{eachItem?.DO ? eachItem?.DO : 'N/A'}</td>
                                                         <td>{eachItem?.total ? eachItem?.total : 'N/A'}</td>
                                                         <td>{eachItem?.balance ? eachItem?.balance : 'N/A'}</td>
-                                                        <td>{eachItem?.created ? eachItem?.created : 'N/A'}</td>
+                                                        <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
                                                     </tr>
                                                     )
@@ -503,7 +501,15 @@ const Dashboard = (props) => {
 
                     </div>
                 </div>
-
+                {importSuccess &&
+                            <SweetAlert show={importSuccess}
+                                custom
+                                confirmBtnText="Ok"
+                                confirmBtnBsStyle="primary"
+                                title={"Import Added Successfully"}
+                                onConfirm={e => onConfirm()}
+                            >
+                            </SweetAlert>}
                 <footer className="footer">
                     <div className="container-fluid">
                         <div className="row">
