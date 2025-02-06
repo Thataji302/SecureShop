@@ -539,11 +539,11 @@ const SignIn = () => {
                                     color: 'red',
                                 }}>{error}</span> : ""
                                 }
-                                <button className="fill_btn lgn-otp-btn" onClick={e => handleLoginOtp(e)}>
+                                {/* <button className="fill_btn lgn-otp-btn" onClick={e => handleLoginOtp(e)}>
                                     {activeLoad === "loginOtp" ?
 
                                         (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
-                                    Login with OTP</button>
+                                    Login with OTP</button> */}
 
 
                                 <button className="fill_btn" onClick={e => handleSignIn(e)} >
@@ -557,10 +557,10 @@ const SignIn = () => {
                              </button> : null
  } */}
                             </div>
-                            <div className="signin-footer mt-4 new_users"> 
+                            {/* <div className="signin-footer mt-4 new_users"> 
                             <p className="signup-prompt mt-5" >Not Registered Yet?<a href="/signup" className="mx-2">Sign Up</a></p>
                              <p className="signup-prompt mt-1" >New users can set password using login with otp!</p>
-                            </div>
+                            </div> */}
 
                         </div>
 

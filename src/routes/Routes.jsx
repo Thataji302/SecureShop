@@ -7,12 +7,13 @@ import EditUser from "../pages/usermanagement/editUser";
 import NotFound from "../pages/NotFound";
 import SignIn from "../pages/signin";
 import UserManagement from "../pages/usermanagement/userMange";
+// import RetailManagement from "../pages/retailmanagement/retailMange";
 import ViewUser from "../pages/usermanagement/viewUser";
 import ContentUpload from "../pages/contentmanagement/contentupload";
 import Client from "../pages/clientmanagement/client";
 
 import Profile from "../pages/profile";
-// import Company from "../pages/clientmanagement/company/company";
+//import Company from "../pages/clientmanagement/company/company";
 import EditClient from "../pages/clientmanagement/editclient";
 import MapContent from "../pages/contentmanagement/mapcontentnew";
 import EditContent from "../pages/contentmanagement/editContent";
@@ -102,6 +103,7 @@ import Finance from "../pages/Finance";
 import Fastag from "../pages/Fastag";
 import AddForm from "../pages/AddForm";
 import User from "../pages/User";
+import Retail from "../pages/Retail";
 import Purchases from "../pages/Purchases";
 
 const Routes = () => {
@@ -114,9 +116,9 @@ const Routes = () => {
       <Route path={`/login`} component={SignIn} />
 
       <Route path={`/company`} component={Company} />
-      <Route path={`/editcompany/:id`} component={UpdateCompany} />
+      {/* <Route path={`/editcompany/:id`} component={UpdateCompany} />
       <Route path={`/viewcompany/:id`} component={ViewCompany} />
-      <Route path={`/addcompany`} component={UpdateCompany} />
+      <Route path={`/addcompany`} component={UpdateCompany} /> */}
 
 
       <Route path={`/clientsearch`} component={ClientSearch} />
@@ -146,6 +148,8 @@ const Routes = () => {
 
       <Route path={`/edituser/:id`} component={EditUser} />
       <Route path={`/viewuser/:id`} component={ViewUser} />
+
+      {/* <Route path={`/retail`} component={RetailManagement} /> */}
 
       <Route path={`/contentmanagement`} component={ContentMange} />
       <Route path={`/contentupload`} component={ContentUpload} />
@@ -236,6 +240,8 @@ const Routes = () => {
       <Route path={`/fastag`} component={Fastag} />
       <Route path={`/createForm`} component={AddForm} />
       <Route path={`/user`} component={User} />
+      <Route path={`/retail`} component={Retail} />
+
       <Route path={`/purchases`} component={Purchases} />
       {/* <Route path={`/landingPage`} component={landingPage} /> */}
 

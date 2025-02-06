@@ -64,6 +64,11 @@ const menuList = [
       labelName: 'Users',
       route: "user"
   },
+  {
+    id: '6',
+    labelName: 'Retail',
+    route: "retail"
+}
 
 ]
 
@@ -125,6 +130,13 @@ const Header = (props) => {
     // userName = localStorage.getItem("ClientName")?.split(" ");
     // console.log("userData",userData)
     setUserName(userData?.name?.split(" "));
+    if(userData.userType === "SUPER ADMIN"){
+      menuList.push({
+        id: '7',
+        labelName: 'Company',
+        route: "company"
+      })
+    }
 
 
   }, [userData]);
@@ -247,7 +259,8 @@ const Header = (props) => {
           {!token ?
             <div className="d-flex align-items-center">
               <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>
-              <a className="register ms-2" href="#" onClick={handleSignup}>Sign Up</a></div> :
+              {/* <a className="register ms-2" href="#" onClick={handleSignup}>Sign Up</a> */}
+              </div> :
               
             <div className="dropdown d-inline-block">
               <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
