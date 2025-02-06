@@ -51,9 +51,7 @@ const User = () => {
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
-
         }
-
     }, [window.site]);
     useEffect(() => {
         if (!localStorage.getItem("token")) {
@@ -90,15 +88,11 @@ const User = () => {
                 }
             });
     }
-
     const backClick = () => {
         // history.goBack();
         setBranchStatus(false)
         getUser()
     }
-
-
-
     // const handleEmailMessage = (e) => {
     //     setError("");
     //     setEmailError("");
@@ -108,12 +102,6 @@ const User = () => {
         let errors = {};
         console.log('formChange', formChange)
         const regEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,8}(.[a-zA-Z{2,8}])?/g;
-        // if (regEx.test(emailId)) {
-        //     setEmailError("");
-        // } else if (!regEx.test(emailId) && emailId !== "") {
-        //     setEmailError("Email is Not Valid");
-        //     formIsValid = false;
-        // }
         if (formChange?.name === "" || formChange?.name === "undefined" || formChange?.name === undefined) {
             // errors.emailid = "First Name is required";
             setNameError("Please Enter Name");
@@ -128,10 +116,7 @@ const User = () => {
         }
 
         return formIsValid;
-
-
     }
-
     const handleUpdate = (e) => {
         let valid = formvalidation();
         // let id = id;
@@ -202,7 +187,6 @@ const User = () => {
                 });
         }
 
-        // formvalidation()
     }
     const getUser = (e) => {
         let companyId = localStorage.getItem("companyId")
@@ -233,15 +217,10 @@ const User = () => {
     const deleteClick = (e, item) => {
         setDeleteConfirm(true)
         setDeleteData(item)
-
     }
-
     function onConfirm1() {
         setResultSuccess(false)
-        //  setUserSuccess(false)
-        // const type = "companyUser";
         getUser();
-        // window.location = "/user"
     };
     function onUpdate() {
         // setResultSuccess(false)
@@ -332,8 +311,6 @@ const User = () => {
             ...formChange,
             [name]: value
         });
-
-
     }
     return (
         <>
@@ -344,26 +321,14 @@ const User = () => {
 
                         <div className="page-content">
                             <div className="container-fluid">
-                                {/* <div className="breadcurmb">
-                                    <div className="title_block">
-                                        <h5>Lookups</h5>
-                                    </div>
-                                   
-                                </div> */}
                                 <div className="card">
                                     <div className="card-body">
-
-
-
-                                      
-                                           
-                                                {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
+                                        {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>Users</h5>
                                                         </div>
                                                         <div className="buttons">
-
                                                             <button className=" btn-primary" onClick={addClick}>add</button>
                                                         </div>
                                                     </div>}
@@ -497,24 +462,7 @@ const User = () => {
                                 onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}
-                        {/* {resultSuccess &&
-                            <SweetAlert show={resultSuccess}
-                                custom
-                                confirmBtnText="Ok"
-                                confirmBtnBsStyle="primary"
-                                title={"Deleted Successfully"}
-                                onConfirm={e => onConfirm1()}
-                            >
-                            </SweetAlert>} */}
-                        {/* {deleteConfirm &&
-                            <SweetAlert show={deleteConfirm}
-                                custom
-                                confirmBtnText="Ok"
-                                confirmBtnBsStyle="primary"
-                                title={"Are you sure want to delete?"}
-                                onConfirm={e => onConfirm2()}
-                            >
-                            </SweetAlert>} */}
+                      
                         <footer className="footer">
                             <div className="container-fluid">
                                 <div className="row">
@@ -527,25 +475,7 @@ const User = () => {
                                 </div>
                             </div>
                         </footer>
-                        {/* {deleteConfirm &&
-                        <div className="modal delete_popup">
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                   
-                                    <div className="modal-body">
-                                    <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
-                                    <span className="material-icons access-denied-icon">delete_outline</span>
-                                    <h3>Delete</h3>
-                                    <p>This action cannot be undone.</p>
-                                    <p>Are you sure you want to delete?</p>
-                                    <div className="popup-footer">
-                                    <button className="fill_btn" onClick={e => onConfirm2()}>Yes, Delete</button>
-                                    </div>
-                                  </div>
-
-                                </div>
-                            </div>
-                        </div>} */}
+                       
                         {deleteConfirm &&
                             <Modal className="access-denied delete_popup" show={deleteConfirm}>
 

@@ -37,7 +37,7 @@ import { contentContext } from "../../context/contentContext";
 //     path: `/user`,
 //   },
 // ];
-const menuList = [
+let menuList = [
   {
       id: '1',
       labelName: 'Sales',
@@ -131,6 +131,7 @@ const Header = (props) => {
     // console.log("userData",userData)
     setUserName(userData?.name?.split(" "));
     if(userData.userType === "SUPER ADMIN"){
+      menuList=menuList.filter(menu=>menu.id !=='7')
       menuList.push({
         id: '7',
         labelName: 'Company',

@@ -9,6 +9,7 @@ function ChangeContentProvider(props) {
   const [menus, setMenus] = useState([]);
   const [initialData, setInitialData] = useState([])
   const [data, setData] = useState([]);
+  const [retailsData, setRetailsData]= useState([]);
   const [initialCategoriesData1, setInitialCategoriesData1] = useState([]);
   const [isLoad1, setIsLoad1] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
@@ -43,6 +44,8 @@ function ChangeContentProvider(props) {
   const [clientmanagesearch, setClientMangeSearch] = useState("");
   const [companysearch, setCompanySearch] = useState("");
   const [usersearch, setUserSearch] = useState("");
+  const [retailsearch, setRetailSearch] = useState("");
+
   const [contentsearch, setContentSearch] = useState("");
   const [itemsearch, setItemSearch] = useState("");
   const[itemAdvSearch,setItemAdvSearch]=useState("")
@@ -68,7 +71,7 @@ function ChangeContentProvider(props) {
     const [activeFieldsObj, setActiveFieldsObj] = useState({CookingshowActive:false,seriesActive:false,SportsActive:false,MusicActive:false,seriesActive:false});
 
     const [searchedFlag, setSearchedFlag] = useState(false);
-const[currentUrl,setCurrentUrl]=useState("")
+    const[currentUrl,setCurrentUrl]=useState("")
     const [currentPageNew, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(15);
   
@@ -282,7 +285,7 @@ const[currentUrl,setCurrentUrl]=useState("")
 
   return (
     <contentContext.Provider value={{ popup, setShowPopup, handleClosePopup, setInitialCategoriesData1, initialData, Categories, categoryName, setCategoryName, categoryNameAdv, setCategoryNameAdv, setIsLoad1, isLoad1, initialCategoriesData1, setHideMenu, hideMenu, perPageConst, setPerPageConst, pageNumber, setPageNumber, assetTotal, setAssetTotal, perpage, setPerpage, totalPagesArray, setTotalPagesArray, totalPages, setTotalPages, menus, isLoading, setIsLoading, clientData1, sortTableAlpha, arrow, sortTableByDate,userData,setUserData, activeMenuObj, setActiveMenuObj ,activeMenuId, setActiveMenuId,catBasedContentFields, setCatBasedContentFields,clientsearch,setClientSearch ,setContactusSearch ,contactussearch,setRecommendedSearch ,recommendedsearch,categorysearch, setCategorySearch ,setDealSearch,dealsearch ,clientmanagesearch, setClientMangeSearch ,companysearch, setCompanySearch ,usersearch, setUserSearch , itemsearch,setItemSearch,contentsearch, setContentSearch ,clientAdvSearch, setClientAdvSearch,dealsadvSearch, setDealsAdvSearch ,companyadvSearch, setCompanyAdvSearch ,searchPayload, setSearchPayload ,contentAdvCount, setContentAdvCount,GetUserDataContext ,currentPage, setcurrentPage ,paginationnumber, setPagintionNumber,selectedOptions, setSelectedOptions,selectedOptionsClientName, multiSelectFields, setMultiSelectFields,activeFieldsObj, setActiveFieldsObj,setSelectedOptionsClientName,pay, setPay,
-      data, setData,rowsPerPage, setRowsPerPage,currentPageNew,currentUrl,setCurrentUrl, setCurrentPage,lookUpType, setlookUpType,route,itemAdvSearch,setItemAdvSearch, setRoute,prevRouteRef,usePrevious,sortedColumn, setSortedColumn,sortDirection, setSortDirection,setShowSessionPopupup,showSessionPopupup,searchedFlag,ActivePageName, setActivePageName, setSearchedFlag,itemsearch, setItemSearch,bidsSearch, setBidsSearch, bidsAdvSearch, setBidsAdvSearch,GetTimeActivity,workshopsearch, setWorkshopSearch,productsearch, setProductSearch,selctionOrder, setSelectionOrder}}>
+      data, setData,rowsPerPage, setRowsPerPage,currentPageNew,currentUrl,setCurrentUrl, setCurrentPage,lookUpType, setlookUpType,route,itemAdvSearch,setItemAdvSearch, setRoute,prevRouteRef,usePrevious,sortedColumn, setSortedColumn,sortDirection, setSortDirection,setShowSessionPopupup,showSessionPopupup,searchedFlag,ActivePageName, setActivePageName, setSearchedFlag,itemsearch, setItemSearch,bidsSearch, setBidsSearch, bidsAdvSearch, setBidsAdvSearch,GetTimeActivity,workshopsearch, setWorkshopSearch,productsearch, setProductSearch,selctionOrder, setSelectionOrder,setRetailSearch,retailsData, setRetailsData}}>
       {props.children}
     </contentContext.Provider>
   )
