@@ -19,24 +19,7 @@ import * as Config from "./../../constants/Config";
 import tmdbApi from "../../api/tmdbApi";
 
 import { contentContext } from "../../context/contentContext";
-// const headerNav = [
-//   {
-//     display: "Yellow Form",
-//     path: `/yellowForm`,
-//   },
-//   {
-//     display: "Lokkups",
-//     path: `/lookups`,
-//   },
-//   {
-//     display: "Reports",
-//     path: `/reports`,
-//   },
-//   {
-//     display: "Users",
-//     path: `/user`,
-//   },
-// ];
+
 let menuList = [
   {
       id: '1',
@@ -82,38 +65,18 @@ const Header = (props) => {
   const [activeId, setActiveId] = useState();
 
   const { userData, setUserData, setShowPopup, setSelectedOptions, setMultiSelectFields, setActiveFieldsObj,
-    setSelectedOptionsClientName, setSearchPayload, setInitialCategoriesData1, GetTimeActivity } = useContext(contentContext)
+    setSelectedOptionsClientName, setSearchPayload, setInitialCategoriesData1, GetTimeActivity,GetUserDataContext } = useContext(contentContext)
 
-  //console.log("props", props.menus);
-  // const active = headerNav.findIndex((e) => e.path === pathname);
   let token = localStorage.getItem("token")
   useEffect(() => {
     if (!localStorage.getItem("token")) {
         history.push("/");
     } 
-    // else if(menuList[0]?.id){
-    //    setActiveId(menuList[0].id)
-    // }
-
+   
 }, []);
   //console.log('token', token)
   useEffect(() => {
-    // const shrinkHeader = () => {
-    //   if (
-    //     document.body.scrollTop > 100 ||
-    //     document.documentElement.scrollTop > 100
-    //   ) {
-    //     headerRef.current.classNameList.add("shrink");
-    //   } else {
-    //     headerRef.current.classNameList.remove("shrink");
-    //   }
-    // };
-
-    // window.addEventListener("scroll", shrinkHeader);
-
-    // return () => {
-    //   window.removeEventListener("scroll", shrinkHeader);
-    // };
+   
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 50);
     });
@@ -127,37 +90,31 @@ const Header = (props) => {
   }, [window.site]);
 
   useEffect(() => {
-    // userName = localStorage.getItem("ClientName")?.split(" ");
-    // console.log("userData",userData)
+ 
+   if(userData){
     setUserName(userData?.name?.split(" "));
     if(userData.userType === "SUPER ADMIN"){
-      menuList=menuList.filter(menu=>menu.id !=='7')
-      menuList.push({
-        id: '7',
-        labelName: 'Company',
-        route: "company"
-      })
+    
+      menuList = [{
+          id: '1',
+          labelName: 'Company',
+          route: "company"
+        }]
     }
 
+   }else{
+    GetUserDataContext()
+   }
+    
 
   }, [userData]);
-  // if (config.common && config.common.resourcesUrl) {
-  //     var img = config.common.resourcesUrl;
-  // }
+  
 
   let imageCloudfront;
   if (config.common && config.common.imageCloudfront) {
     imageCloudfront = config.common.imageCloudfront;
   }
-  // const handleAbout = async () => {
-  //   history.push("./aboutus");
-  // }
-  // const handleHome = async () => {
-  //   history.push("/");
-  // }
-  // const handleContactus = async () => {
-  //   history.push("./contactus");
-  // }
+  
   const handlemenuclick = async (e, path, id) => {
     if (id === 100005) {
       window.open(
@@ -175,14 +132,9 @@ const Header = (props) => {
     history.push("./login");
   }
   const handleLogout = (e) => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    // localStorage.removeItem("ClientName");
-    // localStorage.removeItem("ClientType");
-    // signoutsession();
+    localStorage.clear();
     setUserData([])
     history.push("/");
-    //localStorage.clear("token");
 
 
   }
@@ -238,29 +190,16 @@ const Header = (props) => {
          
             <button key={val.id} href='#' className={`${activeId === val.id ? "btn header-item waves-effect active" : "btn header-item waves-effect"}`} onClick={(e) => onClickMenu(e, val)}  data-tip={val.labelName}><span key="t-chat">{val.labelName}</span></button> 
         ))}
-                        {/* <button type="button" className="btn active header-item waves-effect" >
-                            <span>New Search</span>
-
-                        </button>
-                        <button type="button" className="btn header-item waves-effect" >
-                            <span>Saved Searches</span>
-
-                        </button> */}
+                       
                     </div>}
                    
         </div>
 
         <div className="d-flex">
-        {/* <form class="app-search d-none d-lg-block">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search..."/>
-                                <span class="bx bx-search-alt"></span>
-                            </div>
-                        </form> */}
+       
           {!token ?
             <div className="d-flex align-items-center">
               <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>
-              {/* <a className="register ms-2" href="#" onClick={handleSignup}>Sign Up</a> */}
               </div> :
               
             <div className="dropdown d-inline-block">
@@ -276,9 +215,7 @@ const Header = (props) => {
                 <a className="dropdown-item" href="#" onClick={profile}><i className="bx bx-user font-size-16 align-middle me-1"></i>
                   <span key="t-profile">Profile</span></a>
 
-                <a className="dropdown-item d-block" href="#" onClick={company}><i
-                  className="bx bx-wrench font-size-16 align-middle me-1"></i> <span
-                    key="t-settings">Company</span></a>
+            
 
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item text-danger" href="#" onClick={handleLogout}><i

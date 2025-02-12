@@ -21,6 +21,7 @@ import { useHistory } from "react-router-dom";
 import * as Config from "../constants/Config";
 import moment from "moment";
 import { location } from '././../utils/commonUtils';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 let { lambda, country, appname } = window.app;
 var urlParams = location("type");
@@ -30,6 +31,9 @@ const Company = () => {
     const history = useHistory();
     const [companyData, setCompanyData] = useState({});
     const [savedCompanyData, setSavedCompanyData] = useState([]);
+    const [isEdited, setIsEdited] = useState(false);
+    const [companySuccess, setCompanySuccess] = useState(false);
+
     const [formChange, setFormChange] = useState({
         companyDetails: {
             companyName: "",
@@ -40,7 +44,8 @@ const Company = () => {
         managerDetails: {
             emailId: "",
             name: ""
-        }
+        },
+        status: "Active"
     });
     const [companyErrors, setCompanyErrors] = useState({});
     const [submitButton, setSubmitButton] = useState(false);
@@ -83,7 +88,7 @@ const Company = () => {
     }
 
     const getCompanies = () => {
-        const urlLink = lambda + '/getCompany?appname=' + appname+"&userid="+localStorage.getItem("userId");;
+        const urlLink = lambda + '/getCompany?appname=' + appname + "&userid=" + localStorage.getItem("userId");;
         axios({
             method: 'GET',
             url: urlLink,
@@ -97,10 +102,11 @@ const Company = () => {
 
     const handleUpdate = (e) => {
         let valid = formValidation();
+
         if (valid) {
             setSubmitButton(true);
-            const payload = {
-                
+            let payload = {
+
                 companyDetails: {
                     companyName: formChange.companyDetails.companyName,
                     companyEmailId: formChange.companyDetails.companyEmailId,
@@ -111,9 +117,24 @@ const Company = () => {
                     name: formChange.managerDetails.name,
                     emailId: formChange.managerDetails.emailId
                 }
-            };
 
-            const urlLink = lambda + '/addCompany?appname=' + appname+"&userid="+localStorage.getItem("userId");
+            };
+            let urlLink = lambda + '/addCompany?appname=' + appname + "&userid=" + localStorage.getItem("userId");
+
+            if (formChange._id) {
+
+                payload = {
+                    companyName: formChange.companyDetails.companyName,
+                    companyEmailId: formChange.companyDetails.companyEmailId,
+                    phoneNumber: formChange.companyDetails.phoneNumber,
+                    companyAddress: formChange.companyDetails.companyAddress,
+                    status: formChange.companyDetails.status
+                }
+                urlLink = lambda + '/updateCompany?appname=' + appname + "&userid=" + localStorage.getItem("userId") + "&companyid=" + formChange.companyid;
+            }
+
+
+
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -124,9 +145,12 @@ const Company = () => {
                         setSuccessMessage("Updated Successfully");
                         getCompanies();
                         setSubmitButton(false);
+                        // setBranchStatus(false);
                         if (!id) {
                             setFormChange({});
+                            setSuccessMessage("Save Successfully");
                         }
+                        setCompanySuccess(true)
                     }
                 })
                 .catch((error) => {
@@ -140,10 +164,10 @@ const Company = () => {
     const formValidation = () => {
         let formIsValid = true;
         const errors = {};
-    
+
         // Destructuring for cleaner access
         const { companyDetails, managerDetails } = formChange;
-    
+
         // Company Details Validation
         if (!companyDetails?.companyName?.trim()) {
             errors.companyName = "Please enter company name";
@@ -167,33 +191,52 @@ const Company = () => {
             errors.companyAddress = "Please enter company address";
             formIsValid = false;
         }
-    
+
         // Manager Details Validation
-        if (!managerDetails?.name?.trim()) {
-            errors.managerName = "Please enter manager name";
-            formIsValid = false;
+        if (!isEdited) {
+
+
+            if (!managerDetails?.name?.trim()) {
+                errors.managerName = "Please enter manager name";
+                formIsValid = false;
+            }
+            if (!managerDetails?.emailId?.trim()) {
+                errors.managerEmailId = "Please enter manager email";
+                formIsValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(managerDetails.emailId)) {
+                errors.managerEmailId = "Invalid email format";
+                formIsValid = false;
+            }
         }
-        if (!managerDetails?.emailId?.trim()) {
-            errors.managerEmailId = "Please enter manager email";
-            formIsValid = false;
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(managerDetails.emailId)) {
-            errors.managerEmailId = "Invalid email format";
-            formIsValid = false;
-        }
-    
+
         setCompanyErrors(errors);
         return formIsValid;
     };
-    
 
 
-    const editClick = (item) => {
-        setFormChange(item);
+
+    const editClick = (newObject) => {
+
+        id = newObject?._id;
+        const updatedState = {
+            ...formChange,
+            companyDetails: {
+                companyName: newObject.companyData.companyName,
+                companyEmailId: newObject.companyData.companyEmailId,
+                phoneNumber: newObject.companyData.phoneNumber,
+                companyAddress: newObject.companyData.companyAddress
+            },
+            companyid: newObject?.companyDetails?.companyid || newObject?.companyid,
+            _id: id
+        };
+        setIsEdited(true)
+        setFormChange(updatedState);
         setBranchStatus(true);
     };
 
     const deleteClick = (item) => {
-        const urlLink = lambda + '/delete?appname=' + appname + "&userId=" + item.id + "&type=company";
+        debugger
+        const urlLink = lambda + '/delete?appname=' + appname + "&companyid=" + item?.companyData?.companyid + "&type=company";
         axios({
             method: 'DELETE',
             url: urlLink,
@@ -206,13 +249,14 @@ const Company = () => {
     };
 
     const addClick = () => {
+        setIsEdited(false);
         setFormChange({});
         setBranchStatus(true);
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         if (name.includes(".")) {
             const [section, field] = name.split(".");
             setFormChange((prevState) => ({
@@ -228,19 +272,32 @@ const Company = () => {
                 [name]: value,
             }));
         }
-    
+
         if (!!companyErrors[name]) {
             let error = { ...companyErrors };
             delete error[name];
             setCompanyErrors(error);
         }
     };
-    
+    function onUpdate() {
+        // setResultSuccess(false)
+        setBranchStatus(false)
+        setCompanySuccess(false)
+    };
 
     return (
-         <>
+        <>
             <div id="layout-wrapper">
                 <Header />
+                {companySuccess &&
+                    <SweetAlert show={companySuccess}
+                        custom
+                        confirmBtnText="Ok"
+                        confirmBtnBsStyle="primary"
+                        title={successMessage}
+                        onConfirm={e => onUpdate()}
+                    >
+                    </SweetAlert>}
                 <div className="main-content look_ups purchases">
                     <div className="page-content">
                         <div className="container-fluid">
@@ -278,17 +335,17 @@ const Company = () => {
                                                         <tbody>
                                                             {savedCompanyData.map((item) => (
                                                                 <tr key={item.id}>
+                                                                    <td>{item?.companyData?.companyName}</td>
+                                                                    <td>{item?.companyData?.companyEmailId}</td>
+                                                                    <td>{item?.companyData?.phoneNumber}</td>
+                                                                    <td>{item?.companyData?.companyAddress}</td>
                                                                     <td>{item.name}</td>
                                                                     <td>{item.emailId}</td>
-                                                                    <td>{item.phoneNumber}</td>
-                                                                    <td>{item.address}</td>
-                                                                    <td>{item.managerName}</td>
-                                                                    <td>{item.managerEmailId}</td>
                                                                     <td>{moment(item.created).format('DD-MM-YYYY')}</td>
-                                                                    <td>{item.status}</td>
+                                                                    <td>{item?.companyData?.status}</td>
                                                                     <td>
                                                                         <button onClick={() => editClick(item)}>Edit</button>
-                                                                        <button onClick={() => deleteClick(item)}>Delete</button>
+                                                                        {/* <button onClick={() => deleteClick(item)}>Delete</button> */}
                                                                     </td>
                                                                 </tr>
                                                             ))}
@@ -310,40 +367,127 @@ const Company = () => {
                                                 </div>
                                             </div>
                                             <form>
-  <div className="mb-3">
-    <label className="form-label">Company Name</label>
-    <input type="text" className="form-control" name="companyDetails.companyName" placeholder="Company Name" value={formChange?.companyDetails?.companyName || ""} onChange={handleChange} />
-    {companyErrors.companyDetails?.companyName && <div className="text-danger">{companyErrors.companyDetails.companyName}</div>}
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Company Email</label>
-    <input type="email" className="form-control" name="companyDetails.companyEmailId" placeholder="Company Email" value={formChange?.companyDetails?.companyEmailId || ""} onChange={handleChange} />
-    {companyErrors.companyDetails?.companyEmailId && <div className="text-danger">{companyErrors.companyDetails.companyEmailId}</div>}
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Phone Number</label>
-    <input type="text" className="form-control" name="companyDetails.phoneNumber" placeholder="Phone Number" value={formChange?.companyDetails?.phoneNumber || ""} onChange={handleChange} />
-    {companyErrors.companyDetails?.phoneNumber && <div className="text-danger">{companyErrors.companyDetails.phoneNumber}</div>}
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Address</label>
-    <textarea className="form-control" name="companyDetails.companyAddress" placeholder="Address" value={formChange?.companyDetails?.companyAddress || ""} onChange={handleChange}></textarea>
-    {companyErrors.companyDetails?.companyAddress && <div className="text-danger">{companyErrors.companyDetails.companyAddress}</div>}
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Manager Name</label>
-    <input type="text" className="form-control" name="managerDetails.name" placeholder="Manager Name" value={formChange?.managerDetails?.name || ""} onChange={handleChange} />
-    {companyErrors.managerDetails?.name && <div className="text-danger">{companyErrors.managerDetails.name}</div>}
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Manager Email</label>
-    <input type="email" className="form-control" name="managerDetails.emailId" placeholder="Manager Email" value={formChange?.managerDetails?.emailId || ""} onChange={handleChange} />
-    {companyErrors.managerDetails?.emailId && <div className="text-danger">{companyErrors.managerDetails.emailId}</div>}
-  </div>
-  <button type="button" className="btn btn-primary" onClick={handleUpdate} disabled={submitButton}>
-    {submitButton ? "Saving..." : "Save"}
-  </button>
-</form>
+                                                <div className="row">
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Company Name</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                name="companyDetails.companyName"
+                                                                placeholder="Company Name"
+                                                                value={formChange?.companyDetails?.companyName || ""}
+                                                                onChange={handleChange}
+                                                            />
+                                                            {companyErrors.companyDetails?.companyName && (
+                                                                <div className="text-danger">{companyErrors.companyDetails.companyName}</div>
+                                                            )}
+                                                        </div>
+
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Company Email</label>
+                                                            <input
+                                                                type="email"
+                                                                className="form-control"
+                                                                name="companyDetails.companyEmailId"
+                                                                placeholder="Company Email"
+                                                                value={formChange?.companyDetails?.companyEmailId || ""}
+                                                                onChange={handleChange}
+                                                            />
+                                                            {companyErrors.companyDetails?.companyEmailId && (
+                                                                <div className="text-danger">{companyErrors.companyDetails.companyEmailId}</div>
+                                                            )}
+                                                        </div>
+
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Phone Number</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                name="companyDetails.phoneNumber"
+                                                                placeholder="Phone Number"
+                                                                value={formChange?.companyDetails?.phoneNumber || ""}
+                                                                onChange={handleChange}
+                                                            />
+                                                            {companyErrors.companyDetails?.phoneNumber && (
+                                                                <div className="text-danger">{companyErrors.companyDetails.phoneNumber}</div>
+                                                            )}
+                                                        </div>
+
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Address</label>
+                                                            <textarea
+                                                                className="form-control"
+                                                                name="companyDetails.companyAddress"
+                                                                placeholder="Address"
+                                                                value={formChange?.companyDetails?.companyAddress || ""}
+                                                                onChange={handleChange}
+                                                            ></textarea>
+                                                            {companyErrors.companyDetails?.companyAddress && (
+                                                                <div className="text-danger">{companyErrors.companyDetails.companyAddress}</div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Status</label>
+                                                            <select
+                                                                className="form-select"
+                                                                aria-label="Default select example"
+                                                                name="status"
+                                                                value={formChange?.status}
+                                                                onChange={handleChange}
+                                                            >
+                                                                <option value="">Select Status</option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="Inactive">Inactive</option>
+                                                            </select>
+                                                        </div>
+
+                                                        {!isEdited && (
+                                                            <>
+                                                                <div className="mb-3">
+                                                                    <label className="form-label">Manager Name</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        name="managerDetails.name"
+                                                                        placeholder="Manager Name"
+                                                                        value={formChange?.managerDetails?.name || ""}
+                                                                        onChange={handleChange}
+                                                                    />
+                                                                    {companyErrors.managerDetails?.name && (
+                                                                        <div className="text-danger">{companyErrors.managerDetails.name}</div>
+                                                                    )}
+                                                                </div>
+
+                                                                <div className="mb-3">
+                                                                    <label className="form-label">Manager Email</label>
+                                                                    <input
+                                                                        type="email"
+                                                                        className="form-control"
+                                                                        name="managerDetails.emailId"
+                                                                        placeholder="Manager Email"
+                                                                        value={formChange?.managerDetails?.emailId || ""}
+                                                                        onChange={handleChange}
+                                                                    />
+                                                                    {companyErrors.managerDetails?.emailId && (
+                                                                        <div className="text-danger">{companyErrors.managerDetails.emailId}</div>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                <div className="text-center mt-3">
+                                                    <button type="button" className="btn btn-primary" onClick={handleUpdate} disabled={submitButton}>
+                                                        {submitButton ? (isEdited ? "Updating..." : "Saving...") : isEdited ? "Update" : "Save"}
+                                                    </button>
+                                                </div>
+                                            </form>
+
 
                                         </div>
                                     )}
@@ -352,11 +496,11 @@ const Company = () => {
                         </div>
                     </div>
                 </div>
-                </div>
-                </>
+            </div>
+        </>
 
-                );
+    );
 };
 
-                export default Company;
+export default Company;
 

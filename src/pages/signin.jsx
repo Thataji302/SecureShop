@@ -39,7 +39,7 @@ const SignIn = () => {
     const [pwd, setPwd] = useState('');
     const [error, setError] = useState('');
     const history = useHistory();
-    const [buttonText, setButtonText] = useState('Login with Password');
+    const [buttonText, setButtonText] = useState('Login');
     const [show, setShow] = useState(false);
     const [activeLoad, setActiveLoad] = useState("");
     const [config, setConfig] = useState({});
@@ -519,18 +519,18 @@ const SignIn = () => {
                         <div className="signin-section emaillogin ">
                             <h1 className="bold-heading">Login</h1>
                             <p>Enter Login Credentials</p>
-                            <p className="note-msg"><span>Note: </span>First time users must log in via OTP</p>
+                            {/* <p className="note-msg"><span>Note: </span>First time users must log in via OTP</p> */}
                             <div className="form-floating mb-3 mt-5">
                                 <input type="text" className="form-control" id="floatingInput" name="emailid" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="" onFocus={(e) => handleMessage(e)} onKeyPress={handleKeypress} autoComplete="on" />
                                 <label htmlFor="floatingInput">Email<span>*</span></label>
                             </div>
 
-                            {show === true ?
+                            {/* {show === true ? */}
                                 <div className="form-floating mb-3">
                                     <input type="password" className="form-control" id="floatingInput" placeholder="Password" onChange={(e) => setPwd(e.target.value)} onFocus={(e) => handleMessage(e)} onKeyPress={handleKeypress} />
                                     <label htmlFor="floatingInput">Password<span>*</span></label>
                                 </div>
-                                : ""}
+                                {/* : ""} */}
 
 
                             <div className="signin-footer">
@@ -566,7 +566,7 @@ const SignIn = () => {
 
 
                     </div>
-                    <div className="mt-1 text-center"><p>� 2024 Dealer Reports.</p></div>
+                    <div className="mt-1 text-center"><p>&copy; 2024 Dealer Reports.</p></div>
                 </div>
             </div>
 

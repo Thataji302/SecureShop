@@ -132,7 +132,7 @@ const User = () => {
                 "status": formChange?.status,
                 "phoneNumber": formChange?.phoneNumber,
                 "companyId": companyId,
-                "type": "companyUser",
+                "usertype": formChange?.usertype,
                 "id": id,
                 "userId": userid,
             }
@@ -160,6 +160,7 @@ const User = () => {
             formChange["companyId"] = companyId
             formChange["type"] = "companyUser"
             formChange["userId"] = userid
+            formChange["usertype"]= formChange?.usertype
             let payload = formChange;
             console.log("payload", payload)
             const urlLink = lambda + '/addUser?appname=' + appname;
@@ -250,6 +251,7 @@ const User = () => {
                 "emailId": formChange?.emailId,
                 "status": "Archive",
                 "phoneNumber": formChange?.phoneNumber,
+                "usertype": formChange?.usertype,
                 "companyId": companyId,
                 "type": "companyUser",
                 "userId": id,
@@ -425,6 +427,18 @@ const User = () => {
                                                                         <option value="">Select Status </option>
                                                                         <option value="Active">Active</option>
                                                                         <option value="Inactive"> Inactive</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">User Type</label>
+                                                                    {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
+                                                                    <select className="form-select" aria-label="Default select example" name="usertype" value={formChange?.usertype} onChange={handleChange}>
+                                                                        <option value="">Select Status </option>
+                                                                        <option value="operator">Operator</option>
+                                                                        <option value="manager"> Manager</option>
 
                                                                     </select>
                                                                 </div>
