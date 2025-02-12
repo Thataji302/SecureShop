@@ -430,7 +430,7 @@ const Company = () => {
                                                     </div>
 
                                                     <div className="col-md-6">
-                                                        <div className="mb-3">
+                                                    {!isEdited && ( <div className="mb-3">
                                                             <label className="form-label">Status</label>
                                                             <select
                                                                 className="form-select"
@@ -443,7 +443,7 @@ const Company = () => {
                                                                 <option value="Active">Active</option>
                                                                 <option value="Inactive">Inactive</option>
                                                             </select>
-                                                        </div>
+                                                        </div>)}
 
                                                         {!isEdited && (
                                                             <>
