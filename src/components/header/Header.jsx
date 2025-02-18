@@ -80,6 +80,14 @@ const Header = (props) => {
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 50);
     });
+
+    if(localStorage.getItem("userType") === 'SUPER ADMIN'){
+      menuList = [{
+        id: '1',
+        labelName: 'Company',
+        route: "company"
+      }]
+    }
   }, []);
   useEffect(() => {
     if (window.site) {
@@ -89,33 +97,6 @@ const Header = (props) => {
 
   }, [window.site]);
 
-  useEffect(() => {
-
-    if (userData) {
-
-      setUserName(userData?.name?.split(" "));
-      if (userData?.userType) {
-
-        if (userData.userType === "SUPER ADMIN") {
-
-          menuList = [{
-            id: '1',
-            labelName: 'Company',
-            route: "company"
-          }]
-        }
-
-      } else {
-
-        GetUserDataContext()
-      }
-
-    } else {
-      GetUserDataContext()
-    }
-
-
-  }, [userData]);
 
 
   let imageCloudfront;
