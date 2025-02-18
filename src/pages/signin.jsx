@@ -29,6 +29,7 @@ import moment from "moment";
 
 
 
+
 const SignIn = () => {
     // const [menus, setMenus] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -290,11 +291,19 @@ const SignIn = () => {
                 localStorage.setItem("userId", response.result.userid);
                 let currentDate = new Date().toJSON();
                 localStorage.setItem("currentSessionClientTime", currentDate);
+                const userDatares = await tmdbApi.getUserData({});
+              if(userDatares?.result.length>0){
+                if(userDatares.result[0]?.userType ===  "SUPER ADMIN"){
+                    history.push("/company");
+                }else{
+                    history.push("/yellowForm");
+                }
+              }
                 // let calculationValues = JSON.parse(localStorage.getItem("calculationValues"));
                 // if (calculationValues) {
                 //     history.push("/calculator");
                 // } else {
-                    history.push("/yellowForm");
+                   // history.push("/yellowForm");
                 // }
             } else if (response.result === "Invalid password") {
                 setError("Invalid password");

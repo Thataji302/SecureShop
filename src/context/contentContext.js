@@ -123,6 +123,7 @@ function ChangeContentProvider(props) {
 
             setUserData(response.result[0]);
             localStorage.setItem("username", response.result[0].name)
+            
            // localStorage.setItem("ClientType", response.result[0].type)
             // let userArr = response.result[0].permissions
 

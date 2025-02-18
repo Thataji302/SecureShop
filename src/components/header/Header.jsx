@@ -22,36 +22,36 @@ import { contentContext } from "../../context/contentContext";
 
 let menuList = [
   {
-      id: '1',
-      labelName: 'Sales',
-      route: "yellowForm"
+    id: '1',
+    labelName: 'Sales',
+    route: "yellowForm"
   },
- 
+
   {
-      id: '2',
-      labelName: 'Purchases',
-     route: "purchases"
+    id: '2',
+    labelName: 'Purchases',
+    route: "purchases"
   },
   {
     id: '3',
     labelName: 'Lookups',
     route: "lookups"
-},
-  {
-      id: '4',
-      labelName: 'Reports',
-      //route: "reports"
   },
   {
-      id: '5',
-      labelName: 'Users',
-      route: "user"
+    id: '4',
+    labelName: 'Reports',
+    //route: "reports"
+  },
+  {
+    id: '5',
+    labelName: 'Users',
+    route: "user"
   },
   {
     id: '6',
     labelName: 'Retail',
     route: "retail"
-}
+  }
 
 ]
 
@@ -65,18 +65,18 @@ const Header = (props) => {
   const [activeId, setActiveId] = useState();
 
   const { userData, setUserData, setShowPopup, setSelectedOptions, setMultiSelectFields, setActiveFieldsObj,
-    setSelectedOptionsClientName, setSearchPayload, setInitialCategoriesData1, GetTimeActivity,GetUserDataContext } = useContext(contentContext)
+    setSelectedOptionsClientName, setSearchPayload, setInitialCategoriesData1, GetTimeActivity, GetUserDataContext } = useContext(contentContext)
 
   let token = localStorage.getItem("token")
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-        history.push("/");
-    } 
-   
-}, []);
+      history.push("/");
+    }
+
+  }, []);
   //console.log('token', token)
   useEffect(() => {
-   
+
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 50);
     });
@@ -90,31 +90,39 @@ const Header = (props) => {
   }, [window.site]);
 
   useEffect(() => {
- 
-   if(userData){
-    setUserName(userData?.name?.split(" "));
-    if(userData.userType === "SUPER ADMIN"){
-    
-      menuList = [{
-          id: '1',
-          labelName: 'Company',
-          route: "company"
-        }]
+
+    if (userData) {
+
+      setUserName(userData?.name?.split(" "));
+      if (userData?.userType) {
+
+        if (userData.userType === "SUPER ADMIN") {
+
+          menuList = [{
+            id: '1',
+            labelName: 'Company',
+            route: "company"
+          }]
+        }
+
+      } else {
+
+        GetUserDataContext()
+      }
+
+    } else {
+      GetUserDataContext()
     }
 
-   }else{
-    GetUserDataContext()
-   }
-    
 
   }, [userData]);
-  
+
 
   let imageCloudfront;
   if (config.common && config.common.imageCloudfront) {
     imageCloudfront = config.common.imageCloudfront;
   }
-  
+
   const handlemenuclick = async (e, path, id) => {
     if (id === 100005) {
       window.open(
@@ -154,11 +162,11 @@ const Header = (props) => {
   }
   const onClickMenu = (e, item) => {
     //setMenu(id);
-    console.log('handleActiveMenuObj------------>',item)
-     setActiveId(item.id)
-     
-     history.push(item.route)
-}
+    console.log('handleActiveMenuObj------------>', item)
+    setActiveId(item.id)
+
+    history.push(item.route)
+  }
   return (
     <header id="page-topbar" >
       <div className="navbar-header inner_header">
@@ -177,7 +185,7 @@ const Header = (props) => {
 
 
           </div>
-          
+
 
           <button type="button"
             className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
@@ -185,23 +193,23 @@ const Header = (props) => {
             <i className="fa fa-fw fa-bars"></i>
           </button>
           {token &&
-          <div className="dropdown d-none d-lg-block ms-2 menu">
-          {menuList.map((val) => (
-         
-            <button key={val.id} href='#' className={`${activeId === val.id ? "btn header-item waves-effect active" : "btn header-item waves-effect"}`} onClick={(e) => onClickMenu(e, val)}  data-tip={val.labelName}><span key="t-chat">{val.labelName}</span></button> 
-        ))}
-                       
-                    </div>}
-                   
+            <div className="dropdown d-none d-lg-block ms-2 menu">
+              {menuList.map((val) => (
+
+                <button key={val.id} href='#' className={`${activeId === val.id ? "btn header-item waves-effect active" : "btn header-item waves-effect"}`} onClick={(e) => onClickMenu(e, val)} data-tip={val.labelName}><span key="t-chat">{val.labelName}</span></button>
+              ))}
+
+            </div>}
+
         </div>
 
         <div className="d-flex">
-       
+
           {!token ?
             <div className="d-flex align-items-center">
               <a className="register btn-outline" href="#" onClick={handleSignin}>Sign In</a>
-              </div> :
-              
+            </div> :
+
             <div className="dropdown d-inline-block">
               <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -215,7 +223,7 @@ const Header = (props) => {
                 <a className="dropdown-item" href="#" onClick={profile}><i className="bx bx-user font-size-16 align-middle me-1"></i>
                   <span key="t-profile">Profile</span></a>
 
-            
+
 
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item text-danger" href="#" onClick={handleLogout}><i
@@ -224,7 +232,7 @@ const Header = (props) => {
               </div>
             </div>}
 
-            
+
 
         </div>
       </div>
