@@ -26,6 +26,7 @@ import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import axios from 'axios';
 import { removeSpecialCharecters, location } from '././../utils/commonUtils';
+import StateDropdown from "./StateDropdown";
 
 let { lambda, country, appname } = window.app;
 var urlParams = location("type");
@@ -253,11 +254,19 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
+                    debugger
                     let branchesData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(branchesData && branchesData.name)
                     setBranchAddress(branchesData && branchesData.address)
                     setNumber(branchesData && branchesData.phoneNumber)
                     setDealerCode(branchesData && branchesData.dealerCode)
+                    setState(branchesData && branchesData.state)
+                    setBranch(branchesData && branchesData.branch)
+                    setSubBranch(branchesData && branchesData.subbranch)
+                    setGst(branchesData && branchesData.gst)
+                    setStatus(branchesData && branchesData.status)
+
+
                 }
             });
 
@@ -348,7 +357,9 @@ const Lookups = () => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         let companyId = localStorage.getItem("companyId")
         console.log("lookupid", lookupid)
+        
         if (valid && lookupid) {
+     
             setSubmitButton(true)
             let payload;
             // let userid = localStorage.getItem("userid")
@@ -361,7 +372,12 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
                 "companyId": companyId,
-                "dealerCode": dealerCode
+                "dealerCode": dealerCode,
+                "subbranch":subbranch,
+                "branch":branch,
+                "gst":gst,
+                "state":state,
+                "status":status
             };
             const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=branches" + "&lookupId=" + lookupid;
             axios({
@@ -374,7 +390,7 @@ const Lookups = () => {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./lookups");
                         // setBranchStatus(false)
-                     //   branchTab()
+                        //   branchTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -391,7 +407,12 @@ const Lookups = () => {
                 "status": "Active",
                 "userid": userid,
                 "companyId": companyId,
-                "dealerCode": dealerCode
+                "dealerCode": dealerCode,
+                "subbranch":subbranch,
+                "branch":branch,
+                "gst":gst,
+                "state":state,
+                "status":status
             };
             console.log('payload', payload)
             const urlLink = lambda + '/lookups?appname=' + appname;
@@ -404,8 +425,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
-                       // setBranchStatus(false)
-                       // branchTab()
+                        // setBranchStatus(false)
+                        // branchTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -443,7 +464,7 @@ const Lookups = () => {
                         // history.push("./models");
                         // history.push("./lookups");
                         // setModelStatus(false)
-                       // modelTab()
+                        // modelTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -471,7 +492,7 @@ const Lookups = () => {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./models");
                         //setModelStatus(false)
-                      //  modelTab()
+                        //  modelTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -508,7 +529,7 @@ const Lookups = () => {
                         //history.push("./insurance");
                         // history.push("./lookups");
                         // setInsuranceStatus(false)
-                      //  insuranceTab()
+                        //  insuranceTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -535,8 +556,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./insurance");
-                       // setInsuranceStatus(false)
-                     //   insuranceTab()
+                        // setInsuranceStatus(false)
+                        //   insuranceTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -573,7 +594,7 @@ const Lookups = () => {
                         //history.push("./finance");
                         // history.push("./lookups");
                         // setFinanceStatus(false)
-                       // financeTab()
+                        // financeTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -600,8 +621,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./finance");
-                       // setFinanceStatus(false)
-                      //  financeTab()
+                        // setFinanceStatus(false)
+                        //  financeTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -638,7 +659,7 @@ const Lookups = () => {
                         // history.push("./fastag");
                         // history.push("./lookups");
                         // setFastagStatus(false)
-                       // fastagTab()
+                        // fastagTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
 
@@ -669,7 +690,7 @@ const Lookups = () => {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
                         //setFastagStatus(false)
-                       // fastagTab()
+                        // fastagTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -705,7 +726,7 @@ const Lookups = () => {
                         // history.push("./fastag");
                         // history.push("./lookups");
                         // setVendorStatus(false)
-                      //  vendorTab()
+                        //  vendorTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
 
@@ -734,8 +755,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
-                      //  setVendorStatus(false)
-                       // vendorTab()
+                        //  setVendorStatus(false)
+                        // vendorTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -833,12 +854,12 @@ const Lookups = () => {
     };
     function onUpdate() {
         // setResultSuccess(false)
-       // setBranchStatus(false)
-         setUserSuccess(false)
-         // const type = "companyUser";
+        // setBranchStatus(false)
+        setUserSuccess(false)
+        // const type = "companyUser";
         // getUser();
-         window.location = "/lookups"
-     };
+        window.location = "/lookups"
+    };
     function closePopup() {
         setDeleteConfirm(false)
     };
@@ -920,6 +941,12 @@ const Lookups = () => {
         setVendorNumber("")
         setVendorStatus(true)
     }
+
+    const [branch, setBranch] = useState("mainbranch");
+    const [subbranch,setSubBranch] =  useState("");
+    const [gst,setGst] =  useState("");
+    const [state,setState] =  useState("");
+    const [status,setStatus] =  useState("");
     return (
         <>
             <div id="layout-wrapper">
@@ -979,7 +1006,7 @@ const Lookups = () => {
                                         </ul>
                                         <div className="tab-content pt-15 text-muted">
                                             <div className="tab-pane active branches" id="ENTITY" role="tabpanel">
-                                                {!branchStatus  && savedPropertyData && savedPropertyData?.length > 0 &&
+                                                {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>branches</h5>
@@ -1033,7 +1060,7 @@ const Lookups = () => {
                                                             </div>
                                                             :
                                                             <div className="form_section"><div className="empty_page">
-                                                               <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no branches available.<br />Please add branches.</p>
                                                                 <a className="btn btn-primary" onClick={addClick}>ADD</a>
                                                             </div> </div>}
@@ -1051,6 +1078,41 @@ const Lookups = () => {
                                                             </div>
                                                         </div>
                                                         <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Branch</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="branch"
+                                                                        value={branch} onChange={(e) => setBranch(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Branch</option>
+                                                                        <option value="mainbranch">Main Branch</option>
+                                                                        <option value="subbranch">Sub Branch</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            {
+                                                                //savedPropertyData
+                                                                branch === 'subbranch' && <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Sub Branch</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="subbranch"
+                                                                        value={subbranch} onChange={(e) => setSubBranch(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select sub Branch</option>
+                                                
+                                                                       {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData.filter(item=>item._id!=id && item.branch === 'mainbranch')?.map((eachItem, key) => {
+                                                                            return (eachItem && eachItem.status == "Active"  && <option value={eachItem._id}>{eachItem.name}</option>)
+                                                                       })}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            }
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Branch Name</label>
@@ -1080,6 +1142,36 @@ const Lookups = () => {
                                                                     <input type="text" className="form-control" id="name" placeholder="Enter Dealer Code" name="dealerCode" value={dealerCode} onChange={(e) => setDealerCode(e.target.value)} autoComplete="on" />
                                                                 </div>
                                                             </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">GST</label>
+                                                                    <input type="text" className="form-control" id="gst" placeholder="Enter GST" name="gst" value={gst} onChange={(e) => setGst(e.target.value)}  />
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                <StateDropdown onSelect={(e) => setState(e)}  value={state}/>
+                                                                </div></div>
+
+                                                                <div className="col-md-6">
+                                                               {id && <div className="mb-3 input-field">
+
+                                                                    <label className="form-label form-label">Status</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="status"
+                                                                        value={status} onChange={(e) => setStatus(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="active">Active</option>
+                                                                        <option value="inactive">InActive</option>
+                                                                    </select>
+                                                               
+                                                                </div>
+                                                                }</div>
+                                                                
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1102,46 +1194,46 @@ const Lookups = () => {
                                                 {!modelStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
-                                                        <div className="table-responsive">
-                                                            <table className="table table-striped ">
-                                                                <thead>
-                                                                    <tr>
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
+                                                                        <tr>
 
-                                                                        {/* <th className="align-middle">S No</th> */}
-                                                                        <th className="align-middle">Model Name</th>
-                                                                        <th className="align-middle">Color</th>
-                                                                        <th className="align-middle">Version</th>
-                                                                        <th className="align-middle">Created</th>
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Model Name</th>
+                                                                            <th className="align-middle">Color</th>
+                                                                            <th className="align-middle">Version</th>
+                                                                            <th className="align-middle">Created</th>
 
-                                                                        <th className="align-middle">Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
-                                                                        return (eachItem && eachItem.status == "Active" &&
-                                                                            <tr>
-                                                                                {/* <td>1</td> */}
-                                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                                <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
-                                                                                <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
-                                                                                <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                            <th className="align-middle">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (eachItem && eachItem.status == "Active" &&
+                                                                                <tr>
+                                                                                    {/* <td>1</td> */}
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
+                                                                                    <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
-                                                                                <td><div className="d-flex">
-                                                                                    <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
-                                                                                    <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
-                                                                            </tr>)
+                                                                                    <td><div className="d-flex">
+                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
+                                                                                        <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
+                                                                                </tr>)
 
-                                                                    })
+                                                                        })
 
-                                                                    }
-                                                                </tbody>
-                                                            </table>
-                                                        </div>:
-                                                        <div className="form_section"><div className="empty_page">
-                                                            <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
-                                                            <p>There are no models available.<br />Please add models.</p>
-                                                            <a className="btn btn-primary" onClick={modeladdClick}>ADD</a>
-                                                        </div> </div>}
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> :
+                                                            <div className="form_section"><div className="empty_page">
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
+                                                                <p>There are no models available.<br />Please add models.</p>
+                                                                <a className="btn btn-primary" onClick={modeladdClick}>ADD</a>
+                                                            </div> </div>}
                                                     </div>
                                                     :
                                                     <div className="form_seciton">
@@ -1486,7 +1578,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane vendor" id="ven" role="tabpanel">
-                                                {!vendorStatus&& savedPropertyData && savedPropertyData?.length > 0 &&
+                                                {!vendorStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>vendor</h5>
@@ -1591,7 +1683,7 @@ const Lookups = () => {
                                 onConfirm={e => onConfirm1()}
                             >
                             </SweetAlert>}
-                            {userSuccess &&
+                        {userSuccess &&
                             <SweetAlert show={userSuccess}
                                 custom
                                 confirmBtnText="Ok"

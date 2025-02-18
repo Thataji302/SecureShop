@@ -293,6 +293,7 @@ const SignIn = () => {
                 localStorage.setItem("currentSessionClientTime", currentDate);
                 const userDatares = await tmdbApi.getUserData({});
               if(userDatares?.result.length>0){
+                localStorage.setItem("userType", userDatares.result[0]?.userType);
                 if(userDatares.result[0]?.userType ===  "SUPER ADMIN"){
                     history.push("/company");
                 }else{
