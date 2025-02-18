@@ -33,6 +33,8 @@ const Company = () => {
     const [savedCompanyData, setSavedCompanyData] = useState([]);
     const [isEdited, setIsEdited] = useState(false);
     const [companySuccess, setCompanySuccess] = useState(false);
+    const [companyWarning, setCompanyWarning] = useState(false);
+    
 
     const [formChange, setFormChange] = useState({
         companyDetails: {
@@ -45,11 +47,12 @@ const Company = () => {
             emailId: "",
             name: ""
         },
-        status: "Active"
+        status: "ACTIVE"
     });
     const [companyErrors, setCompanyErrors] = useState({});
     const [submitButton, setSubmitButton] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("Update Successfully");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [companyWarningMessage, setCompanyWarningMessage] = useState("");
     const [branchStatus, setBranchStatus] = useState(false);
 
     useEffect(() => {
@@ -77,7 +80,7 @@ const Company = () => {
         })
             .then(function (response) {
                 if (response.data.statusCode === 200) {
-                    setFormChange(response.data.result && response.data.result[0]);
+                    // setFormChange(response.data.result && response.data.result[0]);
                 }
             });
     }
@@ -85,6 +88,7 @@ const Company = () => {
     const backClick = () => {
         setBranchStatus(false);
         getCompanies();
+        setCompanyErrors({})
     }
 
     const getCompanies = () => {
@@ -141,16 +145,55 @@ const Company = () => {
                 data: payload
             })
                 .then(function (response) {
+                    console.log('response ', response)
                     if (response.data.statusCode === 200) {
-                        setSuccessMessage("Updated Successfully");
+
                         getCompanies();
                         setSubmitButton(false);
                         // setBranchStatus(false);
                         if (!id) {
-                            setFormChange({});
-                            setSuccessMessage("Save Successfully");
+                            if (response.data.result == "company already exists") {
+                                setCompanyWarningMessage("Company Already Exists");
+                                setCompanyWarning(true)
+                            }else if (response.data.result == "Manager already exists") {
+                                setCompanyWarningMessage("Manager Already Exists");
+                                setCompanyWarning(true)
+                            } else {
+                                setSuccessMessage("Save Successfully");
+                                setFormChange({
+                                    companyDetails: {
+                                        companyName: "",
+                                        companyEmailId: "",
+                                        phoneNumber: "",
+                                        companyAddress: ""
+                                    },
+                                    managerDetails: {
+                                        emailId: "",
+                                        name: ""
+                                    },
+                                    status: "ACTIVE"
+                                });
+                                setCompanySuccess(true)
+                            }
+
+                        } else {
+                            setSuccessMessage("Updated Successfully");
+                            setFormChange({
+                                companyDetails: {
+                                    companyName: "",
+                                    companyEmailId: "",
+                                    phoneNumber: "",
+                                    companyAddress: ""
+                                },
+                                managerDetails: {
+                                    emailId: "",
+                                    name: ""
+                                },
+                                status: "ACTIVE"
+                            });
+                            setCompanySuccess(true)
                         }
-                        setCompanySuccess(true)
+                        
                     }
                 })
                 .catch((error) => {
@@ -166,10 +209,12 @@ const Company = () => {
         const errors = {};
 
         // Destructuring for cleaner access
-        const { companyDetails, managerDetails } = formChange;
+        const { companyDetails, managerDetails } = { ...formChange };
 
+        console.log('companyDetails ', companyDetails, companyDetails?.companyName, "sss")
         // Company Details Validation
-        if (!companyDetails?.companyName?.trim()) {
+        if (companyDetails && companyDetails?.companyName == "") {
+            console.log("eeesss")
             errors.companyName = "Please enter company name";
             formIsValid = false;
         }
@@ -209,6 +254,7 @@ const Company = () => {
             }
         }
 
+        console.log('eeee', errors)
         setCompanyErrors(errors);
         return formIsValid;
     };
@@ -250,7 +296,7 @@ const Company = () => {
 
     const addClick = () => {
         setIsEdited(false);
-        setFormChange({});
+        // setFormChange({});
         setBranchStatus(true);
     }
 
@@ -285,6 +331,12 @@ const Company = () => {
         setCompanySuccess(false)
     };
 
+    const onCompanyWarning = ()=> {
+        setCompanyWarning(false)
+    }
+
+    console.log('form', formChange)
+
     return (
         <>
             <div id="layout-wrapper">
@@ -298,6 +350,17 @@ const Company = () => {
                         onConfirm={e => onUpdate()}
                     >
                     </SweetAlert>}
+
+                {companyWarning &&
+                    <SweetAlert show={companyWarning}
+                        custom
+                        confirmBtnText="Ok"
+                        confirmBtnBsStyle="primary"
+                        title={companyWarningMessage}
+                        onConfirm={e => onCompanyWarning()}
+                    >
+                    </SweetAlert>}
+
                 <div className="main-content look_ups purchases">
                     <div className="page-content">
                         <div className="container-fluid">
@@ -360,7 +423,7 @@ const Company = () => {
                                         <div>
                                             <div className="breadcurmb">
                                                 <div className="title_block">
-                                                    <h5>{id ? "Edit Company" : "Add Company"}</h5>
+                                                    <h5>{isEdited ? "Edit Company" : "Add Company"}</h5>
                                                 </div>
                                                 <div className="buttons">
                                                     <button className="btn btn-secondary" onClick={backClick}>Back</button>
@@ -379,8 +442,8 @@ const Company = () => {
                                                                 value={formChange?.companyDetails?.companyName || ""}
                                                                 onChange={handleChange}
                                                             />
-                                                            {companyErrors.companyDetails?.companyName && (
-                                                                <div className="text-danger">{companyErrors.companyDetails.companyName}</div>
+                                                            {companyErrors?.companyName && (
+                                                                <div className="text-danger">{companyErrors?.companyName}</div>
                                                             )}
                                                         </div>
 
@@ -394,8 +457,8 @@ const Company = () => {
                                                                 value={formChange?.companyDetails?.companyEmailId || ""}
                                                                 onChange={handleChange}
                                                             />
-                                                            {companyErrors.companyDetails?.companyEmailId && (
-                                                                <div className="text-danger">{companyErrors.companyDetails.companyEmailId}</div>
+                                                            {companyErrors?.companyEmailId && (
+                                                                <div className="text-danger">{companyErrors?.companyEmailId}</div>
                                                             )}
                                                         </div>
 
@@ -409,8 +472,8 @@ const Company = () => {
                                                                 value={formChange?.companyDetails?.phoneNumber || ""}
                                                                 onChange={handleChange}
                                                             />
-                                                            {companyErrors.companyDetails?.phoneNumber && (
-                                                                <div className="text-danger">{companyErrors.companyDetails.phoneNumber}</div>
+                                                            {companyErrors?.phoneNumber && (
+                                                                <div className="text-danger">{companyErrors?.phoneNumber}</div>
                                                             )}
                                                         </div>
 
@@ -423,14 +486,14 @@ const Company = () => {
                                                                 value={formChange?.companyDetails?.companyAddress || ""}
                                                                 onChange={handleChange}
                                                             ></textarea>
-                                                            {companyErrors.companyDetails?.companyAddress && (
-                                                                <div className="text-danger">{companyErrors.companyDetails.companyAddress}</div>
+                                                            {companyErrors?.companyAddress && (
+                                                                <div className="text-danger">{companyErrors?.companyAddress}</div>
                                                             )}
                                                         </div>
                                                     </div>
 
                                                     <div className="col-md-6">
-                                                    {!isEdited && ( <div className="mb-3">
+                                                        <div className="mb-3">
                                                             <label className="form-label">Status</label>
                                                             <select
                                                                 className="form-select"
@@ -440,10 +503,10 @@ const Company = () => {
                                                                 onChange={handleChange}
                                                             >
                                                                 <option value="">Select Status</option>
-                                                                <option value="Active">Active</option>
-                                                                <option value="Inactive">Inactive</option>
+                                                                <option value="ACTIVE">ACTIVE</option>
+                                                                <option value="INACTVIE">INACTIVE</option>
                                                             </select>
-                                                        </div>)}
+                                                        </div>
 
                                                         {!isEdited && (
                                                             <>
@@ -457,8 +520,8 @@ const Company = () => {
                                                                         value={formChange?.managerDetails?.name || ""}
                                                                         onChange={handleChange}
                                                                     />
-                                                                    {companyErrors.managerDetails?.name && (
-                                                                        <div className="text-danger">{companyErrors.managerDetails.name}</div>
+                                                                    {companyErrors?.managerName && (
+                                                                        <div className="text-danger">{companyErrors?.managerName}</div>
                                                                     )}
                                                                 </div>
 
@@ -472,8 +535,8 @@ const Company = () => {
                                                                         value={formChange?.managerDetails?.emailId || ""}
                                                                         onChange={handleChange}
                                                                     />
-                                                                    {companyErrors.managerDetails?.emailId && (
-                                                                        <div className="text-danger">{companyErrors.managerDetails.emailId}</div>
+                                                                    {companyErrors?.managerEmailId && (
+                                                                        <div className="text-danger">{companyErrors?.managerEmailId}</div>
                                                                     )}
                                                                 </div>
                                                             </>
