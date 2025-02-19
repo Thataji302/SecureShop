@@ -26,6 +26,7 @@ import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import axios from 'axios';
 import { removeSpecialCharecters, location } from '././../utils/commonUtils';
+import StateDropdown from "./StateDropdown";
 
 let { lambda, country, appname } = window.app;
 var urlParams = location("type");
@@ -73,6 +74,9 @@ const Lookups = () => {
     const [insuranceName, setInsuranceName] = useState('');
     const [insuranceNumber, setInsuranceNumber] = useState('');
     const [commission, setCommission] = useState('');
+    const [fasttagState, setFasttagState] = useState('');
+    const [fasttagstatus, setFasttagstatus] = useState('');
+    const [fasttaggst, setFasttaggst] = useState('');
     const [financeNumber, setFinanceNumber] = useState('');
     const [fastagNumber, setFastagNumber] = useState('');
     const [vendorNumber, setVendorNumber] = useState('');
@@ -88,6 +92,7 @@ const Lookups = () => {
     const [dataType, setDataType] = useState('');
     const [submitButton, setSubmitButton] = useState(false);
     const [userSuccess, setUserSuccess] = useState(false);
+    const [title,setTitle]= useState("");
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -253,11 +258,19 @@ const Lookups = () => {
         })
             .then(function (response) {
                 if (response.data.result) {
+                    debugger
                     let branchesData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(branchesData && branchesData.name)
                     setBranchAddress(branchesData && branchesData.address)
                     setNumber(branchesData && branchesData.phoneNumber)
                     setDealerCode(branchesData && branchesData.dealerCode)
+                    setState(branchesData && branchesData.state)
+                    setBranch(branchesData && branchesData.branch)
+                    setSubBranch(branchesData && branchesData.subbranch)
+                    setGst(branchesData && branchesData.gst)
+                    setStatus(branchesData && branchesData.status)
+
+
                 }
             });
 
@@ -345,75 +358,71 @@ const Lookups = () => {
     const handleUpdate = (e) => {
         let valid = formvalidation();
         let lookupid = id;
-        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        let companyId = localStorage.getItem("companyId")
-        console.log("lookupid", lookupid)
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId");
+        let companyId = localStorage.getItem("companyid");
+    
+        console.log("lookupid", lookupid);
+    
         if (valid && lookupid) {
-            setSubmitButton(true)
-            let payload;
-            // let userid = localStorage.getItem("userid")
-            payload = {
+            setSubmitButton(true);
+            let payload = {
                 "name": name,
                 "phoneNumber": phoneNumber,
                 "address": branchAddress,
                 "type": "branches",
-                "status": "Active",
                 "lookupId": lookupid,
                 "userid": userid,
                 "companyId": companyId,
-                "dealerCode": dealerCode
+                "dealerCode": dealerCode,
+                "subbranch": subbranch,
+                "branch": branch,
+                "gst": gst,
+                "state": state,
+                "status": status
             };
-            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=branches" + "&lookupId=" + lookupid;
-            axios({
-                method: 'POST',
-                url: urlLink,
-                data: payload
-            })
-                .then(function (response) {
+    
+            const urlLink = `${lambda}/updateBranch?appname=dealerReports&branchid=${lookupid}`;
+    
+            axios.post(urlLink, payload)
+                .then(response => {
                     if (response.data.statusCode === 200) {
-                        // localStorage.setItem("previousid", response.data.result)
-                        // history.push("./lookups");
-                        // setBranchStatus(false)
-                     //   branchTab()
-                        setSubmitButton(false)
-                        setUserSuccess(true)
+                        setSubmitButton(false);
+                        setUserSuccess(true);
                     }
                 });
         } else if (valid) {
-            setSubmitButton(true)
-            let payload;
-
-            payload = {
+            setSubmitButton(true);
+            let payload = {
                 "name": name,
                 "phoneNumber": phoneNumber,
                 "address": branchAddress,
                 "type": "branches",
-                "status": "Active",
+                "status": "ACTIVE",
                 "userid": userid,
                 "companyId": companyId,
-                "dealerCode": dealerCode
+                "dealerCode": dealerCode,
+                "subbranch": subbranch,
+                "branch": branch,
+                "gst": gst,
+                "state": state,
+                "status": status
             };
-            console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname;
-            axios({
-                method: 'POST',
-                url: urlLink,
-                data: payload
-            })
-                .then(function (response) {
+    
+            console.log('payload', payload);
+    
+            const urlLink = `${lambda}/addBranch?appname=dealerReports&companyid=${companyId}&userid=${userid}`;
+    
+            axios.post(urlLink, payload)
+                .then(response => {
                     if (response.data.statusCode === 200) {
-                        // localStorage.setItem("previousid", response.data.result)
-                        // history.push("./branches");
-                       // setBranchStatus(false)
-                       // branchTab()
-                        setSubmitButton(false)
-                        setUserSuccess(true)
+                        setSubmitButton(false);
+                        setUserSuccess(true);
+                        setTitle(response.data.result)
                     }
                 });
         }
-
-        // formvalidation()
-    }
+    };
+    
     const modelUpdate = (e) => {
         let valid = formvalidation();
         let lookupid = id;
@@ -443,9 +452,10 @@ const Lookups = () => {
                         // history.push("./models");
                         // history.push("./lookups");
                         // setModelStatus(false)
-                       // modelTab()
+                        // modelTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
                     }
                 });
         } else if (valid) {
@@ -471,9 +481,10 @@ const Lookups = () => {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./models");
                         //setModelStatus(false)
-                      //  modelTab()
+                        //  modelTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
                     }
                 });
         }
@@ -508,7 +519,7 @@ const Lookups = () => {
                         //history.push("./insurance");
                         // history.push("./lookups");
                         // setInsuranceStatus(false)
-                      //  insuranceTab()
+                        //  insuranceTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -535,8 +546,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./insurance");
-                       // setInsuranceStatus(false)
-                     //   insuranceTab()
+                        // setInsuranceStatus(false)
+                        //   insuranceTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -573,7 +584,7 @@ const Lookups = () => {
                         //history.push("./finance");
                         // history.push("./lookups");
                         // setFinanceStatus(false)
-                       // financeTab()
+                        // financeTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -600,8 +611,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         //history.push("./finance");
-                       // setFinanceStatus(false)
-                      //  financeTab()
+                        // setFinanceStatus(false)
+                        //  financeTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -613,6 +624,8 @@ const Lookups = () => {
         let valid = formvalidation();
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        let companyId = localStorage.getItem("companyid");
+
         if (valid && lookupid) {
             setSubmitButton(true)
             let payload;
@@ -621,12 +634,14 @@ const Lookups = () => {
                 "name": name,
                 "phoneNumber": fastagNumber,
                 "type": "fastag",
-                "status": "Active",
+                "status": fasttagstatus,
                 "commission": commission,
                 "lookupId": lookupid,
                 "userid": userid,
-            };
-            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=fastag" + "&lookupId=" + lookupid;
+                "state":fasttagState,
+                "gst":fasttaggst
+            }; 
+            const urlLink = lambda + '/updateFasttag?companyid='+companyId+'&appname=' + appname + "&type=fastag" + "&fasttagid=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -638,9 +653,11 @@ const Lookups = () => {
                         // history.push("./fastag");
                         // history.push("./lookups");
                         // setFastagStatus(false)
-                       // fastagTab()
+                        // fastagTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
+
 
                     }
                 });
@@ -655,10 +672,12 @@ const Lookups = () => {
                 "status": "Active",
                 "commission": commission,
                 "userid": userid,
+                "state":fasttagState,
+                "gst":fasttaggst
 
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/addFastag?companyid='+companyId+'&appname=' + appname+'&userid=' + userid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -669,9 +688,11 @@ const Lookups = () => {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
                         //setFastagStatus(false)
-                       // fastagTab()
+                        // fastagTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
+
                     }
                 });
         }
@@ -705,7 +726,7 @@ const Lookups = () => {
                         // history.push("./fastag");
                         // history.push("./lookups");
                         // setVendorStatus(false)
-                      //  vendorTab()
+                        //  vendorTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
 
@@ -734,8 +755,8 @@ const Lookups = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./fastag");
-                      //  setVendorStatus(false)
-                       // vendorTab()
+                        //  setVendorStatus(false)
+                        // vendorTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -743,40 +764,50 @@ const Lookups = () => {
         }
         // formvalidation()
     }
+    let apiName="branchinfo"
     const branchTab = (e) => {
         const type = "branches";
+        apiName="branchInfo";
         GetPropertyData(type);
         setBranchStatus(false)
     }
     const modelTab = (e) => {
         const type = "models";
+        apiName="modelsinfo"
         GetPropertyData(type);
         setModelStatus(false)
     }
     const insuranceTab = (e) => {
         const type = "insurance";
+        apiName="insuranceinfo"
         GetPropertyData(type);
         setInsuranceStatus(false)
     }
     const financeTab = (e) => {
         const type = "finance";
+        apiName="financeinfo"
         GetPropertyData(type);
         setFinanceStatus(false)
     }
     const fastagTab = (e) => {
         const type = "fastag";
+        apiName="fastagInfo"
         GetPropertyData(type);
         setFastagStatus(false)
     }
     const vendorTab = (e) => {
         const type = "vendor";
+        apiName="vendorinfo"
         GetPropertyData(type);
         setVendorStatus(false)
     }
 
     const GetPropertyData = (type) => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
+        let companyId = localStorage.getItem("companyid");
+             //   const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
+
+        const urlLink = lambda + '/'+apiName+'?appname=' + appname + "&companyid=" + companyId + "&status=Active" + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
@@ -833,12 +864,12 @@ const Lookups = () => {
     };
     function onUpdate() {
         // setResultSuccess(false)
-       // setBranchStatus(false)
-         setUserSuccess(false)
-         // const type = "companyUser";
+        // setBranchStatus(false)
+        setUserSuccess(false)
+        // const type = "companyUser";
         // getUser();
-         window.location = "/lookups"
-     };
+        window.location = "/lookups"
+    };
     function closePopup() {
         setDeleteConfirm(false)
     };
@@ -920,6 +951,12 @@ const Lookups = () => {
         setVendorNumber("")
         setVendorStatus(true)
     }
+
+    const [branch, setBranch] = useState("mainbranch");
+    const [subbranch,setSubBranch] =  useState("");
+    const [gst,setGst] =  useState("");
+    const [state,setState] =  useState("");
+    const [status,setStatus] =  useState("Active");
     return (
         <>
             <div id="layout-wrapper">
@@ -979,7 +1016,7 @@ const Lookups = () => {
                                         </ul>
                                         <div className="tab-content pt-15 text-muted">
                                             <div className="tab-pane active branches" id="ENTITY" role="tabpanel">
-                                                {!branchStatus  && savedPropertyData && savedPropertyData?.length > 0 &&
+                                                {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>branches</h5>
@@ -1033,7 +1070,7 @@ const Lookups = () => {
                                                             </div>
                                                             :
                                                             <div className="form_section"><div className="empty_page">
-                                                               <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
                                                                 <p>There are no branches available.<br />Please add branches.</p>
                                                                 <a className="btn btn-primary" onClick={addClick}>ADD</a>
                                                             </div> </div>}
@@ -1051,6 +1088,51 @@ const Lookups = () => {
                                                             </div>
                                                         </div>
                                                         <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Branch</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="branch"
+                                                                        value={branch} onChange={(e) => setBranch(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Branch</option>
+                                                                        <option value="mainbranch">Main Branch</option>
+                                                                        <option value="subbranch">Sub Branch</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            {
+                                                                //savedPropertyData
+                                                                branch === 'subbranch' && <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Sub Branch</label>
+                                                                    <select
+    className="form-select"
+    aria-label="Default select example"
+    name="subbranch"
+    value={subbranch}
+    onChange={(e) => setSubBranch(e.target.value)}
+    onFocus={(e) => handleMessage(e)}
+>
+    <option value="">Select sub Branch</option>
+
+    {savedPropertyData &&
+        savedPropertyData.length > 0 &&
+        savedPropertyData
+            .filter(item => item.branch === 'mainbranch' && item.status === "Active" && (!id || item._id !== id))
+            .map((eachItem) => (
+                <option key={eachItem._id} value={eachItem._id}>
+                    {eachItem.name}
+                </option>
+            ))
+    }
+</select>
+
+                                                                </div>
+                                                            </div>
+                                                            }
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Branch Name</label>
@@ -1080,6 +1162,36 @@ const Lookups = () => {
                                                                     <input type="text" className="form-control" id="name" placeholder="Enter Dealer Code" name="dealerCode" value={dealerCode} onChange={(e) => setDealerCode(e.target.value)} autoComplete="on" />
                                                                 </div>
                                                             </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">GST</label>
+                                                                    <input type="text" className="form-control" id="gst" placeholder="Enter GST" name="gst" value={gst} onChange={(e) => setGst(e.target.value)}  />
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                <StateDropdown onSelect={(e) => setState(e)}  value={state}/>
+                                                                </div></div>
+
+                                                                <div className="col-md-6">
+                                                               {id && <div className="mb-3 input-field">
+
+                                                                    <label className="form-label form-label">Status</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="status"
+                                                                        value={status} onChange={(e) => setStatus(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="active">Active</option>
+                                                                        <option value="inactive">InActive</option>
+                                                                    </select>
+                                                               
+                                                                </div>
+                                                                }</div>
+                                                                
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1102,46 +1214,46 @@ const Lookups = () => {
                                                 {!modelStatus ?
                                                     <div>
                                                         {savedPropertyData && savedPropertyData?.length > 0 ?
-                                                        <div className="table-responsive">
-                                                            <table className="table table-striped ">
-                                                                <thead>
-                                                                    <tr>
+                                                            <div className="table-responsive">
+                                                                <table className="table table-striped ">
+                                                                    <thead>
+                                                                        <tr>
 
-                                                                        {/* <th className="align-middle">S No</th> */}
-                                                                        <th className="align-middle">Model Name</th>
-                                                                        <th className="align-middle">Color</th>
-                                                                        <th className="align-middle">Version</th>
-                                                                        <th className="align-middle">Created</th>
+                                                                            {/* <th className="align-middle">S No</th> */}
+                                                                            <th className="align-middle">Model Name</th>
+                                                                            <th className="align-middle">Color</th>
+                                                                            <th className="align-middle">Version</th>
+                                                                            <th className="align-middle">Created</th>
 
-                                                                        <th className="align-middle">Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
-                                                                        return (eachItem && eachItem.status == "Active" &&
-                                                                            <tr>
-                                                                                {/* <td>1</td> */}
-                                                                                <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                                <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
-                                                                                <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
-                                                                                <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                            <th className="align-middle">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData?.map((eachItem, key) => {
+                                                                            return (eachItem && eachItem.status == "Active" &&
+                                                                                <tr>
+                                                                                    {/* <td>1</td> */}
+                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                                    <td>{eachItem?.color ? eachItem?.color : 'N/A'}</td>
+                                                                                    <td>{eachItem?.version ? eachItem?.version : 'N/A'}</td>
+                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
-                                                                                <td><div className="d-flex">
-                                                                                    <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
-                                                                                    <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
-                                                                            </tr>)
+                                                                                    <td><div className="d-flex">
+                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
+                                                                                        <a className="action-button delete tooltip-container" onClick={e => modelDelete(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
+                                                                                </tr>)
 
-                                                                    })
+                                                                        })
 
-                                                                    }
-                                                                </tbody>
-                                                            </table>
-                                                        </div>:
-                                                        <div className="form_section"><div className="empty_page">
-                                                            <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
-                                                            <p>There are no models available.<br />Please add models.</p>
-                                                            <a className="btn btn-primary" onClick={modeladdClick}>ADD</a>
-                                                        </div> </div>}
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> :
+                                                            <div className="form_section"><div className="empty_page">
+                                                                <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
+                                                                <p>There are no models available.<br />Please add models.</p>
+                                                                <a className="btn btn-primary" onClick={modeladdClick}>ADD</a>
+                                                            </div> </div>}
                                                     </div>
                                                     :
                                                     <div className="form_seciton">
@@ -1478,6 +1590,43 @@ const Lookups = () => {
 
 
                                                             </div>
+
+                                                            <div className="col-md-6">
+                                                               {id && <div className="mb-3 input-field">
+
+                                                                    <label className="form-label form-label">Status</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="fasttagstatus"
+                                                                        value={status} onChange={(e) => setFastagStatus(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="active">Active</option>
+                                                                        <option value="inactive">InActive</option>
+                                                                    </select>
+                                                               
+                                                                </div>
+                                                                }</div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <div className="form-floating mb-3">
+                                                                        <StateDropdown onSelect={(e) => setFasttagState(e)}  value={fasttagState}/>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Gst Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="gstnumber" placeholder="Enter Gst Number" name="fasttagGst" value={fasttaggst} onChange={e => setFasttaggst(e.target.value)} autoComplete="on" />
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1486,7 +1635,7 @@ const Lookups = () => {
 
                                             </div>
                                             <div className="tab-pane vendor" id="ven" role="tabpanel">
-                                                {!vendorStatus&& savedPropertyData && savedPropertyData?.length > 0 &&
+                                                {!vendorStatus && savedPropertyData && savedPropertyData?.length > 0 &&
                                                     <div className="breadcurmb">
                                                         <div className="title_block">
                                                             <h5>vendor</h5>
@@ -1591,12 +1740,12 @@ const Lookups = () => {
                                 onConfirm={e => onConfirm1()}
                             >
                             </SweetAlert>}
-                            {userSuccess &&
+                        {userSuccess &&
                             <SweetAlert show={userSuccess}
                                 custom
                                 confirmBtnText="Ok"
                                 confirmBtnBsStyle="primary"
-                                title={"Updated Successfully"}
+                                title={title}
                                 onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}
