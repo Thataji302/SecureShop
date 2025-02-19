@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const indianStates = [
   "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -9,11 +9,15 @@ const indianStates = [
   "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
-const StateDropdown = ({ onSelect,state }) => {
-  const [selectedState, setSelectedState] = useState(state);
+const StateDropdown = ({ onSelect, state }) => {
+  const [selectedState, setSelectedState] = useState(state || ""); // Ensure an empty string as the default value
+
+  // Sync state prop with local state when it changes
+  useEffect(() => {
+    setSelectedState(state || "");
+  }, [state]);
 
   const handleChange = (event) => {
-    
     setSelectedState(event.target.value);
     if (onSelect) {
       onSelect(event.target.value);
@@ -22,7 +26,7 @@ const StateDropdown = ({ onSelect,state }) => {
 
   return (
     <div>
-    <label className="form-label form-label">State</label>
+      <label className="form-label">State</label>
       <select id="state-select" value={selectedState} onChange={handleChange} className="form-control">
         <option value="">--Choose a state--</option>
         {indianStates.map((state, index) => (
