@@ -31,7 +31,6 @@ import StateDropdown from "./StateDropdown";
 let { lambda, country, appname } = window.app;
 var urlParams = location("type");
 var id = location("id");
-
 const Lookups = () => {
     const history = useHistory();
     const [countries, setCountries] = useState('');
@@ -93,7 +92,7 @@ const Lookups = () => {
     const [dataType, setDataType] = useState('');
     const [submitButton, setSubmitButton] = useState(false);
     const [userSuccess, setUserSuccess] = useState(false);
-    const [title, setTitle] = useState("");
+    const [title,setTitle]= useState("");
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -180,21 +179,30 @@ const Lookups = () => {
         setVendorNumber(onlyDigits);
 
     };
-    const handleBackClick = (setStatus) => {
+    const backClick = () => {
         // history.goBack();
-        setStatus(false);
-        history.push("/lookups");
-      //  navigate(`/lookups`)
-
-    };
-    
-    const backClick = () => handleBackClick(setBranchStatus);
-    const modelBack = () => handleBackClick(setModelStatus);
-    const insuranceBack = () => handleBackClick(setInsuranceStatus);
-    const financeBack = () => handleBackClick(setFinanceStatus);
-    const fastagBack = () => handleBackClick(setFastagStatus);
-    const vendorBack = () => handleBackClick(setVendorStatus);
-    
+        setBranchStatus(false)
+    }
+    const modelBack = () => {
+        // history.goBack();
+        setModelStatus(false)
+    }
+    const insuranceBack = () => {
+        // history.goBack();
+        setInsuranceStatus(false)
+    }
+    const financeBack = () => {
+        // history.goBack();
+        setFinanceStatus(false)
+    }
+    const fastagBack = () => {
+        // history.goBack();
+        setFastagStatus(false)
+    }
+    const vendorBack = () => {
+        // history.goBack();
+        setVendorStatus(false)
+    }
 
     const handleMessage = (e) => {
         setNameError("");
@@ -251,7 +259,7 @@ const Lookups = () => {
             .then(function (response) {
                 if (response.data.result) {
                     debugger
-                    let branchesData = response.data.result && response.data.result && response.data.result.data[0]
+                    let branchesData = response.data.result && response.data.result.data && response.data.result.data[0]
                     setName(branchesData && branchesData.name)
                     setBranchAddress(branchesData && branchesData.address)
                     setNumber(branchesData && branchesData.phoneNumber)
@@ -352,9 +360,9 @@ const Lookups = () => {
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId");
         let companyId = localStorage.getItem("companyid");
-
+    
         console.log("lookupid", lookupid);
-
+    
         if (valid && lookupid) {
             setSubmitButton(true);
             let payload = {
@@ -372,9 +380,9 @@ const Lookups = () => {
                 "state": state,
                 "status": status
             };
-
+    
             const urlLink = `${lambda}/updateBranch?appname=dealerReports&branchid=${lookupid}`;
-
+    
             axios.post(urlLink, payload)
                 .then(response => {
                     if (response.data.statusCode === 200) {
@@ -399,11 +407,11 @@ const Lookups = () => {
                 "state": state,
                 "status": status
             };
-
+    
             console.log('payload', payload);
-
+    
             const urlLink = `${lambda}/addBranch?appname=dealerReports&companyid=${companyId}&userid=${userid}`;
-
+    
             axios.post(urlLink, payload)
                 .then(response => {
                     if (response.data.statusCode === 200) {
@@ -414,7 +422,7 @@ const Lookups = () => {
                 });
         }
     };
-
+    
     const modelUpdate = (e) => {
         let valid = formvalidation();
         let lookupid = id;
@@ -434,7 +442,7 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
             };
-            const urlLink = lambda + '/updatelookup?companyid=' + companyId + '&appname=' + appname + "&type=models" + "&modalid=" + lookupid;
+            const urlLink = lambda + '/updatelookup?companyid='+companyId+'&appname=' + appname + "&type=models" + "&modalid=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -464,7 +472,7 @@ const Lookups = () => {
                 "userid": userid,
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/addlookup?companyid=' + companyId + '&?appname=' + appname;
+            const urlLink = lambda + '/addlookup?companyid='+companyId+'&?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -497,12 +505,10 @@ const Lookups = () => {
                 "name": name,
                 "phoneNumber": insuranceNumber,
                 "type": "insurance",
+                "status": "Active",
                 "commission": commission,
                 "lookupId": lookupid,
                 "userid": userid,
-                "state": insurancestate,
-                "status": insurancestatusval
-               
             };
             const urlLink = `${lambda}/updateInsurance?appname=${appname}&insuranceid=${lookupid}`;
             axios({
@@ -529,15 +535,14 @@ const Lookups = () => {
                 "name": name,
                 "phoneNumber": insuranceNumber,
                 "type": "insurance",
+                "status": "Active",
                 "commission": commission,
                 "userid": userid,
-                "state": insurancestate,
-                "status": insurancestatusval
             };
             console.log('payload', payload)
             const urlLink = `${lambda}/addInsurance?appname=${appname}&companyid=${companyId}&userid=${userid}`;
-
-
+           
+    
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -570,14 +575,13 @@ const Lookups = () => {
                 "name": name,
                 "phoneNumber": financeNumber,
                 "type": "finance",
-                "status": financestatusval,
+                "status": "Active",
                 "commission": commission,
                 "userid": userid,
-                "lookupId": lookupid,
-                "state":financestate
+                "lookupId": lookupid
             };
             const urlLink = `${lambda}/updateFinance?appname=${appname}&financeid=${lookupid}`;
-
+    
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -603,9 +607,8 @@ const Lookups = () => {
                 "phoneNumber": financeNumber,
                 "type": "finance",
                 "commission": commission,
-                "status":financestatusval,
+                "status": "Active",
                 "userid": userid,
-                "state":financestate
             };
             console.log('payload', payload)
             const urlLink = `${lambda}/addFinance?appname=${appname}&companyid=${companyId}&userid=${userid}`;
@@ -646,10 +649,10 @@ const Lookups = () => {
                 "commission": commission,
                 "lookupId": lookupid,
                 "userid": userid,
-                "state": fasttagState,
-                "gst": fasttaggst
-            };
-            const urlLink = lambda + '/updateFastag?companyid=' + companyId + '&appname=' + appname + "&type=fastag" + "&fasttagid=" + lookupid;
+                "state":fasttagState,
+                "gst":fasttaggst
+            }; 
+            const urlLink = lambda + '/updateFasttag?companyid='+companyId+'&appname=' + appname + "&type=fastag" + "&fasttagid=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -680,12 +683,12 @@ const Lookups = () => {
                 "status": "Active",
                 "commission": commission,
                 "userid": userid,
-                "state": fasttagState,
-                "gst": fasttaggst
+                "state":fasttagState,
+                "gst":fasttaggst
 
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/addFastag?companyid=' + companyId + '&appname=' + appname + '&userid=' + userid;
+            const urlLink = lambda + '/addFastag?companyid='+companyId+'&appname=' + appname+'&userid=' + userid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -709,8 +712,6 @@ const Lookups = () => {
     const vendorUpdate = (e) => {
         let valid = formvalidation();
         let lookupid = id;
-        let companyId = localStorage.getItem("companyid");
-
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         if (valid && lookupid) {
             setSubmitButton(true)
@@ -720,13 +721,11 @@ const Lookups = () => {
                 "name": name,
                 "Gst": fastagNumber,
                 "type": "vendor",
-                "status": vendorstatusval,
+                "status": "Active",
                 "lookupId": lookupid,
                 "userid": userid,
-                "state":vendorstate
             };
-            const urlLink = lambda + '/updateVendor?companyid=' + companyId + '&appname=' + appname + "&type=fastag" + "&vendorid=" + lookupid;
-
+            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=vendor" + "&lookupId=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -741,8 +740,6 @@ const Lookups = () => {
                         //  vendorTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
-                        setTitle(response.data.result)
-
 
                     }
                 });
@@ -759,7 +756,7 @@ const Lookups = () => {
 
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/addVendor?companyid=' + companyId + '&appname=' + appname + '&userid=' + userid;
+            const urlLink = lambda + '/lookups?appname=' + appname;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -773,56 +770,45 @@ const Lookups = () => {
                         // vendorTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
-                        setTitle(response.data.result)
-
                     }
                 });
         }
         // formvalidation()
     }
-    let apiName = "branchinfo";
-    let type = "branches";
-    const [tabType,setTabType]=useState("")
-
+    let apiName="branchinfo"
     const branchTab = (e) => {
-        type = "branches";
-        apiName = "branchInfo";
+        const type = "branches";
+        apiName="branchInfo";
         GetPropertyData(type);
-        setTabType(type)
         setBranchStatus(false)
     }
     const modelTab = (e) => {
-        type = "models";
-        apiName = "modelsinfo"
-        setTabType(type)
+        const type = "models";
+        apiName="modelsinfo"
         GetPropertyData(type);
         setModelStatus(false)
     }
     const insuranceTab = (e) => {
-        type = "insurance";
-        apiName = "insuranceInfo"
-        setTabType(type)
+        const type = "insurance";
+        apiName="insuranceinfo"
         GetPropertyData(type);
         setInsuranceStatus(false)
     }
     const financeTab = (e) => {
-        type = "finance";
-        apiName = "financeInfo"
-        setTabType(type)
+        const type = "finance";
+        apiName="financeinfo"
         GetPropertyData(type);
         setFinanceStatus(false)
     }
     const fastagTab = (e) => {
-        type = "fastag";
-        apiName = "fastagInfo"
-        setTabType(type)
+        const type = "fastag";
+        apiName="fastagInfo"
         GetPropertyData(type);
         setFastagStatus(false)
     }
     const vendorTab = (e) => {
-        type = "vendor";
-        apiName = "vendorsInfo"
-        setTabType(type)
+        const type = "vendor";
+        apiName="vendorinfo"
         GetPropertyData(type);
         setVendorStatus(false)
     }
@@ -830,43 +816,27 @@ const Lookups = () => {
     const GetPropertyData = (type) => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         let companyId = localStorage.getItem("companyid");
-        //   const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
+             //   const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
 
-        const urlLink = lambda + '/' + apiName + '?appname=' + appname + "&companyid=" + companyId + "&status=Active" + (userid ? "&userid=" + userid : "");
+        const urlLink = lambda + '/'+apiName+'?appname=' + appname + "&companyid=" + companyId + "&status=Active" + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
         })
             .then(function (response) {
                 if (response.data.result) {
-                    setSavedPropertyData(response.data.result)
+                    setSavedPropertyData(response.data.result && response.data.result.data)
                 }
             });
     }
 
     const editClick = (e, item) => {
-        debugger
         let type = item && item.type;
-        let id = item && item.companyid;
+        let id = item && item.lookupId;
         //localStorage.setItem("item", JSON.stringify(item));
         //history.push("/lookupForm")
         localStorage.removeItem("formType");
-        history.push(`/lookups?id=${id}&type=${type}`);
-        if(tabType === 'branches'){
-            setBranchStatus(true)
-        }else if(tabType === 'models'){
-            setModelStatus(true)
-        }else if(tabType === 'insurance'){
-            setInsuranceStatus(true)
-
-           }else if(tabType === 'finance'){
-            setFinanceStatus(true);
-           }else if(tabType === 'fastag'){
-            setFastagStatus(true);
-           }else if(tabType === 'vendor'){
-            setVendorStatus(true);
-           }
-
+        window.location = `/lookups?id=${id}&type=${type} `;
     }
     const deleteClick = (e, item) => {
         setDeleteConfirm(true)
@@ -900,32 +870,16 @@ const Lookups = () => {
     }
     function onConfirm1() {
         setResultSuccess(false)
-        type = dataType;
+        const type = dataType;
         GetPropertyData(type);
     };
     function onUpdate() {
         // setResultSuccess(false)
-       
         // setBranchStatus(false)
-        setUserSuccess(false);
-       if(tabType === 'branches'){
-        branchTab();
-       }else if(tabType === 'models'){
-        modelTab();
-       }else if(tabType === 'insurance'){
-        insuranceTab();
-       }else if(tabType === 'finance'){
-        financeTab();
-       }else if(tabType === 'fastag'){
-        fastagTab();
-       }else if(tabType === 'vendor'){
-        vendorTab();
-       }
-       history.push("/lookups");
+        setUserSuccess(false)
         // const type = "companyUser";
         // getUser();
-        //window.location = "/lookups"
-       
+        window.location = "/lookups"
     };
     function closePopup() {
         setDeleteConfirm(false)
@@ -966,7 +920,7 @@ const Lookups = () => {
         // const type = "branches";
         // GetPropertyData(type);
     };
-    type = localStorage.getItem("formType");
+    let type = localStorage.getItem("formType");
     let imageCloudfront;
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
@@ -1010,20 +964,10 @@ const Lookups = () => {
     }
 
     const [branch, setBranch] = useState("mainbranch");
-    const [subbranch, setSubBranch] = useState("");
-    const [gst, setGst] = useState("");
-    const [state, setState] = useState("");
-    const [status, setStatus] = useState("Active");
-
-    const [insurancestate, setiInsuranceState] = useState("");
-    const [insurancestatusval, setInsuranceStatusval] = useState("Active");
-
-    const [financestate, setFinanceState] = useState("");
-    const [financestatusval, setFinanceStatusval] = useState("Active");
-
-    const [vendorstate, setVendorState] = useState("");
-    const [vendorstatusval, setVendorStatusval] = useState("Active");
-
+    const [subbranch,setSubBranch] =  useState("");
+    const [gst,setGst] =  useState("");
+    const [state,setState] =  useState("");
+    const [status,setStatus] =  useState("Active");
     return (
         <>
             <div id="layout-wrapper">
@@ -1155,8 +1099,51 @@ const Lookups = () => {
                                                             </div>
                                                         </div>
                                                         <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Branch</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="branch"
+                                                                        value={branch} onChange={(e) => setBranch(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Branch</option>
+                                                                        <option value="mainbranch">Main Branch</option>
+                                                                        <option value="subbranch">Sub Branch</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            {
+                                                                //savedPropertyData
+                                                                branch === 'subbranch' && <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Sub Branch</label>
+                                                                    <select
+    className="form-select"
+    aria-label="Default select example"
+    name="subbranch"
+    value={subbranch}
+    onChange={(e) => setSubBranch(e.target.value)}
+    onFocus={(e) => handleMessage(e)}
+>
+    <option value="">Select sub Branch</option>
 
+    {savedPropertyData &&
+        savedPropertyData.length > 0 &&
+        savedPropertyData
+            .filter(item => item.branch === 'mainbranch' && item.status === "Active" && (!id || item._id !== id))
+            .map((eachItem) => (
+                <option key={eachItem._id} value={eachItem._id}>
+                    {eachItem.name}
+                </option>
+            ))
+    }
+</select>
 
+                                                                </div>
+                                                            </div>
+                                                            }
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Branch Name</label>
@@ -1189,63 +1176,17 @@ const Lookups = () => {
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">GST</label>
-                                                                    <input type="text" className="form-control" id="gst" placeholder="Enter GST" name="gst" value={gst} onChange={(e) => setGst(e.target.value)} />
+                                                                    <input type="text" className="form-control" id="gst" placeholder="Enter GST" name="gst" value={gst} onChange={(e) => setGst(e.target.value)}  />
                                                                 </div>
                                                             </div>
-
+                                                            
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
-                                                                    <StateDropdown onSelect={(e) => setState(e)} state={state} />
+                                                                <StateDropdown onSelect={(e) => setState(e)}  value={state}/>
                                                                 </div></div>
 
-
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Branch</label>
-                                                                    <select
-                                                                        className="form-select"
-                                                                        aria-label="Default select example"
-                                                                        name="branch"
-                                                                        value={branch} onChange={(e) => setBranch(e.target.value)} onFocus={(e) => handleMessage(e)}
-                                                                    >
-                                                                        <option value="">Select Branch</option>
-                                                                        <option value="mainbranch">Main Branch</option>
-                                                                        <option value="subbranch">Sub Branch</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            {
-                                                                //savedPropertyData
-                                                                branch === 'subbranch' && <div className="col-md-6">
-                                                                    <div className="mb-3 input-field">
-                                                                        <label className="form-label form-label">Sub Branch</label>
-                                                                        <select
-                                                                            className="form-select"
-                                                                            aria-label="Default select example"
-                                                                            name="subbranch"
-                                                                            value={subbranch}
-                                                                            onChange={(e) => setSubBranch(e.target.value)}
-                                                                            onFocus={(e) => handleMessage(e)}
-                                                                        >
-                                                                            <option value="">Select sub Branch</option>
-
-                                                                            {savedPropertyData &&
-                                                                                savedPropertyData.length > 0 &&
-                                                                                savedPropertyData
-                                                                                    .filter(item => item.branch === 'mainbranch' && item.status === "Active" && (!id || item._id !== id))
-                                                                                    .map((eachItem) => (
-                                                                                        <option key={eachItem._id} value={eachItem._id}>
-                                                                                            {eachItem.name}
-                                                                                        </option>
-                                                                                    ))
-                                                                            }
-                                                                        </select>
-
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            <div className="col-md-6">
-                                                                {id && <div className="mb-3 input-field">
+                                                                <div className="col-md-6">
+                                                               {id && <div className="mb-3 input-field">
 
                                                                     <label className="form-label form-label">Status</label>
                                                                     <select
@@ -1258,10 +1199,10 @@ const Lookups = () => {
                                                                         <option value="active">Active</option>
                                                                         <option value="inactive">InActive</option>
                                                                     </select>
-
+                                                               
                                                                 </div>
                                                                 }</div>
-
+                                                                
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1469,29 +1410,6 @@ const Lookups = () => {
                                                                     <input type="text" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={insuranceNumber} onChange={e => checkInput1(e)} autoComplete="on" />
                                                                 </div>
                                                             </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <StateDropdown onSelect={(e) => setiInsuranceState(e)} state={insurancestate} />
-                                                                </div></div>
-
-
-                                                                <div className="col-md-6">
-                                                                {id && <div className="mb-3 input-field">
-
-                                                                    <label className="form-label form-label">Status</label>
-                                                                    <select
-                                                                        className="form-select"
-                                                                        aria-label="Default select example"
-                                                                        name="insurancestatusval"
-                                                                        value={insurancestatusval} onChange={(e) => setInsuranceStatusval(e.target.value)} onFocus={(e) => handleMessage(e)}
-                                                                    >
-                                                                        <option value="">Select Status</option>
-                                                                        <option value="active">Active</option>
-                                                                        <option value="inactive">InActive</option>
-                                                                    </select>
-
-                                                                </div>
-                                                                }</div>
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => insuranceUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1584,29 +1502,6 @@ const Lookups = () => {
                                                                 <input type="text" className="form-control" id="commission" placeholder="Enter Commission" name="commission" value={commission} onChange={e => financeCommission(e)} autoComplete="on" />
                                                                 <label for="floatingInput">Commission %</label>
                                                             </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <StateDropdown onSelect={(e) => setFinanceState(e)} state={financestate} />
-                                                                </div></div>
-
-
-                                                                <div className="col-md-6">
-                                                                {id && <div className="mb-3 input-field">
-
-                                                                    <label className="form-label form-label">Status</label>
-                                                                    <select
-                                                                        className="form-select"
-                                                                        aria-label="Default select example"
-                                                                        name="financestatusval"
-                                                                        value={financestatusval} onChange={(e) => setFinanceStatusval(e.target.value)} onFocus={(e) => handleMessage(e)}
-                                                                    >
-                                                                        <option value="">Select Status</option>
-                                                                        <option value="active">Active</option>
-                                                                        <option value="inactive">InActive</option>
-                                                                    </select>
-
-                                                                </div>
-                                                                }</div>
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1708,7 +1603,7 @@ const Lookups = () => {
                                                             </div>
 
                                                             <div className="col-md-6">
-                                                                {id && <div className="mb-3 input-field">
+                                                               {id && <div className="mb-3 input-field">
 
                                                                     <label className="form-label form-label">Status</label>
                                                                     <select
@@ -1721,13 +1616,13 @@ const Lookups = () => {
                                                                         <option value="active">Active</option>
                                                                         <option value="inactive">InActive</option>
                                                                     </select>
-
+                                                               
                                                                 </div>
                                                                 }</div>
                                                             <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <div className="form-floating mb-3">
-                                                                        <StateDropdown onSelect={(e) => setFasttagState(e)} state={fasttagState} />
+                                                                        <StateDropdown onSelect={(e) => setFasttagState(e)}  value={fasttagState}/>
                                                                     </div>
                                                                 </div>
 
@@ -1831,29 +1726,6 @@ const Lookups = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <StateDropdown onSelect={(e) => setVendorState(e)} state={vendorstate} />
-                                                                </div></div>
-
-
-                                                                <div className="col-md-6">
-                                                                {id && <div className="mb-3 input-field">
-
-                                                                    <label className="form-label form-label">Status</label>
-                                                                    <select
-                                                                        className="form-select"
-                                                                        aria-label="Default select example"
-                                                                        name="vendorstatusval"
-                                                                        value={vendorstatusval} onChange={(e) => setVendorStatusval(e.target.value)} onFocus={(e) => handleMessage(e)}
-                                                                    >
-                                                                        <option value="">Select Status</option>
-                                                                        <option value="active">Active</option>
-                                                                        <option value="inactive">InActive</option>
-                                                                    </select>
-
-                                                                </div>
-                                                                }</div>
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => vendorUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
