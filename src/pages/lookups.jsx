@@ -74,6 +74,9 @@ const Lookups = () => {
     const [insuranceName, setInsuranceName] = useState('');
     const [insuranceNumber, setInsuranceNumber] = useState('');
     const [commission, setCommission] = useState('');
+    const [fasttagState, setFasttagState] = useState('');
+    const [fasttagstatus, setFasttagstatus] = useState('');
+    const [fasttaggst, setFasttaggst] = useState('');
     const [financeNumber, setFinanceNumber] = useState('');
     const [fastagNumber, setFastagNumber] = useState('');
     const [vendorNumber, setVendorNumber] = useState('');
@@ -89,6 +92,7 @@ const Lookups = () => {
     const [dataType, setDataType] = useState('');
     const [submitButton, setSubmitButton] = useState(false);
     const [userSuccess, setUserSuccess] = useState(false);
+    const [title,setTitle]= useState("");
     useEffect(() => {
         if (window.site) {
             setConfig(window.site);
@@ -354,87 +358,71 @@ const Lookups = () => {
     const handleUpdate = (e) => {
         let valid = formvalidation();
         let lookupid = id;
-        let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        let companyId = localStorage.getItem("companyId")
-        console.log("lookupid", lookupid)
-        
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId");
+        let companyId = localStorage.getItem("companyid");
+    
+        console.log("lookupid", lookupid);
+    
         if (valid && lookupid) {
-     
-            setSubmitButton(true)
-            let payload;
-            // let userid = localStorage.getItem("userid")
-            payload = {
+            setSubmitButton(true);
+            let payload = {
                 "name": name,
                 "phoneNumber": phoneNumber,
                 "address": branchAddress,
                 "type": "branches",
-                "status": "Active",
                 "lookupId": lookupid,
                 "userid": userid,
                 "companyId": companyId,
                 "dealerCode": dealerCode,
-                "subbranch":subbranch,
-                "branch":branch,
-                "gst":gst,
-                "state":state,
-                "status":status
+                "subbranch": subbranch,
+                "branch": branch,
+                "gst": gst,
+                "state": state,
+                "status": status
             };
-            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=branches" + "&lookupId=" + lookupid;
-            axios({
-                method: 'POST',
-                url: urlLink,
-                data: payload
-            })
-                .then(function (response) {
+    
+            const urlLink = `${lambda}/updateBranch?appname=dealerReports&branchid=${lookupid}`;
+    
+            axios.post(urlLink, payload)
+                .then(response => {
                     if (response.data.statusCode === 200) {
-                        // localStorage.setItem("previousid", response.data.result)
-                        // history.push("./lookups");
-                        // setBranchStatus(false)
-                        //   branchTab()
-                        setSubmitButton(false)
-                        setUserSuccess(true)
+                        setSubmitButton(false);
+                        setUserSuccess(true);
                     }
                 });
         } else if (valid) {
-            setSubmitButton(true)
-            let payload;
-
-            payload = {
+            setSubmitButton(true);
+            let payload = {
                 "name": name,
                 "phoneNumber": phoneNumber,
                 "address": branchAddress,
                 "type": "branches",
-                "status": "Active",
+                "status": "ACTIVE",
                 "userid": userid,
                 "companyId": companyId,
                 "dealerCode": dealerCode,
-                "subbranch":subbranch,
-                "branch":branch,
-                "gst":gst,
-                "state":state,
-                "status":status
+                "subbranch": subbranch,
+                "branch": branch,
+                "gst": gst,
+                "state": state,
+                "status": status
             };
-            console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname;
-            axios({
-                method: 'POST',
-                url: urlLink,
-                data: payload
-            })
-                .then(function (response) {
+    
+            console.log('payload', payload);
+    
+            const urlLink = `${lambda}/addBranch?appname=dealerReports&companyid=${companyId}&userid=${userid}`;
+    
+            axios.post(urlLink, payload)
+                .then(response => {
                     if (response.data.statusCode === 200) {
-                        // localStorage.setItem("previousid", response.data.result)
-                        // history.push("./branches");
-                        // setBranchStatus(false)
-                        // branchTab()
-                        setSubmitButton(false)
-                        setUserSuccess(true)
+                        setSubmitButton(false);
+                        setUserSuccess(true);
+                        setTitle(response.data.result)
                     }
                 });
         }
-
-        // formvalidation()
-    }
+    };
+    
     const modelUpdate = (e) => {
         let valid = formvalidation();
         let lookupid = id;
@@ -467,6 +455,7 @@ const Lookups = () => {
                         // modelTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
                     }
                 });
         } else if (valid) {
@@ -495,6 +484,7 @@ const Lookups = () => {
                         //  modelTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
                     }
                 });
         }
@@ -634,6 +624,8 @@ const Lookups = () => {
         let valid = formvalidation();
         let lookupid = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
+        let companyId = localStorage.getItem("companyid");
+
         if (valid && lookupid) {
             setSubmitButton(true)
             let payload;
@@ -642,12 +634,14 @@ const Lookups = () => {
                 "name": name,
                 "phoneNumber": fastagNumber,
                 "type": "fastag",
-                "status": "Active",
+                "status": fasttagstatus,
                 "commission": commission,
                 "lookupId": lookupid,
                 "userid": userid,
-            };
-            const urlLink = lambda + '/updatelookups?appname=' + appname + "&type=fastag" + "&lookupId=" + lookupid;
+                "state":fasttagState,
+                "gst":fasttaggst
+            }; 
+            const urlLink = lambda + '/updateFasttag?companyid='+companyId+'&appname=' + appname + "&type=fastag" + "&fasttagid=" + lookupid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -662,6 +656,8 @@ const Lookups = () => {
                         // fastagTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
+
 
                     }
                 });
@@ -676,10 +672,12 @@ const Lookups = () => {
                 "status": "Active",
                 "commission": commission,
                 "userid": userid,
+                "state":fasttagState,
+                "gst":fasttaggst
 
             };
             console.log('payload', payload)
-            const urlLink = lambda + '/lookups?appname=' + appname;
+            const urlLink = lambda + '/addFastag?companyid='+companyId+'&appname=' + appname+'&userid=' + userid;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -693,6 +691,8 @@ const Lookups = () => {
                         // fastagTab()
                         setSubmitButton(false)
                         setUserSuccess(true)
+                        setTitle(response.data.result)
+
                     }
                 });
         }
@@ -764,40 +764,50 @@ const Lookups = () => {
         }
         // formvalidation()
     }
+    let apiName="branchinfo"
     const branchTab = (e) => {
         const type = "branches";
+        apiName="branchInfo";
         GetPropertyData(type);
         setBranchStatus(false)
     }
     const modelTab = (e) => {
         const type = "models";
+        apiName="modelsinfo"
         GetPropertyData(type);
         setModelStatus(false)
     }
     const insuranceTab = (e) => {
         const type = "insurance";
+        apiName="insuranceinfo"
         GetPropertyData(type);
         setInsuranceStatus(false)
     }
     const financeTab = (e) => {
         const type = "finance";
+        apiName="financeinfo"
         GetPropertyData(type);
         setFinanceStatus(false)
     }
     const fastagTab = (e) => {
         const type = "fastag";
+        apiName="fastagInfo"
         GetPropertyData(type);
         setFastagStatus(false)
     }
     const vendorTab = (e) => {
         const type = "vendor";
+        apiName="vendorinfo"
         GetPropertyData(type);
         setVendorStatus(false)
     }
 
     const GetPropertyData = (type) => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
+        let companyId = localStorage.getItem("companyid");
+             //   const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + "&status=Active" + (userid ? "&userid=" + userid : "");
+
+        const urlLink = lambda + '/'+apiName+'?appname=' + appname + "&companyid=" + companyId + "&status=Active" + (userid ? "&userid=" + userid : "");
         axios({
             method: 'GET',
             url: urlLink,
@@ -946,7 +956,7 @@ const Lookups = () => {
     const [subbranch,setSubBranch] =  useState("");
     const [gst,setGst] =  useState("");
     const [state,setState] =  useState("");
-    const [status,setStatus] =  useState("");
+    const [status,setStatus] =  useState("Active");
     return (
         <>
             <div id="layout-wrapper">
@@ -1099,17 +1109,27 @@ const Lookups = () => {
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">Sub Branch</label>
                                                                     <select
-                                                                        className="form-select"
-                                                                        aria-label="Default select example"
-                                                                        name="subbranch"
-                                                                        value={subbranch} onChange={(e) => setSubBranch(e.target.value)} onFocus={(e) => handleMessage(e)}
-                                                                    >
-                                                                        <option value="">Select sub Branch</option>
-                                                
-                                                                       {savedPropertyData && savedPropertyData?.length > 0 && savedPropertyData.filter(item=>item._id!=id && item.branch === 'mainbranch')?.map((eachItem, key) => {
-                                                                            return (eachItem && eachItem.status == "Active"  && <option value={eachItem._id}>{eachItem.name}</option>)
-                                                                       })}
-                                                                    </select>
+    className="form-select"
+    aria-label="Default select example"
+    name="subbranch"
+    value={subbranch}
+    onChange={(e) => setSubBranch(e.target.value)}
+    onFocus={(e) => handleMessage(e)}
+>
+    <option value="">Select sub Branch</option>
+
+    {savedPropertyData &&
+        savedPropertyData.length > 0 &&
+        savedPropertyData
+            .filter(item => item.branch === 'mainbranch' && item.status === "Active" && (!id || item._id !== id))
+            .map((eachItem) => (
+                <option key={eachItem._id} value={eachItem._id}>
+                    {eachItem.name}
+                </option>
+            ))
+    }
+</select>
+
                                                                 </div>
                                                             </div>
                                                             }
@@ -1570,6 +1590,43 @@ const Lookups = () => {
 
 
                                                             </div>
+
+                                                            <div className="col-md-6">
+                                                               {id && <div className="mb-3 input-field">
+
+                                                                    <label className="form-label form-label">Status</label>
+                                                                    <select
+                                                                        className="form-select"
+                                                                        aria-label="Default select example"
+                                                                        name="fasttagstatus"
+                                                                        value={status} onChange={(e) => setFastagStatus(e.target.value)} onFocus={(e) => handleMessage(e)}
+                                                                    >
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="active">Active</option>
+                                                                        <option value="inactive">InActive</option>
+                                                                    </select>
+                                                               
+                                                                </div>
+                                                                }</div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <div className="form-floating mb-3">
+                                                                        <StateDropdown onSelect={(e) => setFasttagState(e)}  value={fasttagState}/>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Gst Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="gstnumber" placeholder="Enter Gst Number" name="fasttagGst" value={fasttaggst} onChange={e => setFasttaggst(e.target.value)} autoComplete="on" />
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => fastagUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
@@ -1688,7 +1745,7 @@ const Lookups = () => {
                                 custom
                                 confirmBtnText="Ok"
                                 confirmBtnBsStyle="primary"
-                                title={"Updated Successfully"}
+                                title={title}
                                 onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}
