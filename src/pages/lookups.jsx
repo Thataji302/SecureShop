@@ -78,6 +78,10 @@ const Lookups = () => {
     const [fasttagState, setFasttagState] = useState('');
     const [fasttagstatus, setFasttagstatus] = useState('');
     const [fasttaggst, setFasttaggst] = useState('');
+    const [financegst, setFinancegst] = useState('');
+    const [insurancegst, setInsurancegst] = useState('');
+
+    
     const [financeNumber, setFinanceNumber] = useState('');
     const [fastagNumber, setFastagNumber] = useState('');
     const [vendorNumber, setVendorNumber] = useState('');
@@ -501,7 +505,8 @@ const Lookups = () => {
                 "lookupId": lookupid,
                 "userid": userid,
                 "state": insurancestate,
-                "status": insurancestatusval
+                "status": insurancestatusval,
+                "gst":insurancegst
                
             };
             const urlLink = `${lambda}/updateInsurance?appname=${appname}&insuranceid=${lookupid}`;
@@ -532,7 +537,8 @@ const Lookups = () => {
                 "commission": commission,
                 "userid": userid,
                 "state": insurancestate,
-                "status": insurancestatusval
+                "status": insurancestatusval,
+                "gst":insurancegst
             };
             console.log('payload', payload)
             const urlLink = `${lambda}/addInsurance?appname=${appname}&companyid=${companyId}&userid=${userid}`;
@@ -574,7 +580,8 @@ const Lookups = () => {
                 "commission": commission,
                 "userid": userid,
                 "lookupId": lookupid,
-                "state":financestate
+                "state":financestate,
+                "gst":financegst
             };
             const urlLink = `${lambda}/updateFinance?appname=${appname}&financeid=${lookupid}`;
 
@@ -605,7 +612,8 @@ const Lookups = () => {
                 "commission": commission,
                 "status":financestatusval,
                 "userid": userid,
-                "state":financestate
+                "state":financestate,
+                "gst":financegst
             };
             console.log('payload', payload)
             const urlLink = `${lambda}/addFinance?appname=${appname}&companyid=${companyId}&userid=${userid}`;
@@ -1474,6 +1482,15 @@ const Lookups = () => {
                                                                     <StateDropdown onSelect={(e) => setiInsuranceState(e)} state={insurancestate} />
                                                                 </div></div>
 
+                                                                <div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Gst Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="insurancegst" placeholder="Enter Gst Number" name="insurancegst" value={insurancegst} onChange={e => setInsurancegst(e.target.value)} autoComplete="on" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
 
                                                                 <div className="col-md-6">
                                                                 {id && <div className="mb-3 input-field">
@@ -1607,6 +1624,15 @@ const Lookups = () => {
 
                                                                 </div>
                                                                 }</div>
+
+<div className="col-md-6">
+                                                                <div className="mb-3 input-field">
+                                                                    <label className="form-label form-label">Gst Number</label>
+                                                                    <div className="form-floating mb-3">
+                                                                        <input type="text" className="form-control" id="financegst" placeholder="Enter Gst Number" name="financegst" value={financegst} onChange={e => setFinancegst(e.target.value)} autoComplete="on" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div className="col-md-12 mb-2">
                                                                 <button className="update_btn" type="submit" onClick={e => financeUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
                                                             </div>
