@@ -169,7 +169,9 @@ const Lookups = () => {
             formFields: [
                 { name: "name", label: "Name", type: "text", required: true },
                 { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
-                { name: "commission", label: "Commission(%)", type: "text", required: true },
+                { name: "commission", label: "Commission(%)", type: "text", required: true, pattern: /^(0\.[1-9]\d?|[1-9]\d?(\.\d{1,2})?)$/
+
+ },
                 { name: "gst", label: "GST", type: "text"},
                 { name: "state", label: "State", type: "dropdown" },
                 {
@@ -223,7 +225,7 @@ const Lookups = () => {
             formFields: [
                 { name: "name", label: "Name", type: "text", required: true },
                 { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
-                { name: "commission", label: "Commission(%)", type: "text", required: true },
+                { name: "commission", label: "Commission(%)", type: "number", required: true },
                 { name: "gst", label: "GST", type: "text" },
                 { name: "state", label: "State", type: "dropdown" },
                 
@@ -278,7 +280,7 @@ const Lookups = () => {
             formFields: [
                 { name: "name", label: "Name", type: "text", required: true },
                 { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
-                { name: "commission", label: "Commission(%)", type: "text", required: true },
+                { name: "commission", label: "Commission(%)", type: "number", required: true },
                 { name: "gst", label: "GST", type: "text" },
                 { name: "state", label: "State", type: "dropdown" },
                 
