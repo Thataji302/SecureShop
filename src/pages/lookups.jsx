@@ -142,14 +142,14 @@ const Lookups = () => {
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateModel?appname=${appname}&modelId=$id`,
+                    url: `${lambda}/updateModels?appname=${appname}&modelId=$id&companyid=${companyId}`,
                     errors: [
                         "Branch already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateModel?appname=${appname}&modelId=$id&type=delete`,
+                    url: `${lambda}/updateModels?appname=${appname}&modelId=$id&type=delete&companyid=${companyId}`,
                 }
             },
             columns: [
@@ -196,14 +196,14 @@ const Lookups = () => {
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateInsurance?appname=${appname}&insuranceId=$id`,
+                    url: `${lambda}/updateInsurance?appname=${appname}&insuranceId=$id&companyid=${companyId}`,
                     errors: [
                         "Insurance already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateInsurance?appname=${appname}&insuranceId=$id&type=delete`,
+                    url: `${lambda}/updateInsurance?appname=${appname}&insuranceId=$id&type=delete&companyid=${companyId}`,
                 }
             },
             columns: [
@@ -251,14 +251,14 @@ const Lookups = () => {
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateFinance?appname=${appname}&financeId=$id`,
+                    url: `${lambda}/updateFinance?appname=${appname}&financeId=$id&companyid=${companyId}`,
                     errors: [
                         "Finance already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateFinance?appname=${appname}&financeId=$id&type=delete`,
+                    url: `${lambda}/updateFinance?appname=${appname}&financeId=$id&type=delete&companyid=${companyId}`,
                 }
             },
             columns: [
@@ -306,14 +306,14 @@ const Lookups = () => {
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateFastag?appname=${appname}&fastagId=$id`,
+                    url: `${lambda}/updateFastag?appname=${appname}&fastagId=$id&companyid=${companyId}`,
                     errors: [
                         "Fastag already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateFastag?appname=${appname}&fastagId=$id&type=delete`,
+                    url: `${lambda}/updateFastag?appname=${appname}&fastagId=$id&type=delete&companyid=${companyId}`,
                 }
             },
             columns: [
@@ -359,14 +359,14 @@ const Lookups = () => {
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateVendors?appname=${appname}&vendorId=$id`,
+                    url: `${lambda}/updateVendors?appname=${appname}&vendorId=$id&companyid=${companyId}`,
                     errors: [
                         "Vendor already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateVendors?appname=${appname}&vendorId=$id&type=delete`,
+                    url: `${lambda}/updateVendors?appname=${appname}&vendorId=$id&type=delete&companyid=${companyId}`,
                 }
             },
             columns: [

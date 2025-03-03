@@ -137,9 +137,10 @@ const tmdbApi = {
   },
 
    pwdGenerate: (params) => {
+    debugger
     const token = localStorage.getItem("token")
     const userid = localStorage.getItem("userId")
-    const url = "/setPassword?appname=" + appname+ "&token=" + token + '&userid=' + userid;
+    const url = "/setPassword?appname=" + appname+'&userid=' + userid;
     return axiosClient.post(url, params);
   },
 

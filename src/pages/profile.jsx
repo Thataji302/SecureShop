@@ -269,7 +269,7 @@ const Profile = () => {
         setLoaderEnable(true)
         try {
             const response = await tmdbApi.pwdGenerate({
-                "emailid": email,
+                "emailid": localStorage.getItem("email"),
                 "password": passwordInput.password,
                 // "oldPassword": passwordInput.oldPassword
             });
