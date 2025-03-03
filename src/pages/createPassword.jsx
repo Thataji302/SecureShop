@@ -104,8 +104,8 @@ const CreatePassword = () => {
         </button>
         <Row className="justify-content-center">
           <Col className="col-6 content col-xl-5">
-            <img src={`${window.site?.common?.resourcesUrl}${Config.imgmiddle}logo-light.png`} alt="Logo" />
-            <Card className="overflow-hidden">
+          {window.site?.common?.imageCloudfront && <img src={`${window.site?.common?.imageCloudfront}propertyCalculator/images/mainlogo.png`} alt="Logo" height={40} />}
+          <Card className="overflow-hidden">
               <CardBody className="pt-0">
                 <div className="p-2">
                   <h1>Create Password</h1>
