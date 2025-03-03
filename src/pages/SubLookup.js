@@ -149,6 +149,7 @@ const SubLookup = ({ tabData, imageCloudfront }) => {
     };
 
     const addClick = () => {
+        setFormValues({})
         setShowTable(false)
     }
     const backClick = () => {
