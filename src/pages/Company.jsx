@@ -416,13 +416,14 @@ const Company = () => {
                                                         <div className="mb-3">
                                                             <label className="form-label">Phone Number</label>
                                                             <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                name="companyDetails.phoneNumber"
-                                                                placeholder="Phone Number"
-                                                                value={formChange?.companyDetails?.phoneNumber || ""}
-                                                                onChange={handleChange}
-                                                            />
+                                                                 type="number"
+                                                                 pattern="/^[6-9]\d{9}$/"
+                                                                 className="form-control"
+                                                                 name="companyDetails.phoneNumber"
+                                                                 placeholder="Phone Number"
+                                                                 value={formChange?.companyDetails?.phoneNumber || ""}
+                                                                 onChange={handleChange}
+                                                             />
                                                             {companyErrors?.phoneNumber && (
                                                                 <div className="text-danger">{companyErrors.phoneNumber}</div>
                                                             )}
