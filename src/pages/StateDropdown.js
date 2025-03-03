@@ -25,15 +25,15 @@ const StateDropdown = ({ onSelect, state }) => {
   };
 
   return (
-    <div>
-      <label className="form-label">State</label>
+    
+      
       <select id="state-select" value={selectedState} onChange={handleChange} className="form-control">
         <option value="">--Choose a state--</option>
         {indianStates.map((state, index) => (
           <option key={index} value={state}>{state}</option>
         ))}
       </select>
-    </div>
+    
   );
 };
 
