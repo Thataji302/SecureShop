@@ -417,7 +417,8 @@ const Company = () => {
                                                             <label className="form-label">Phone Number</label>
                                                             <input
                                                                  type="number"
-                                                                 pattern="/^[6-9]\d{9}$/"
+                                                                //  pattern="/^[6-9]\d{9}$/"
+                                                                pattern="/^[6-9]\d{9}$/"
                                                                  className="form-control"
                                                                  name="companyDetails.phoneNumber"
                                                                  placeholder="Phone Number"
