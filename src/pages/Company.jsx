@@ -114,7 +114,7 @@ const Company = () => {
                     companyEmailId: formChange.companyDetails.companyEmailId,
                     phoneNumber: formChange.companyDetails.phoneNumber,
                     companyAddress: formChange.companyDetails.companyAddress,
-                    status: formChange?.companyDetails?.status
+                    status: formChange?.status
                 },
                 managerDetails: {
                     name: formChange.managerDetails.name,
@@ -132,7 +132,7 @@ const Company = () => {
                     companyEmailId: formChange.companyDetails.companyEmailId,
                     phoneNumber: formChange.companyDetails.phoneNumber,
                     companyAddress: formChange.companyDetails.companyAddress,
-                    status: formChange.companyDetails.status
+                    status: formChange.status
                 }
                 urlLink = lambda + '/updateCompany?appname=' + appname + "&userid=" + localStorage.getItem("userId") + "&companyid=" + formChange.companyid;
             }
