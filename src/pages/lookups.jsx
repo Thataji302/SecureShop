@@ -398,8 +398,70 @@ const Lookups = () => {
                 "edit": "Edit Vendor"
             }
         },
+        {
+            tab: "Executive",
+            formFields: [
+                { name: "name", label: "Name", type: "text", required: true },
+                { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
+                { name: "email", label: "Email", type: "text" },
+                {
+                    name: "branch", label: "Branch", type: "select", required: true,
+                    options: [
+                        { value: "mainbranch", label: "Main Branch" },
+                        { value: "subbranch", label: "Sub Branch" }
+                    ]
+                },
+
+                
+                {
+                    name: "status", label: "Status", type: "select",
+                    options: [
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
+                    ],
+                    conditional: (values) => values._id // Show only when updating
+                }
+            ],
+            
+            services: {
+                "summaryAPI": {
+                    method: "GET",
+                    url: `${lambda}/vendorsInfo?appname=${appname}&companyid=${companyId}&userid=${userid}`
+
+                },
+                "createAPI": {
+                    method: "POST",
+                    url: `${lambda}/addVendor?appname=${appname}&companyid=${companyId}&userid=${userid}`,
+                    errors: [
+                        "Vendor already exists"]
+                },
+                "updateAPI": {
+                    method: "POST",
+                    url: `${lambda}/updateVendor?appname=${appname}&vendorId=$id&companyid=${companyId}&userid=${userid}`,
+                    errors: [
+                        "Vendor already exists"]
+
+                },
+                "deleteAPI": {
+                    method: "POST",
+                    url: `${lambda}/updateVendor?appname=${appname}&vendorId=$id&type=delete&companyid=${companyId}&userid=${userid}`,
+                }
+            },
+            columns: [
+                { key: "name", label: "Name", type: "string" },
+
+                { key: "phoneNumber", label: "Phone Number", type: "string" },
+                { key: "branch", label: "Branch", type: "string" },
+            ],
+            labels: {
+                "add": "Add Executive",
+                "edit": "Edit Executive"
+            }
+        },
+
 
     ];
+    
     const [activeTab, setActiveTab] = useState('Branches');
     const [imageCloudfront, setImageCloudfront] = useState(null);
     useEffect(() => {
