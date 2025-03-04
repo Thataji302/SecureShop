@@ -383,7 +383,7 @@ const Company = () => {
                                             <form>
                                                 <div className="row">
                                                     <div className="col-md-6">
-                                                        <div className="mb-3">
+                                                        <div className="mb-3 input-field">
                                                             <label className="form-label">Company Name</label>
                                                             <input
                                                                 type="text"
@@ -398,7 +398,7 @@ const Company = () => {
                                                             )}
                                                         </div>
 
-                                                        <div className="mb-3">
+                                                        <div className="mb-3 input-field">
                                                             <label className="form-label">Company Email</label>
                                                             <input
                                                                 type="email"
@@ -413,7 +413,7 @@ const Company = () => {
                                                             )}
                                                         </div>
 
-                                                        <div className="mb-3">
+                                                        <div className="mb-3 input-field">
                                                             <label className="form-label">Phone Number</label>
                                                             <input
                                                                  type="number"
@@ -430,19 +430,7 @@ const Company = () => {
                                                             )}
                                                         </div>
 
-                                                        <div className="mb-3">
-                                                            <label className="form-label">Address</label>
-                                                            <textarea
-                                                                className="form-control"
-                                                                name="companyDetails.companyAddress"
-                                                                placeholder="Address"
-                                                                value={formChange?.companyDetails?.companyAddress || ""}
-                                                                onChange={handleChange}
-                                                            ></textarea>
-                                                            {companyErrors?.companyAddress && (
-                                                                <div className="text-danger">{companyErrors.companyAddress}</div>
-                                                            )}
-                                                        </div>
+                                                        
                                                     </div>
 
                                                   
@@ -464,7 +452,7 @@ const Company = () => {
 
                                                         {!isEdited && (
                                                             <>
-                                                                <div className="mb-3">
+                                                                <div className="mb-3 input-field">
                                                                     <label className="form-label">Manager Name</label>
                                                                     <input
                                                                         type="text"
@@ -479,7 +467,7 @@ const Company = () => {
                                                                     )}
                                                                 </div>
 
-                                                                <div className="mb-3">
+                                                                <div className="mb-3 input-field">
                                                                     <label className="form-label">Manager Email</label>
                                                                     <input
                                                                         type="email"
@@ -493,6 +481,19 @@ const Company = () => {
                                                                         <div className="text-danger">{companyErrors.managerDetails.emailId}</div>
                                                                     )}
                                                                 </div>
+                                                                <div className="mb-3 input-field">
+                                                            <label className="form-label">Address</label>
+                                                            <textarea
+                                                                className="form-control"
+                                                                name="companyDetails.companyAddress"
+                                                                placeholder="Address"
+                                                                value={formChange?.companyDetails?.companyAddress || ""}
+                                                                onChange={handleChange}
+                                                            ></textarea>
+                                                            {companyErrors?.companyAddress && (
+                                                                <div className="text-danger">{companyErrors.companyAddress}</div>
+                                                            )}
+                                                        </div>
                                                             </>
                                                         )}
                                                     </div>
