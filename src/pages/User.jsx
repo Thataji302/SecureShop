@@ -414,7 +414,7 @@ const User = () => {
                                                 <div className="row">
                                                     <div className="col-md-6">
                                                         <div className="mb-3 input-field">
-                                                            <label className="form-label form-label">User Name</label>
+                                                            <label className="form-label form-label"> Name</label>
                                                             <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={formChange?.name} onChange={(e) => handleChange(e)} required />
                                                             {nameerror != "" ? <span className="errormsg" style={{
                                                                 fontWeight: 'bold',
