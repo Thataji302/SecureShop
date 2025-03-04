@@ -3,9 +3,11 @@ import StateDropdown from "./StateDropdown";
 import LookupTable from "./LookupTable";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Modal from "react-bootstrap/Modal";
+import AutoCompleteDropdown from "./AutoCompleteDropdown";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-
-const SubLookup = ({ tabData, imageCloudfront }) => {
+const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
     const [formValues, setFormValues] = useState({});
     const [data, setData] = useState(null);
     const [errors, setErrors] = useState({});
@@ -21,6 +23,8 @@ const SubLookup = ({ tabData, imageCloudfront }) => {
 
     const { formFields, services, columns, labels } = tabData;
 
+
+
     const getSummaryData = () => {
 
         fetch(services?.summaryAPI.url, { method: services?.summaryAPI.method })
@@ -34,14 +38,18 @@ const SubLookup = ({ tabData, imageCloudfront }) => {
 
     }
 
-   
+
     useEffect(() => {
         if (showTable) {
             getSummaryData();
         }
     }, [showTable])
 
-
+    useEffect(() => {
+        if (tabSelected === tabData.tab) {
+            getSummaryData();
+        }
+    }, [tabSelected])
 
 
     // Handle input change
@@ -239,6 +247,24 @@ const SubLookup = ({ tabData, imageCloudfront }) => {
                                             <div className="mb-3 input-field">
                                                 <label className="form-label">{field.label}</label>
 
+                                                 {field.type === "date" && (
+                                                // <DatePicker
+                                                //     selected={formValues[field.name] || null}
+                                                //     onChange={handleChange}
+                                                //     className="form-control"
+                                                //     dateFormat="dd-MM-YYYY"
+                                                //     placeholderText={`Select ${field.label}`}
+                                                // />
+                                                <input
+                                                type="date"
+                                                className="form-control"
+                                                name={field.name}
+                                                placeholder={`Enter ${field.label}`}
+                                                value={formValues[field.name] || ""}
+                                                onChange={handleChange}
+                                            />
+                                            )}
+
                                                 {field.type === "text" ? (
                                                     <input
                                                         type="text"
@@ -249,19 +275,23 @@ const SubLookup = ({ tabData, imageCloudfront }) => {
                                                         onChange={handleChange}
                                                     />
                                                 ) : field.type === "select" ? (
-                                                    <select
-                                                        className="form-select"
-                                                        name={field.name}
-                                                        value={formValues[field.name] || ""}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="">Select {field.label}</option>
-                                                        {field.options.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </select>
+
+                                                    field?.autoinput ?
+                                                        <AutoCompleteDropdown field={field} formValues={formValues} handleChange={handleChange}/>
+                                                        :
+                                                        <select
+                                                            className="form-select"
+                                                            name={field.name}
+                                                            value={formValues[field.name] || ""}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select {field.label}</option>
+                                                            {field?.options?.map((option) => (
+                                                                <option key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </option>
+                                                            ))}
+                                                        </select>
                                                 ) : field.type === "dropdown" ? (
                                                     <StateDropdown onSelect={handleStateSelect} state={formValues.state} />
                                                 ) : null}
@@ -276,7 +306,7 @@ const SubLookup = ({ tabData, imageCloudfront }) => {
                                 {formValues.branch === "subbranch" && (
                                     <div className="col-md-6">
                                         <div className="mb-3 input-field">
-                                            <label className="form-label">Sub Branch</label>
+                                            <label className="form-label">Main Branch</label>
                                             <select
                                                 className="form-select"
                                                 name="subbranch"

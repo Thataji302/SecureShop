@@ -66,7 +66,7 @@ const Purchases = () => {
         if (!localStorage.getItem("token")) {
             history.push("/");
         }
-         console.log('id', id)
+        console.log('id', id)
         if (id) {
             userClick()
             setBranchStatus(true)
@@ -179,9 +179,13 @@ const Purchases = () => {
                 "invoiceNumber": formChange?.invoiceNumber,
                 "chassisNumber": formChange?.chassisNumber,
                 "vendorName": formChange?.vendorName,
+                "variant": formChange?.variant,
+                "vendorName": formChange?.vendorName,
+
+
                 "type": "purchase",
                 "purchaseId": id,
-                "userId":userid
+                "userId": userid
             }
             console.log("payload", payload)
             const urlLink = lambda + '/updatePurchase?appname=' + appname + "&purchaseId=" + id + "&type=purchase";
@@ -194,8 +198,8 @@ const Purchases = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./user");
-                      //  window.location = "/user"
-                       // setBranchStatus(false)
+                        //  window.location = "/user"
+                        // setBranchStatus(false)
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -219,7 +223,7 @@ const Purchases = () => {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
-                       
+
                         getUser()
                         setSubmitButton(false)
                         setUserSuccess(true)
@@ -294,8 +298,8 @@ const Purchases = () => {
                 "vendorName": formChange?.vendorName,
                 "type": type,
                 "purchaseId": id,
-                "status":"Archive",
-                "userId":userid
+                "status": "Archive",
+                "userId": userid
             }
 
             const urlLink = lambda + '/deletePurchase?appname=' + appname + "&purchaseId=" + id + "&userId=" + userid + "&type=" + type;
@@ -307,7 +311,7 @@ const Purchases = () => {
                 .then(function (response) {
                     if (response.data.statusCode === 200) {
                         // localStorage.setItem("previousid", response.data.result)
-                    // history.push("./fastag");
+                        // history.push("./fastag");
                         setResultSuccess(true)
                     }
                 });
@@ -403,181 +407,201 @@ const Purchases = () => {
 
 
 
-                                        
-                                          
-                                                {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
-                                                    <div className="breadcurmb">
-                                                        <div className="title_block">
-                                                            <h5>Purchases</h5>
-                                                        </div>
-                                                        <div className="buttons">
 
-                                                            <button className=" btn-primary" onClick={addClick}>add</button>
-                                                        </div>
-                                                    </div>}
-                                                {!branchStatus ?
-                                                    <div>
-                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
-                                                            <div className="table-responsive">
-                                                                <table className="table table-striped ">
-                                                                    <thead>
-                                                                        <tr>
 
-                                                                            {/* <th className="align-middle">S No</th> */}
-                                                                            <th className="align-middle">Invoice Date</th>
-                                                                            <th className="align-middle">Invoice Number</th>
-                                                                            <th className="align-middle">Model Name</th>
-                                                                            <th className="align-middle">Chassis Number</th>
-                                                                            <th className="align-middle">Vendor Name</th>
-                                                                            {/* <th className="align-middle">GST Number</th> */}
-                                                                            <th className="align-middle">Created</th>
-                                                                            <th className="align-middle">Action</th>
+                                        {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
+                                            <div className="breadcurmb">
+                                                <div className="title_block">
+                                                    <h5>Purchases</h5>
+                                                </div>
+                                                <div className="buttons">
+
+                                                    <button className=" btn-primary" onClick={addClick}>add</button>
+                                                </div>
+                                            </div>}
+                                        {!branchStatus ?
+                                            <div>
+                                                {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                    <div className="table-responsive">
+                                                        <table className="table table-striped ">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    {/* <th className="align-middle">S No</th> */}
+                                                                    <th className="align-middle">Invoice Date</th>
+                                                                    <th className="align-middle">Invoice Date</th>
+
+                                                                    <th className="align-middle">Invoice Number</th>
+                                                                    <th className="align-middle">Model Name</th>
+                                                                    <th className="align-middle">Chassis Number</th>
+                                                                    <th className="align-middle">Vendor Name</th>
+                                                                    {/* <th className="align-middle">GST Number</th> */}
+                                                                    <th className="align-middle">Created</th>
+                                                                    <th className="align-middle">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {savedPropertyData?.map((eachItem, key) => {
+                                                                    return (eachItem && eachItem.status != "Archive" &&
+                                                                        <tr key={key}>
+                                                                            <td>{moment(eachItem?.invoiceDate).format('DD-MM-YYYY')}</td>
+                                                                            <td>{eachItem?.invoiceNumber ? eachItem?.invoiceNumber : 'N/A'}</td>
+                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                            <td>{eachItem?.chassisNumber ? eachItem?.chassisNumber : 'N/A'}</td>
+                                                                            <td>{eachItem?.vendorName ? eachItem?.vendorName : 'N/A'}</td>
+                                                                            {/* <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td> */}
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+
+                                                                            <td><div className="d-flex">
+                                                                                <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
+                                                                                <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {savedPropertyData?.map((eachItem, key) => {
-                                                                            return (eachItem && eachItem.status != "Archive" &&
-                                                                                <tr key={key}>
-                                                                                    <td>{moment(eachItem?.invoiceDate).format('DD-MM-YYYY')}</td>
-                                                                                    <td>{eachItem?.invoiceNumber ? eachItem?.invoiceNumber : 'N/A'}</td>
-                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                                    <td>{eachItem?.chassisNumber ? eachItem?.chassisNumber : 'N/A'}</td>
-                                                                                    <td>{eachItem?.vendorName ? eachItem?.vendorName : 'N/A'}</td>
-                                                                                    {/* <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td> */}
-                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                    )
 
-                                                                                    <td><div className="d-flex">
-                                                                                        <a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a>
-                                                                                        <a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
-                                                                                </tr>
-                                                                                )
+                                                                }
 
-                                                                        }
-
-                                                                        )
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            :
-                                                            <div className="form_section"><div className="empty_page">
-                                                                <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
-                                                                <p>There are no purchases available.<br />Please add purchases.</p>
-                                                                <a className="btn btn-primary" onClick={addClick}>ADD</a>
-                                                            </div> </div>}
+                                                                )
+                                                                }
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                     :
+                                                    <div className="form_section"><div className="empty_page">
+                                                        <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
+                                                        <p>There are no purchases available.<br />Please add purchases.</p>
+                                                        <a className="btn btn-primary" onClick={addClick}>ADD</a>
+                                                    </div> </div>}
+                                            </div>
+                                            :
 
-                                                    <div className="form_seciton">
-                                                        <div className="breadcurmb">
-                                                            <div className="title_block">
-                                                                <h5>add purchases</h5>
-                                                            </div>
-                                                            <div className="buttons">
+                                            <div className="form_seciton">
+                                                <div className="breadcurmb">
+                                                    <div className="title_block">
+                                                        <h5>add purchases</h5>
+                                                    </div>
+                                                    <div className="buttons">
 
-                                                                <a href="#" className="back_btn" onClick={backClick} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
-                                                            </div>
+                                                        <a href="#" className="back_btn" onClick={backClick} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Invoice Date</label>
+                                                            <input type="date" className="form-control" id="name" placeholder="Enter Date" name="invoiceDate" value={formChange?.invoiceDate} onChange={(e) => handleChange(e)} required />
+                                                            {invoiceDateError != "" ?
+                                                                <span className="errormsg" style={{
+                                                                    fontWeight: 'bold',
+                                                                    color: 'red',
+                                                                }}>{invoiceDateError}</span> : ""
+                                                            }
                                                         </div>
-                                                        <div className="row">
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Invoice Date</label>
-                                                                    <input type="date" className="form-control" id="name" placeholder="Enter Date" name="invoiceDate" value={formChange?.invoiceDate} onChange={(e) => handleChange(e)} required />
-                                                                    {invoiceDateError != "" ?
-                                                                        <span className="errormsg" style={{
-                                                                            fontWeight: 'bold',
-                                                                            color: 'red',
-                                                                        }}>{invoiceDateError}</span> : ""
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Invoice Number</label>
-                                                                    <input type="number" className="form-control" id="companyNumber" placeholder="Enter Number" name="invoiceNumber" value={formChange?.invoiceNumber} onChange={e => handleChange(e)} autoComplete="on" />
-                                                                    {invoiceNumberError != "" ?
-                                                                        <span className="errormsg" style={{
-                                                                            fontWeight: 'bold',
-                                                                            color: 'red',
-                                                                        }}>{invoiceNumberError}</span> : ""
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Model Name</label>
-                                                                    {/* <input type="text" className="form-control" id="name" placeholder="Enter Name" name="modelName" value={formChange?.modelName} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
-                                                                    <select className="form-select" aria-label="Default select example" name="name" value={formChange?.name} onChange={handleChange}>
-                                                                        <option value="">Select Models </option>
-                                                                        {modelData && modelData?.length > 0 && modelData?.map((eachItem, key) => {
-                                                                            console.log("eachItem", eachItem)
-                                                                            return (eachItem && eachItem.status == "Active" &&
-                                                                                <option value={eachItem?.name ? eachItem?.name : 'N/A'}>{eachItem?.name ? eachItem?.name : 'N/A'} </option>
-                                                                            )
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Invoice Number</label>
+                                                            <input type="number" className="form-control" id="companyNumber" placeholder="Enter Number" name="invoiceNumber" value={formChange?.invoiceNumber} onChange={e => handleChange(e)} autoComplete="on" />
+                                                            {invoiceNumberError != "" ?
+                                                                <span className="errormsg" style={{
+                                                                    fontWeight: 'bold',
+                                                                    color: 'red',
+                                                                }}>{invoiceNumberError}</span> : ""
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Model Name</label>
+                                                            {/* <input type="text" className="form-control" id="name" placeholder="Enter Name" name="modelName" value={formChange?.modelName} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
+                                                            <select className="form-select" aria-label="Default select example" name="name" value={formChange?.name} onChange={handleChange}>
+                                                                <option value="">Select Models </option>
+                                                                {modelData && modelData?.length > 0 && modelData?.map((eachItem, key) => {
+                                                                    console.log("eachItem", eachItem)
+                                                                    return (eachItem && eachItem.status == "Active" &&
+                                                                        <option value={eachItem?.name ? eachItem?.name : 'N/A'}>{eachItem?.name ? eachItem?.name : 'N/A'} </option>
+                                                                    )
 
-                                                                        }
+                                                                }
 
-                                                                        )
-                                                                        }
-                                                                    </select>
-                                                                    {nameerror != "" ?
-                                                                        <span className="errormsg" style={{
-                                                                            fontWeight: 'bold',
-                                                                            color: 'red',
-                                                                        }}>{nameerror}</span> : ""
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Chassis Number</label>
-                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Number" name="chassisNumber" value={formChange?.chassisNumber} onChange={(e) => handleChange(e)} autoComplete="on" />
-                                                                    {chassisNumberError != "" ?
-                                                                        <span className="errormsg" style={{
-                                                                            fontWeight: 'bold',
-                                                                            color: 'red',
-                                                                        }}>{chassisNumberError}</span> : ""
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Vendor Name</label>
-                                                                    {/* <input type="text" className="form-control" id="name" placeholder="Enter Name" name="vendorName" value={formChange?.vendorName} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
-                                                                    <select className="form-select" aria-label="Default select example" name="vendorName" value={formChange?.vendorName} onChange={handleChange}>
-                                                                        <option value="">Select Vendors </option>
-                                                                        {vendorResultData && vendorResultData?.length > 0 && vendorResultData?.map((eachItem, key) => {
-                                                                            console.log("eachItem", eachItem)
-                                                                            return (eachItem && eachItem.status == "Active" &&
-                                                                                <option value={eachItem?.name ? eachItem?.name : 'N/A'}>{eachItem?.name ? eachItem?.name : 'N/A'} </option>
-                                                                            )
+                                                                )
+                                                                }
+                                                            </select>
+                                                            {nameerror != "" ?
+                                                                <span className="errormsg" style={{
+                                                                    fontWeight: 'bold',
+                                                                    color: 'red',
+                                                                }}>{nameerror}</span> : ""
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Chassis Number</label>
+                                                            <input type="text" className="form-control" id="name" placeholder="Enter Number" name="chassisNumber" value={formChange?.chassisNumber} onChange={(e) => handleChange(e)} autoComplete="on" />
+                                                            {chassisNumberError != "" ?
+                                                                <span className="errormsg" style={{
+                                                                    fontWeight: 'bold',
+                                                                    color: 'red',
+                                                                }}>{chassisNumberError}</span> : ""
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Fuel Type</label>
+                                                            <select className="form-select" aria-label="Default select example" name="fuelType" value={formChange?.fuelType} onChange={handleChange}>
+                                                                <option value="">Select Fuel Type </option>
+                                                                <option value="Deisel">Deisel</option>
+                                                                <option value="Petrol">Petrol</option>
+                                                                <option value="Electrical">Electrical</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Variant</label>
+                                                            <input type="text" className="form-control" id="variant" placeholder="Enter Variant" name="variant" value={formChange?.variant} onChange={(e) => handleChange(e)} autoComplete="on" />
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Vendor Name</label>
+                                                            {/* <input type="text" className="form-control" id="name" placeholder="Enter Name" name="vendorName" value={formChange?.vendorName} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
+                                                            <select className="form-select" aria-label="Default select example" name="vendorName" value={formChange?.vendorName} onChange={handleChange}>
+                                                                <option value="">Select Vendors </option>
+                                                                {vendorResultData && vendorResultData?.length > 0 && vendorResultData?.map((eachItem, key) => {
+                                                                    console.log("eachItem", eachItem)
+                                                                    return (eachItem && eachItem.status == "Active" &&
+                                                                        <option value={eachItem?.name ? eachItem?.name : 'N/A'}>{eachItem?.name ? eachItem?.name : 'N/A'} </option>
+                                                                    )
 
-                                                                        }
+                                                                }
 
-                                                                        )
-                                                                        }
-                                                                    </select>
-                                                                    {vendorNameError!= "" ?
-                                                                        <span className="errormsg" style={{
-                                                                            fontWeight: 'bold',
-                                                                            color: 'red',
-                                                                        }}>{vendorNameError}</span> : ""
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            {/* <div className="col-md-6">
+                                                                )
+                                                                }
+                                                            </select>
+                                                            {vendorNameError != "" ?
+                                                                <span className="errormsg" style={{
+                                                                    fontWeight: 'bold',
+                                                                    color: 'red',
+                                                                }}>{vendorNameError}</span> : ""
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    {/* <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">GST Number</label>
                                                                     <input type="text" className="form-control" id="name" placeholder="Enter Number" name="gst" value={formChange?.gst} onChange={(e) => handleChange(e)} autoComplete="on" />
                                                                 </div>
                                                             </div> */}
-                                                            <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>}
-                                            
-                                        
+                                                    <div className="col-md-12 mb-2">
+                                                        <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
+                                                    </div>
+                                                </div>
+                                            </div>}
+
+
                                     </div>
                                 </div>
 

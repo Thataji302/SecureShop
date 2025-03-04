@@ -35,7 +35,7 @@ const LookupTable = ({ data, header, addClick, imageCloudfront,columns,editClick
                         </tr>
                     </thead>
                     <tbody>
-                        {data
+                        {data && data
                             .filter(item => item.status === "Active") // Show only active records
                             .map((eachItem, key) => (
                                 <tr key={key}>
