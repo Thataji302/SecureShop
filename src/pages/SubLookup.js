@@ -212,8 +212,9 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
             return;
         }
 
-        let body = { ...formValues };
-        delete body._id;
+        // let body = { ...formValues };
+        // delete body._id;
+        let body = {};
 
         const method = services?.deleteAPI?.method || "DELETE";
 
