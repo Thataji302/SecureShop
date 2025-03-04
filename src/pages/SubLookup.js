@@ -120,7 +120,13 @@ const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
             formValues["status"] = "Active";
         }
         let { url, method } = api;
-        url = url.replace("$id", `${formValues._id}`)
+        if(tabData.tab === 'Models'){
+            url = url.replace("$id", `${formValues.modelid}`)
+
+        }else{
+            url = url.replace("$id", `${formValues._id}`)
+
+        }
 
         let body = Object.assign({}, formValues);
         delete body._id;
