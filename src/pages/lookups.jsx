@@ -52,7 +52,7 @@ const Lookups = () => {
                     conditional: (values) => values._id // Show only when updating
                 }
             ],
-            tableFields: [],
+            
             services: {
                 "summaryAPI": {
                     method: "GET",
@@ -94,9 +94,9 @@ const Lookups = () => {
             tab: "Models",
             formFields: [
                 { name: "name", label: "Modal Name", type: "text", required: true },
-                { name: "gst", label: "GST", type: "text" },
+                // { name: "gst", label: "GST", type: "text" },
                 {
-                    name: "color", label: "Color", type: "select",
+                    name: "color", label: "Color", type: "select",autoinput:true,
                     options: [
                         { value: "Red", label: "Red" },
                         { value: "Black", label: "Black" },
@@ -112,10 +112,11 @@ const Lookups = () => {
                     name: "fuel", label: "Fuel", type: "select",
                     options: [
                         { value: "Deisel", label: "Deisel" },
-                        { value: "Petrol", label: "Petrol" }
+                        { value: "Petrol", label: "Petrol" },
+                        { value: "Electrical", label: "Electrical" }
                     ]
                 },
-                { name: "state", label: "State", type: "dropdown" },
+                // { name: "state", label: "State", type: "dropdown" },
                 { name: "variant", label: "Variant", type: "text" },
                 {
                     name: "status", label: "Status", type: "select",
@@ -127,7 +128,7 @@ const Lookups = () => {
                 }
 
             ],
-            tableFields: [],
+            
             services: {
                 "summaryAPI": {
                     method: "GET",
@@ -183,7 +184,7 @@ const Lookups = () => {
                     conditional: (values) => values._id // Show only when updating
                 }
             ],
-            tableFields: [],
+            
             services: {
                 "summaryAPI": {
                     method: "GET",
@@ -238,7 +239,7 @@ const Lookups = () => {
                     conditional: (values) => values._id // Show only when updating
                 }
             ],
-            tableFields: [],
+            
             services: {
                 "summaryAPI": {
                     method: "GET",
@@ -293,7 +294,7 @@ const Lookups = () => {
                     conditional: (values) => values._id // Show only when updating
                 }
             ],
-            tableFields: [],
+            
             services: {
                 "summaryAPI": {
                     method: "GET",
@@ -334,8 +335,12 @@ const Lookups = () => {
             tab: "Vendor",
             formFields: [
                 { name: "name", label: "Name", type: "text", required: true },
+                { key: "phoneNumber", label: "Phone Number", type: "text" },
+                { key: "adress", label: "Adress", type: "text" },
+                { key: "email", label: "Email", type: "text" },
                 { name: "gst", label: "GST", type: "text" },
                 { name: "state", label: "State", type: "dropdown" },
+
                 
                 {
                     name: "status", label: "Status", type: "select",
@@ -346,7 +351,7 @@ const Lookups = () => {
                     conditional: (values) => values._id // Show only when updating
                 }
             ],
-            tableFields: [],
+            
             services: {
                 "summaryAPI": {
                     method: "GET",
@@ -421,7 +426,7 @@ const Lookups = () => {
                                             {
                                                 lookupForms.map((lookupForm, index) => <div key={`tab-content-${index}`} className={`tab-pane branches ${activeTab === lookupForm.tab ? 'active' : ''}`} id={`${lookupForm.tab}`} role="tabpanel">
 
-                                                    {imageCloudfront && <SubLookup tabData={lookupForm} imageCloudfront={imageCloudfront} />}
+                                                    {imageCloudfront && <SubLookup tabData={lookupForm} imageCloudfront={imageCloudfront} tabSelected={activeTab}/>}
                                                 </div>)
                                             }
 

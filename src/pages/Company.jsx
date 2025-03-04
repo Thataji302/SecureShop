@@ -374,7 +374,7 @@ const Company = () => {
                                         <div>
                                             <div className="breadcurmb">
                                                 <div className="title_block">
-                                                    <h5>{id ? "Edit Company" : "Add Company"}</h5>
+                                                    <h5>{formChange?._id ? "Edit Company" : "Add Company"}</h5>
                                                 </div>
                                                 <div className="buttons">
                                                     <button className="btn btn-secondary" onClick={backClick}>Back</button>
@@ -445,8 +445,9 @@ const Company = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="col-md-6">
-                                                    {!isEdited && ( <div className="mb-3">
+                                                  
+                                                   <div className="col-md-6">
+                                                    {( formChange?._id && <div className="mb-3">
                                                             <label className="form-label">Status</label>
                                                             <select
                                                                 className="form-select"
