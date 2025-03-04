@@ -46,8 +46,8 @@ const Lookups = () => {
                 {
                     name: "status", label: "Status", type: "select",
                     options: [
-                        { value: "Active", label: "Active" },
-                        { value: "InActive", label: "InActive" }
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
                     ],
                     conditional: (values) => values._id // Show only when updating
                 }
@@ -98,14 +98,14 @@ const Lookups = () => {
                 {
                     name: "color", label: "Color", type: "select",autoinput:true,
                     options: [
-                        { value: "Red", label: "Red" },
-                        { value: "Black", label: "Black" },
-                        { value: "Yellow", label: "Yellow" },
-                        { value: "White", label: "White" },
-                        { value: "Blue", label: "Blue" },
-                        { value: "Green", label: "Green" },
-                        { value: "Silver", label: "Silver" },
-                        { value: "Maroon", label: "Maroon" }
+                        // { value: "Red", label: "Red" },
+                        // { value: "Black", label: "Black" },
+                        // { value: "Yellow", label: "Yellow" },
+                        // { value: "White", label: "White" },
+                        // { value: "Blue", label: "Blue" },
+                        // { value: "Green", label: "Green" },
+                        // { value: "Silver", label: "Silver" },
+                        // { value: "Maroon", label: "Maroon" }
                     ]
                 },
                 {
@@ -121,8 +121,8 @@ const Lookups = () => {
                 {
                     name: "status", label: "Status", type: "select",
                     options: [
-                        { value: "Active", label: "Active" },
-                        { value: "InActive", label: "InActive" }
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
                     ],
                     conditional: (values) => values._id // Show only when updating
                 }
@@ -130,6 +130,11 @@ const Lookups = () => {
             ],
             
             services: {
+                "colorsAPI": {
+                    method: "GET",
+                    url: `${lambda}/lookups?appname=${appname}&type=color`
+
+                },
                 "summaryAPI": {
                     method: "GET",
                     url: `${lambda}/modelInfo?appname=${appname}&companyid=${companyId}&userid=${userid}`
@@ -178,8 +183,8 @@ const Lookups = () => {
                 {
                     name: "status", label: "Status", type: "select",
                     options: [
-                        { value: "Active", label: "Active" },
-                        { value: "InActive", label: "InActive" }
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
                     ],
                     conditional: (values) => values._id // Show only when updating
                 }
@@ -233,8 +238,8 @@ const Lookups = () => {
                 {
                     name: "status", label: "Status", type: "select",
                     options: [
-                        { value: "Active", label: "Active" },
-                        { value: "InActive", label: "InActive" }
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
                     ],
                     conditional: (values) => values._id // Show only when updating
                 }
@@ -288,8 +293,8 @@ const Lookups = () => {
                 {
                     name: "status", label: "Status", type: "select",
                     options: [
-                        { value: "Active", label: "Active" },
-                        { value: "InActive", label: "InActive" }
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
                     ],
                     conditional: (values) => values._id // Show only when updating
                 }
@@ -345,8 +350,8 @@ const Lookups = () => {
                 {
                     name: "status", label: "Status", type: "select",
                     options: [
-                        { value: "Active", label: "Active" },
-                        { value: "InActive", label: "InActive" }
+                        { value: "ACTIVE", label: "ACTIVE" },
+                        { value: "INACTIVE", label: "INACTIVE" }
                     ],
                     conditional: (values) => values._id // Show only when updating
                 }

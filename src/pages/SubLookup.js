@@ -38,6 +38,35 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
 
     }
 
+    const getColors = () => {
+        if(services?.colorsAPI){
+            fetch(services?.colorsAPI?.url, { method: services?.colorsAPI.method })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    let tmp=[];
+                    data.result.map(item=>{
+                        let obj={
+                            label:item.name,
+                            value:item.value,
+                        }
+                        tmp.push(obj)
+                    })
+
+                    formFields=formFields.map(item=>{
+                        if(item.name === 'color'){
+                            item.options=tmp;
+                        }
+                        return item
+                    })
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+       
+
+    }
+
 
     useEffect(() => {
         if (showTable) {
@@ -48,6 +77,10 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
     useEffect(() => {
         if (tabSelected === tabData.tab) {
             getSummaryData();
+        }
+
+        if(tabData.tab === 'Models'){
+            getColors();
         }
     }, [tabSelected])
 
