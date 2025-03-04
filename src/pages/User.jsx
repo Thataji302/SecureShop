@@ -121,22 +121,31 @@ const User = () => {
         let valid = formvalidation();
         // let id = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-       // let companyId = localStorage.getItem("companyId")
+        // let companyId = localStorage.getItem("companyId")
         let companyId = localStorage.getItem("companyid");
 
         // console.log("id", id)
         if (valid && id) {
             setSubmitButton(true)
             let payload =
+            // {
+            //     "name": formChange?.name,
+            //     "emailId": formChange?.emailId,
+            //     "status": formChange?.status,
+            //     "phoneNumber": formChange?.phoneNumber,
+            //     "companyId": companyId,
+            //     "usertype": formChange?.usertype,
+            //     "id": id,
+            //     "userId": userid,
+            // }
+
+
             {
                 "name": formChange?.name,
-                "emailId": formChange?.emailId,
-                "status": formChange?.status,
                 "phoneNumber": formChange?.phoneNumber,
-                "companyId": companyId,
+                "emailid": formChange?.emailId,
+                "status": formChange?.status,
                 "usertype": formChange?.usertype,
-                "id": id,
-                "userId": userid,
             }
             console.log("payload", payload)
             const urlLink = lambda + '/updateUser?appname=' + appname + "&id=" + id + "&type=companyUser";
@@ -158,15 +167,23 @@ const User = () => {
                     }
                 });
         } else if (valid) {
-            setSubmitButton(true)
-            formChange["companyId"] = companyId
-            formChange["type"] = "companyUser"
-            //formChange["userId"] = userid
-            formChange["usertype"]= formChange?.usertype
-            let payload = formChange;
+            setSubmitButton(true);
+            let payload =
+            {
+                "name": formChange?.name,
+                "phoneNumber": formChange?.phoneNumber,
+                "emailid": formChange?.emailId,
+                "status": formChange?.status,
+                "usertype": formChange?.usertype,
+            }
+            // formChange["companyId"] = companyId
+            // formChange["type"] = "companyUser"
+            // //formChange["userId"] = userid
+            // formChange["usertype"] = formChange?.usertype
+            // let payload = formChange;
             console.log("payload", payload)
 
-            const urlLink = lambda + '/addUser?appname=' + appname+'&userid='+userid
+            const urlLink = lambda + '/addUser?appname=' + appname + '&userid=' + userid
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -251,8 +268,8 @@ const User = () => {
             let payload =
             {
                 "name": formChange?.name,
-                "emailId": formChange?.emailId,
-                "status": "Archive",
+                "emailid": formChange?.emailId,
+                "status": "Active",
                 "phoneNumber": formChange?.phoneNumber,
                 "usertype": formChange?.usertype,
                 "companyId": companyId,
@@ -329,130 +346,130 @@ const User = () => {
                                 <div className="card">
                                     <div className="card-body">
                                         {!branchStatus && savedPropertyData && savedPropertyData?.length > 0 &&
-                                                    <div className="breadcurmb">
-                                                        <div className="title_block">
-                                                            <h5>Users</h5>
-                                                        </div>
-                                                        <div className="buttons">
-                                                            <button className=" btn-primary" onClick={addClick}>add</button>
-                                                        </div>
-                                                    </div>}
-                                                {!branchStatus ?
-                                                    <div>
-                                                        {savedPropertyData && savedPropertyData?.length > 0 ?
-                                                            <div className="table-responsive">
-                                                                <table className="table table-striped ">
-                                                                    <thead>
-                                                                        <tr>
+                                            <div className="breadcurmb">
+                                                <div className="title_block">
+                                                    <h5>Users</h5>
+                                                </div>
+                                                <div className="buttons">
+                                                    <button className=" btn-primary" onClick={addClick}>add</button>
+                                                </div>
+                                            </div>}
+                                        {!branchStatus ?
+                                            <div>
+                                                {savedPropertyData && savedPropertyData?.length > 0 ?
+                                                    <div className="table-responsive">
+                                                        <table className="table table-striped ">
+                                                            <thead>
+                                                                <tr>
 
-                                                                            {/* <th className="align-middle">S No</th> */}
-                                                                            <th className="align-middle">Name</th>
-                                                                            <th className="align-middle">Email Id</th>
-                                                                            <th className="align-middle">Phone Number</th>
-                                                                            <th className="align-middle">Status</th>
-                                                                            <th className="align-middle">Created</th>
-                                                                            <th className="align-middle">Action</th>
+                                                                    {/* <th className="align-middle">S No</th> */}
+                                                                    <th className="align-middle">Name</th>
+                                                                    <th className="align-middle">Email Id</th>
+                                                                    <th className="align-middle">Phone Number</th>
+                                                                    <th className="align-middle">Status</th>
+                                                                    <th className="align-middle">Created</th>
+                                                                    <th className="align-middle">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {savedPropertyData?.map((eachItem, key) => {
+                                                                    return (eachItem && eachItem.status != "Archive" &&
+                                                                        <tr key={key}>
+                                                                            <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
+                                                                            <td>{eachItem?.emailId ? eachItem?.emailId : 'N/A'}</td>
+                                                                            <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                            <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td>
+                                                                            <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+
+                                                                            <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {savedPropertyData?.map((eachItem, key) => {
-                                                                            return (eachItem && eachItem.status != "Archive" &&
-                                                                                <tr key={key}>
-                                                                                    <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
-                                                                                    <td>{eachItem?.emailId ? eachItem?.emailId : 'N/A'}</td>
-                                                                                    <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
-                                                                                    <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td>
-                                                                                    <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
+                                                                    )
 
-                                                                                    <td><div className="d-flex"><a className="action-button edit tooltip-container" onClick={e => editClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Edit</span>edit</span>edit</a><a className="action-button delete tooltip-container" onClick={e => deleteClick(e, eachItem)}><span className="material-symbols-outlined"><span className="tooltip">Delete</span>delete</span>delete</a></div></td>
-                                                                                </tr>
-                                                                            )
+                                                                }
 
-                                                                        }
-
-                                                                        )
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            :
-                                                            <div className="form_section"><div className="empty_page">
-                                                                <span><img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} /></span>
-                                                                <p>There are no users available.<br />Please add users.</p>
-                                                                <a className="btn btn-primary" onClick={addClick}>ADD</a>
-                                                            </div> </div>}
+                                                                )
+                                                                }
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                     :
+                                                    <div className="form_section"><div className="empty_page">
+                                                        <span><img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} /></span>
+                                                        <p>There are no users available.<br />Please add users.</p>
+                                                        <a className="btn btn-primary" onClick={addClick}>ADD</a>
+                                                    </div> </div>}
+                                            </div>
+                                            :
 
-                                                    <div className="form_seciton">
-                                                        <div className="breadcurmb">
-                                                            <div className="title_block">
-                                                                <h5>add user</h5>
-                                                            </div>
-                                                            <div className="buttons">
+                                            <div className="form_seciton">
+                                                <div className="breadcurmb">
+                                                    <div className="title_block">
+                                                        <h5>add user</h5>
+                                                    </div>
+                                                    <div className="buttons">
 
-                                                                <a href="#" className="back_btn" onClick={backClick} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
-                                                            </div>
+                                                        <a href="#" className="back_btn" onClick={backClick} style={{ cursor: 'pointer' }}><span className="material-icons icon"> arrow_back</span>BACK</a>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">User Name</label>
+                                                            <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={formChange?.name} onChange={(e) => handleChange(e)} required />
+                                                            {nameerror != "" ? <span className="errormsg" style={{
+                                                                fontWeight: 'bold',
+                                                                color: 'red',
+                                                            }}>{nameerror}</span> : ""}
+
                                                         </div>
-                                                        <div className="row">
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">User Name</label>
-                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Name" name="name" value={formChange?.name} onChange={(e) => handleChange(e)} required />
-                                                                    {nameerror != "" ? <span className="errormsg" style={{
-                                                                        fontWeight: 'bold',
-                                                                        color: 'red',
-                                                                    }}>{nameerror}</span> : ""}
-
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Phone Number</label>
-                                                                    <input type="number" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={formChange?.phoneNumber} onChange={e => handleChange(e)} autoComplete="on" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Email Id</label>
-                                                                    <input type="text" className="form-control" id="name" placeholder="Enter Email" name="emailId" value={formChange?.emailId} onChange={(e) => handleChange(e)} autoComplete="on" />
-                                                                    {emailError != "" ? <span className="errormsg" style={{
-                                                                        fontWeight: 'bold',
-                                                                        color: 'red',
-                                                                    }}>{emailError}</span> : ""}
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">Status</label>
-                                                                    {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
-                                                                    <select className="form-select" aria-label="Default select example" name="status" value={formChange?.status} onChange={handleChange}>
-                                                                        <option value="">Select Status </option>
-                                                                        <option value="Active">Active</option>
-                                                                        <option value="Inactive"> Inactive</option>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <div className="mb-3 input-field">
-                                                                    <label className="form-label form-label">User Type</label>
-                                                                    {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
-                                                                    <select className="form-select" aria-label="Default select example" name="usertype" value={formChange?.usertype} onChange={handleChange}>
-                                                                        <option value="">Select Status </option>
-                                                                        <option value="operator">Operator</option>
-                                                                        <option value="manager"> Manager</option>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-12 mb-2">
-                                                                <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
-                                                            </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Phone Number</label>
+                                                            <input type="number" className="form-control" id="companyNumber" placeholder="Enter Number" name="phoneNumber" value={formChange?.phoneNumber} onChange={e => handleChange(e)} autoComplete="on" />
                                                         </div>
-                                                    </div>}
-                                          
-                                       
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Email Id</label>
+                                                            <input type="text" className="form-control" id="name" placeholder="Enter Email" name="emailId" value={formChange?.emailId} onChange={(e) => handleChange(e)} autoComplete="on" />
+                                                            {emailError != "" ? <span className="errormsg" style={{
+                                                                fontWeight: 'bold',
+                                                                color: 'red',
+                                                            }}>{emailError}</span> : ""}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Status</label>
+                                                            {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
+                                                            <select className="form-select" aria-label="Default select example" name="status" value={formChange?.status} onChange={handleChange}>
+                                                                <option value="">Select Status </option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="Inactive"> Inactive</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">User Type</label>
+                                                            {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
+                                                            <select className="form-select" aria-label="Default select example" name="usertype" value={formChange?.usertype} onChange={handleChange}>
+                                                                <option value="">Select Status </option>
+                                                                <option value="OPERATOR">Operator</option>
+                                                                <option value="MANAGER"> Manager</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12 mb-2">
+                                                        <button className="update_btn" type="submit" onClick={e => handleUpdate(e)} style={{ cursor: 'pointer' }}>{submitButton ? "Saving..." : "Save"}</button>
+                                                    </div>
+                                                </div>
+                                            </div>}
+
+
                                     </div>
                                 </div>
 
@@ -479,7 +496,7 @@ const User = () => {
                                 onConfirm={e => onUpdate()}
                             >
                             </SweetAlert>}
-                      
+
                         <footer className="footer">
                             <div className="container-fluid">
                                 <div className="row">
@@ -492,7 +509,7 @@ const User = () => {
                                 </div>
                             </div>
                         </footer>
-                       
+
                         {deleteConfirm &&
                             <Modal className="access-denied delete_popup" show={deleteConfirm}>
 
