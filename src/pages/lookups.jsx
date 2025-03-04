@@ -32,6 +32,7 @@ const Lookups = () => {
                 { name: "name", label: "Branch Name", type: "text", required: true },
                 { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
                 { name: "address", label: "Address", type: "text", required: true },
+                { name: "email", label: "Email", type: "text" },
                 { name: "dealerCode", label: "Dealer Code", type: "text" },
                 { name: "gst", label: "GST", type: "text" },
                 //{ name: "gst", label: "GST", type: "text", pattern: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}$/ },
@@ -108,6 +109,8 @@ const Lookups = () => {
                         // { value: "Maroon", label: "Maroon" }
                     ]
                 },
+                { name: "email", label: "Email", type: "text" },
+
                 {
                     name: "fuel", label: "Fuel", type: "select",
                     options: [
@@ -178,6 +181,8 @@ const Lookups = () => {
                 { name: "commission", label: "Commission(%)", type: "text", required: true, pattern: /^(0\.[1-9]\d?|[1-9]\d?(\.\d{1,2})?)$/
 
  },
+ { name: "email", label: "Email", type: "text" },
+
                 { name: "gst", label: "GST", type: "text"},
                 { name: "state", label: "State", type: "dropdown" },
                 {
@@ -232,6 +237,7 @@ const Lookups = () => {
                 { name: "name", label: "Name", type: "text", required: true },
                 { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
                 { name: "commission", label: "Commission(%)", type: "text", required: true },
+                { name: "email", label: "Email", type: "text" },
                 { name: "gst", label: "GST", type: "text" },
                 { name: "state", label: "State", type: "dropdown" },
                 
@@ -287,6 +293,7 @@ const Lookups = () => {
                 { name: "name", label: "Name", type: "text", required: true },
                 { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
                 { name: "gst", label: "GST", type: "text" },
+                { name: "email", label: "Email", type: "text" },
                 { name: "commission", label: "Commission(%)", type: "text", required: true },
                 { name: "state", label: "State", type: "dropdown" },
                 
