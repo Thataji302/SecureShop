@@ -7,7 +7,7 @@ import AutoCompleteDropdown from "./AutoCompleteDropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
+const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
     const [formValues, setFormValues] = useState({});
     const [data, setData] = useState(null);
     const [errors, setErrors] = useState({});
@@ -107,6 +107,27 @@ const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
         return valid;
     };
 
+    const changeId=(url)=>{
+        if (tabData.tab === 'Models') {
+            url = url.replace("$id", `${formValues.modelid}`)
+        }
+        else if (tabData.tab === 'Branches') {
+            url = url.replace("$id", `${formValues.branchid}`)
+        } else if (tabData.tab === 'Insurance') {
+            url = url.replace("$id", `${formValues.insuranceid}`)
+        } else if (tabData.tab === 'Finance') {
+            url = url.replace("$id", `${formValues.financeid}`)
+        } else if (tabData.tab === 'Fastag') {
+            url = url.replace("$id", `${formValues.fastagid}`)
+        } else if (tabData.tab === 'Vendor') {
+            url = url.replace("$id", `${formValues.vendorid}`)
+        } else {
+            url = url.replace("$id", `${formValues._id}`)
+        }
+        return url;
+    }
+
+
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -120,13 +141,8 @@ const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
             formValues["status"] = "Active";
         }
         let { url, method } = api;
-        if(tabData.tab === 'Models'){
-            url = url.replace("$id", `${formValues.modelid}`)
-
-        }else{
-            url = url.replace("$id", `${formValues._id}`)
-
-        }
+        url = changeId(url)
+        
 
         let body = Object.assign({}, formValues);
         delete body._id;
@@ -187,7 +203,7 @@ const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
         setIsSubmitting(true);
         let url = services?.deleteAPI?.url;
         if (formValues._id) {
-            url = url?.replace("$id", `${formValues._id}`);
+            url = changeId(url)
         } else {
             console.error("Missing _id in formValues");
             alert("Error: Missing item ID.");
@@ -253,23 +269,23 @@ const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
                                             <div className="mb-3 input-field">
                                                 <label className="form-label">{field.label}</label>
 
-                                                 {field.type === "date" && (
-                                                // <DatePicker
-                                                //     selected={formValues[field.name] || null}
-                                                //     onChange={handleChange}
-                                                //     className="form-control"
-                                                //     dateFormat="dd-MM-YYYY"
-                                                //     placeholderText={`Select ${field.label}`}
-                                                // />
-                                                <input
-                                                type="date"
-                                                className="form-control"
-                                                name={field.name}
-                                                placeholder={`Enter ${field.label}`}
-                                                value={formValues[field.name] || ""}
-                                                onChange={handleChange}
-                                            />
-                                            )}
+                                                {field.type === "date" && (
+                                                    // <DatePicker
+                                                    //     selected={formValues[field.name] || null}
+                                                    //     onChange={handleChange}
+                                                    //     className="form-control"
+                                                    //     dateFormat="dd-MM-YYYY"
+                                                    //     placeholderText={`Select ${field.label}`}
+                                                    // />
+                                                    <input
+                                                        type="date"
+                                                        className="form-control"
+                                                        name={field.name}
+                                                        placeholder={`Enter ${field.label}`}
+                                                        value={formValues[field.name] || ""}
+                                                        onChange={handleChange}
+                                                    />
+                                                )}
 
                                                 {field.type === "text" ? (
                                                     <input
@@ -283,7 +299,7 @@ const SubLookup = ({ tabData, imageCloudfront,tabSelected }) => {
                                                 ) : field.type === "select" ? (
 
                                                     field?.autoinput ?
-                                                        <AutoCompleteDropdown field={field} formValues={formValues} handleChange={handleChange}/>
+                                                        <AutoCompleteDropdown field={field} formValues={formValues} handleChange={handleChange} />
                                                         :
                                                         <select
                                                             className="form-select"
