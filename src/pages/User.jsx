@@ -121,7 +121,9 @@ const User = () => {
         let valid = formvalidation();
         // let id = id;
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        let companyId = localStorage.getItem("companyId")
+       // let companyId = localStorage.getItem("companyId")
+        let companyId = localStorage.getItem("companyid");
+
         // console.log("id", id)
         if (valid && id) {
             setSubmitButton(true)
@@ -159,11 +161,12 @@ const User = () => {
             setSubmitButton(true)
             formChange["companyId"] = companyId
             formChange["type"] = "companyUser"
-            formChange["userId"] = userid
+            //formChange["userId"] = userid
             formChange["usertype"]= formChange?.usertype
             let payload = formChange;
             console.log("payload", payload)
-            const urlLink = lambda + '/addUser?appname=' + appname;
+
+            const urlLink = lambda + '/addUser?appname=' + appname+'&userid='+userid
             axios({
                 method: 'POST',
                 url: urlLink,

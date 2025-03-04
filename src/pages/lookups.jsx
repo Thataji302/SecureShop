@@ -335,9 +335,9 @@ const Lookups = () => {
             tab: "Vendor",
             formFields: [
                 { name: "name", label: "Name", type: "text", required: true },
-                { key: "phoneNumber", label: "Phone Number", type: "text" },
-                { key: "adress", label: "Adress", type: "text" },
-                { key: "email", label: "Email", type: "text" },
+                { name: "phoneNumber", label: "Phone Number", type: "text", required: true, pattern: /^[6-9]\d{9}$/ },
+                { name: "address", label: "Address", type: "text" },
+                { name: "email", label: "Email", type: "text" },
                 { name: "gst", label: "GST", type: "text" },
                 { name: "state", label: "State", type: "dropdown" },
 
@@ -360,20 +360,20 @@ const Lookups = () => {
                 },
                 "createAPI": {
                     method: "POST",
-                    url: `${lambda}/addVendors?appname=${appname}&companyid=${companyId}&userid=${userid}`,
+                    url: `${lambda}/addVendor?appname=${appname}&companyid=${companyId}&userid=${userid}`,
                     errors: [
                         "Vendor already exists"]
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateVendors?appname=${appname}&vendorId=$id&companyid=${companyId}&userid=${userid}`,
+                    url: `${lambda}/updateVendor?appname=${appname}&vendorId=$id&companyid=${companyId}&userid=${userid}`,
                     errors: [
                         "Vendor already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateVendors?appname=${appname}&vendorId=$id&type=delete&companyid=${companyId}&userid=${userid}`,
+                    url: `${lambda}/updateVendor?appname=${appname}&vendorId=$id&type=delete&companyid=${companyId}&userid=${userid}`,
                 }
             },
             columns: [

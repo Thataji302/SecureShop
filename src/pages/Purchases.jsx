@@ -45,8 +45,8 @@ const Purchases = () => {
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteData, setDeleteData] = useState('');
     const [dataType, setDataType] = useState('');
-    const [modelData, setModelData] = useState({})
-    const [vendorResultData, setVendorResultData] = useState({})
+    const [modelData, setModelData] = useState(null)
+    const [vendorResultData, setVendorResultData] = useState(null)
     const [submitButton, setSubmitButton] = useState(false);
     const [userSuccess, setUserSuccess] = useState(false);
     const [invoiceDateError, setInvoiceDateError] = useState('');
@@ -58,8 +58,10 @@ const Purchases = () => {
             setConfig(window.site);
 
         }
-        modelTab()
-        vendorTab()
+        // modelTab()
+        // vendorTab()
+        getVendorData();
+        getModelData()
 
     }, [window.site]);
     useEffect(() => {
@@ -373,6 +375,35 @@ const Purchases = () => {
                 }
             });
     }
+
+
+    const getModelData = () => {
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId");
+        let companyId = localStorage.getItem("companyid");
+        const urlLink = `${lambda}/modelInfo?appname=${appname}&companyid=${companyId}&userid=${userid}`
+        fetch(urlLink, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                setModelData(data.result);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    const getVendorData = () => {
+        let userid = localStorage.getItem("userid") || localStorage.getItem("userId");
+        let companyId = localStorage.getItem("companyid");
+        const urlLink = `${lambda}/vendorsInfo?appname=${appname}&companyid=${companyId}&userid=${userid}`
+        fetch(urlLink, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                setVendorResultData(data.result);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
     const vendorData = (type) => {
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         const urlLink = lambda + '/lookups?appname=' + appname + "&type=" + type + (userid ? "&userid=" + userid : "");

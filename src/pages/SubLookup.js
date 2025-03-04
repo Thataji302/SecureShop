@@ -54,6 +54,7 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
 
     // Handle input change
     const handleChange = (e) => {
+        
         const { name, value } = e.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
         validateField(name, value);
