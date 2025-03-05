@@ -279,8 +279,8 @@ const SignInOtp = () => {
               <div className="signin-footer mt-4">
 
                 <button className="fill_btn" onClick={e => handleLogin(e)}>
-                  {activeLoad === "loginOtp" ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
-                  LOGIN</button>
+                  
+                  LOGIN {activeLoad === "loginOtp" ? '...' : null}</button>
                 <button className="sm-btn" onClick={handleEmailLogin}>Login with Password</button>
               </div>
 

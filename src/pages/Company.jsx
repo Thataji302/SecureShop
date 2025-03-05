@@ -348,7 +348,7 @@ const Company = () => {
                                                         </thead>
                                                         <tbody>
                                                             {savedCompanyData.map((item) => (
-                                                                <tr key={item.id}>
+                                                                <tr key={item._id}>
                                                                     <td>{item?.companyData?.companyName}</td>
                                                                     <td>{item?.companyData?.companyEmailId}</td>
                                                                     <td>{item?.companyData?.phoneNumber}</td>

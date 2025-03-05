@@ -603,16 +603,16 @@ const SignUp = () => {
 
 
                   <button onClick={handleResendOtp}>
-                    {activeLoad === "ResendActive" ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
-                    Resend</button> {activeLoad === "ResendActive" ? <p style={{ 'font-size': '12px', 'color': 'green' }}>OTP Resent!</p> : null}
+                    
+                    Resend {activeLoad === "ResendActive" ? '...' : null}</button> {activeLoad === "ResendActive" ? <p style={{ 'font-size': '12px', 'color': 'green' }}>OTP Resent!</p> : null}
                 </div>
               </div>
             }
             <div className="signup">
               <button className="fill_btn" onClick={e => handleStatus(e)}>
-                {activeLoad === "signUpActive" ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
+                
 
-                {buttonText}</button>
+                {buttonText} {activeLoad === "signUpActive" ? '...' : null}</button>
 
             </div>
             {error != "" ?

@@ -517,7 +517,7 @@ const Profile = () => {
                                                                          </div> */}
 
                                           
-                                            <button onClick={handleUserUpdate} className="fill_btn"> {loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}UPDATE</button>
+                                            <button onClick={handleUserUpdate} className="fill_btn"> UPDATE {loaderEnable ? '...' : null}</button>
                                             </div>
                                             <div className="col-lg-4 col-md-4 col-xs-12">
                                                 <div className="avatar-block">
@@ -618,7 +618,7 @@ const Profile = () => {
                                             </div>
                                             <p className="text-danger"></p>
                                             <div className="signin-footer mt-4">
-                                                <button className="fill_btn" onClick={e => handlePwdGenerate(e)}>{loaderEnable ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null} UPDATE</button>
+                                                <button className="fill_btn" onClick={e => handlePwdGenerate(e)}> UPDATE {loaderEnable ? '...' : null}</button>
                                             </div>
                                         </div>
                                         <div className="col-lg-5 col-md-5 col-xs-12">

@@ -559,8 +559,8 @@ const SignIn = () => {
 
 
                                 <button className="fill_btn" onClick={e => handleSignIn(e)} >
-                                    {activeLoad === "loginPwd" ? (<img src="https://orasi-dev.imgix.net/orasi/client/resources/orasiv1/images/common-icons/rotate_right.svg" className="loading-icon" />) : null}
-                                    {buttonText}</button>
+                                   
+                                    {buttonText}  {activeLoad === "loginPwd" ? '...' : null}</button>
 
                                 {/* {buttonText === "Login" && email != "" ? 
                                  <button className="plain-btn-sm forgotPwd" onClick={e => handleForgot(e)}>
