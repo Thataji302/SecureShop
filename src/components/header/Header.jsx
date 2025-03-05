@@ -20,40 +20,7 @@ import tmdbApi from "../../api/tmdbApi";
 
 import { contentContext } from "../../context/contentContext";
 
-let menuList = [
-  {
-    id: '1',
-    labelName: 'Sales',
-    route: "yellowForm"
-  },
 
-  {
-    id: '2',
-    labelName: 'Purchases',
-    route: "purchases"
-  },
-  {
-    id: '3',
-    labelName: 'Lookups',
-    route: "lookups"
-  },
-  {
-    id: '4',
-    labelName: 'Reports',
-    //route: "reports"
-  },
-  {
-    id: '5',
-    labelName: 'Users',
-    route: "user"
-  },
-  {
-    id: '6',
-    labelName: 'Retail',
-    route: "retail"
-  }
-
-]
 
 const Header = (props) => {
   const { pathname } = useLocation();
@@ -63,6 +30,7 @@ const Header = (props) => {
   const [userName, setUserName] = useState([]);
   const [config, setConfig] = useState({});
   const [activeId, setActiveId] = useState();
+  const [menuList, setmenuList] = useState([]);
 
   const { userData, setUserData, setShowPopup, setSelectedOptions, setMultiSelectFields, setActiveFieldsObj,
     setSelectedOptionsClientName, setSearchPayload, setInitialCategoriesData1, GetTimeActivity, GetUserDataContext } = useContext(contentContext)
@@ -80,15 +48,10 @@ const Header = (props) => {
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 50);
     });
+    GetUserDataContext()
 
-    if(localStorage.getItem("userType") === 'SUPER ADMIN'){
-      menuList = [{
-        id: '1',
-        labelName: 'Company',
-        route: "company"
-      }]
-    }
   }, []);
+
   useEffect(() => {
     if (window.site) {
       setConfig(window.site);
@@ -97,26 +60,68 @@ const Header = (props) => {
 
   }, [window.site]);
 
+  useEffect(() => {
 
+
+    console.log('userData  ddd ', userData?.userType)
+    if (userData?.userType != undefined && userData?.userType == 'SUPER ADMIN') {
+      console.log('ssss')
+      setmenuList([{
+        id: '1',
+        labelName: 'Company',
+        route: "company"
+      }])
+
+    } else if (userData?.userType != undefined && userData?.userType != 'SUPER ADMIN') {
+      setmenuList([
+        {
+          id: '1',
+          labelName: 'Sales',
+          route: "yellowForm"
+        },
+
+        {
+          id: '2',
+          labelName: 'Purchases',
+          route: "purchases"
+        },
+        {
+          id: '3',
+          labelName: 'Lookups',
+          route: "lookups"
+        },
+        {
+          id: '4',
+          labelName: 'Reports',
+          //route: "reports"
+        },
+        {
+          id: '5',
+          labelName: 'Users',
+          route: "user"
+        },
+        {
+          id: '6',
+          labelName: 'Retail',
+          route: "retail"
+        }
+      ])
+    }
+    // if (localStorage.getItem("userType") === 'SUPER ADMIN') {
+    //   menuList = [{
+    //     id: '1',
+    //     labelName: 'Company',
+    //     route: "company"
+    //   }]
+    // }
+  }, [userData]);
 
   let imageCloudfront;
   if (config.common && config.common.imageCloudfront) {
     imageCloudfront = config.common.imageCloudfront;
   }
 
-  const handlemenuclick = async (e, path, id) => {
-    if (id === 100005) {
-      window.open(
-        'https://deas.hitlab.com/?ref=ORASI',
-        '_blank'
-      );
-    } else {
-      history.push(path);
-    }
-  }
-  const handleSignup = async () => {
-    history.push("./signup");
-  }
+
   const handleSignin = async () => {
     history.push("./login");
   }
@@ -143,11 +148,12 @@ const Header = (props) => {
   }
   const onClickMenu = (e, item) => {
     //setMenu(id);
-    console.log('handleActiveMenuObj------------>', item)
     setActiveId(item.id)
 
     history.push(item.route)
   }
+
+  console.log('menuList ', menuList, userData)
   return (
     <header id="page-topbar" >
       <div className="navbar-header inner_header">

@@ -1,4 +1,4 @@
-import React,{ useState, createContext, useEffect ,useRef } from "react";
+import React, { useState, createContext, useEffect, useRef } from "react";
 import tmdbApi from "../api/tmdbApi";
 import SessionPopup from "../pages/SessionPopup"
 import moment from "moment";
@@ -9,7 +9,7 @@ function ChangeContentProvider(props) {
   const [menus, setMenus] = useState([]);
   const [initialData, setInitialData] = useState([])
   const [data, setData] = useState([]);
-  const [retailsData, setRetailsData]= useState([]);
+  const [retailsData, setRetailsData] = useState([]);
   const [initialCategoriesData1, setInitialCategoriesData1] = useState([]);
   const [isLoad1, setIsLoad1] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
@@ -27,13 +27,13 @@ function ChangeContentProvider(props) {
   const [hideMenu, setHideMenu] = useState(true);
   const [showSessionPopupup, setShowSessionPopupup] = useState(false);
 
-  const [categoryName, setCategoryName] = useState([]); 
-  const [categoryNameAdv, setCategoryNameAdv] = useState([]); 
+  const [categoryName, setCategoryName] = useState([]);
+  const [categoryNameAdv, setCategoryNameAdv] = useState([]);
   const [selectedOptionsClientName, setSelectedOptionsClientName] = useState([]);
 
   const [clientData1, setClientData1] = useState([]);
-    const [userData , setUserData] = useState([]);
-    const [activeMenuId, setActiveMenuId] = useState("");
+  const [userData, setUserData] = useState([]);
+  const [activeMenuId, setActiveMenuId] = useState("");
 
   const [arrow, setArrow] = useState("0");
 
@@ -48,7 +48,7 @@ function ChangeContentProvider(props) {
 
   const [contentsearch, setContentSearch] = useState("");
   const [itemsearch, setItemSearch] = useState("");
-  const[itemAdvSearch,setItemAdvSearch]=useState("")
+  const [itemAdvSearch, setItemAdvSearch] = useState("")
   const [clientAdvSearch, setClientAdvSearch] = useState({});
   const [dealsadvSearch, setDealsAdvSearch] = useState({});
   const [companyadvSearch, setCompanyAdvSearch] = useState({});
@@ -65,119 +65,119 @@ function ChangeContentProvider(props) {
   const [paginationnumber, setPagintionNumber] = useState("");
   const [ActivePageName, setActivePageName] = useState("");
   const [popup, setShowPopup] = useState(false);
-    const [activeMenuObj, setActiveMenuObj] = useState({});
+  const [activeMenuObj, setActiveMenuObj] = useState({});
 
-    const [multiSelectFields, setMultiSelectFields] = useState({});
-    const [activeFieldsObj, setActiveFieldsObj] = useState({CookingshowActive:false,seriesActive:false,SportsActive:false,MusicActive:false,seriesActive:false});
+  const [multiSelectFields, setMultiSelectFields] = useState({});
+  const [activeFieldsObj, setActiveFieldsObj] = useState({ CookingshowActive: false, seriesActive: false, SportsActive: false, MusicActive: false, seriesActive: false });
 
-    const [searchedFlag, setSearchedFlag] = useState(false);
-    const[currentUrl,setCurrentUrl]=useState("")
-    const [currentPageNew, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
-  
-    const [lookUpType, setlookUpType] = useState("");
-  
-    // const [lookupsearch, setLookupSearch] = useState("");
-  
-    const [route, setRoute] = useState("");
+  const [searchedFlag, setSearchedFlag] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState("")
+  const [currentPageNew, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
 
-    const prevRouteRef = useRef(null);
-    const [sortedColumn, setSortedColumn] = useState(null);
-    const [sortDirection, setSortDirection] = useState(null);
-    const [workshopsearch, setWorkshopSearch] = useState("");
-    const [productsearch, setProductSearch] = useState("");
-    const [selctionOrder, setSelectionOrder] = useState("");
+  const [lookUpType, setlookUpType] = useState("");
+
+  // const [lookupsearch, setLookupSearch] = useState("");
+
+  const [route, setRoute] = useState("");
+
+  const prevRouteRef = useRef(null);
+  const [sortedColumn, setSortedColumn] = useState(null);
+  const [sortDirection, setSortDirection] = useState(null);
+  const [workshopsearch, setWorkshopSearch] = useState("");
+  const [productsearch, setProductSearch] = useState("");
+  const [selctionOrder, setSelectionOrder] = useState("");
   const handleClosePopup = () => setShowPopup(false);
 
   function usePrevious(newRoute) {
     const ref = React.useRef();
-    React.useEffect(()=>{
+    React.useEffect(() => {
       ref.current = newRoute
     }, [newRoute])
     return ref.current
   }
 
 
-    useEffect(() => {
-      GetUserDataContext();
-      userAgent();
+  useEffect(() => {
+    GetUserDataContext();
+    userAgent();
   }, []);
   const userAgent = async () => {
     axios({
       method: 'GET',
       url: "https://d4nv8o5tzs3mt.cloudfront.net/",
-  })
+    })
       .then(function (response) {
         let locData = JSON.stringify(response.data)
-          localStorage.setItem("loc",locData);
+        localStorage.setItem("loc", locData);
       });
-    }
-  
+  }
 
-   const GetUserDataContext = async () => {
+
+  const GetUserDataContext = async () => {
     try {
 
-        const response = await tmdbApi.getUserData({});
+      const response = await tmdbApi.getUserData({});
 
-        if (response.statusCode === 200) {
+      if (response.statusCode === 200) {
 
-            setUserData(response.result[0]);
-            localStorage.setItem("username", response.result[0].name)
-            
-           // localStorage.setItem("ClientType", response.result[0].type)
-            // let userArr = response.result[0].permissions
+        setUserData(response.result[0]);
+        localStorage.setItem("username", response.result[0].name)
 
-            // const obj = userArr.reduce((acc, item) => {
-            //     if (item.submenus) acc[item.menu] = false;
-            //     return acc;
-            // }, {});
-           
-        }
+        // localStorage.setItem("ClientType", response.result[0].type)
+        // let userArr = response.result[0].permissions
+
+        // const obj = userArr.reduce((acc, item) => {
+        //     if (item.submenus) acc[item.menu] = false;
+        //     return acc;
+        // }, {});
+
+      }
     } catch {
-        console.log("error");
+      console.log("error");
     }
-};
+  };
 
 
-    const Categories = async () => {
-        try {
-       
-          const response = await tmdbApi.getCategory({});
-          console.log('response in content context ',response)
-          if (response.result === "Invalid token or Expired" && response.statusCode === 200) {
-            setShowSessionPopupup(true)
-            
-        }
-         else if (response.statusCode === 200) {
-           
-            let arr = []
-            let advArr = []
-            setCatBasedContentFields(response && response.result &&response.result.data)
-            response.result.data.forEach((item) => {
-              if(item.status === 'ACTIVE'){
-                arr.push(item.name);
-              }
-              advArr.push(item.name)
-             
-            });
-            const arrOfObj = arr.map((item) => {
-              return { value: item, label: item };
-            });
-            const arrOfObj2 = advArr.map((item) => {
-              return { value: item, label: item };
-            });
-            setCategoryName(arrOfObj);
-            setCategoryNameAdv(arrOfObj2);
-            setIsLoading(false)
+  const Categories = async () => {
+    try {
+
+      const response = await tmdbApi.getCategory({});
+      console.log('response in content context ', response)
+      if (response.result === "Invalid token or Expired" && response.statusCode === 200) {
+        setShowSessionPopupup(true)
+
+      }
+      else if (response.statusCode === 200) {
+
+        let arr = []
+        let advArr = []
+        setCatBasedContentFields(response && response.result && response.result.data)
+        response.result.data.forEach((item) => {
+          if (item.status === 'ACTIVE') {
+            arr.push(item.name);
           }
-        } catch {
-          console.log("error");
-        }
-      };
+          advArr.push(item.name)
+
+        });
+        const arrOfObj = arr.map((item) => {
+          return { value: item, label: item };
+        });
+        const arrOfObj2 = advArr.map((item) => {
+          return { value: item, label: item };
+        });
+        setCategoryName(arrOfObj);
+        setCategoryNameAdv(arrOfObj2);
+        setIsLoading(false)
+      }
+    } catch {
+      console.log("error");
+    }
+  };
 
   const GetTimeActivity = () => {
-  
-   localStorage.setItem("timeActivity",moment().format('MMM-DD-YYYY HH:mm:ss'))
+
+    localStorage.setItem("timeActivity", moment().format('MMM-DD-YYYY HH:mm:ss'))
   }
   const GetClientDataFunction = async () => {
     try {
@@ -282,11 +282,13 @@ function ChangeContentProvider(props) {
     }
   }
 
-  
+
 
   return (
-    <contentContext.Provider value={{ popup, setShowPopup, handleClosePopup, setInitialCategoriesData1, initialData, Categories, categoryName, setCategoryName, categoryNameAdv, setCategoryNameAdv, setIsLoad1, isLoad1, initialCategoriesData1, setHideMenu, hideMenu, perPageConst, setPerPageConst, pageNumber, setPageNumber, assetTotal, setAssetTotal, perpage, setPerpage, totalPagesArray, setTotalPagesArray, totalPages, setTotalPages, menus, isLoading, setIsLoading, clientData1, sortTableAlpha, arrow, sortTableByDate,userData,setUserData, activeMenuObj, setActiveMenuObj ,activeMenuId, setActiveMenuId,catBasedContentFields, setCatBasedContentFields,clientsearch,setClientSearch ,setContactusSearch ,contactussearch,setRecommendedSearch ,recommendedsearch,categorysearch, setCategorySearch ,setDealSearch,dealsearch ,clientmanagesearch, setClientMangeSearch ,companysearch, setCompanySearch ,usersearch, setUserSearch , itemsearch,setItemSearch,contentsearch, setContentSearch ,clientAdvSearch, setClientAdvSearch,dealsadvSearch, setDealsAdvSearch ,companyadvSearch, setCompanyAdvSearch ,searchPayload, setSearchPayload ,contentAdvCount, setContentAdvCount,GetUserDataContext ,currentPage, setcurrentPage ,paginationnumber, setPagintionNumber,selectedOptions, setSelectedOptions,selectedOptionsClientName, multiSelectFields, setMultiSelectFields,activeFieldsObj, setActiveFieldsObj,setSelectedOptionsClientName,pay, setPay,
-      data, setData,rowsPerPage, setRowsPerPage,currentPageNew,currentUrl,setCurrentUrl, setCurrentPage,lookUpType, setlookUpType,route,itemAdvSearch,setItemAdvSearch, setRoute,prevRouteRef,usePrevious,sortedColumn, setSortedColumn,sortDirection, setSortDirection,setShowSessionPopupup,showSessionPopupup,searchedFlag,ActivePageName, setActivePageName, setSearchedFlag,itemsearch, setItemSearch,bidsSearch, setBidsSearch, bidsAdvSearch, setBidsAdvSearch,GetTimeActivity,workshopsearch, setWorkshopSearch,productsearch, setProductSearch,selctionOrder, setSelectionOrder,setRetailSearch,retailsData, setRetailsData}}>
+    <contentContext.Provider value={{
+      popup, setShowPopup, handleClosePopup, setInitialCategoriesData1, initialData, Categories, categoryName, setCategoryName, categoryNameAdv, setCategoryNameAdv, setIsLoad1, isLoad1, initialCategoriesData1, setHideMenu, hideMenu, perPageConst, setPerPageConst, pageNumber, setPageNumber, assetTotal, setAssetTotal, perpage, setPerpage, totalPagesArray, setTotalPagesArray, totalPages, setTotalPages, menus, isLoading, setIsLoading, clientData1, sortTableAlpha, arrow, sortTableByDate, userData, setUserData, activeMenuObj, setActiveMenuObj, activeMenuId, setActiveMenuId, catBasedContentFields, setCatBasedContentFields, clientsearch, setClientSearch, setContactusSearch, contactussearch, setRecommendedSearch, recommendedsearch, categorysearch, setCategorySearch, setDealSearch, dealsearch, clientmanagesearch, setClientMangeSearch, companysearch, setCompanySearch, usersearch, setUserSearch, itemsearch, setItemSearch, contentsearch, setContentSearch, clientAdvSearch, setClientAdvSearch, dealsadvSearch, setDealsAdvSearch, companyadvSearch, setCompanyAdvSearch, searchPayload, setSearchPayload, contentAdvCount, setContentAdvCount, GetUserDataContext, currentPage, setcurrentPage, paginationnumber, setPagintionNumber, selectedOptions, setSelectedOptions, selectedOptionsClientName, multiSelectFields, setMultiSelectFields, activeFieldsObj, setActiveFieldsObj, setSelectedOptionsClientName, pay, setPay,
+      data, setData, rowsPerPage, setRowsPerPage, currentPageNew, currentUrl, setCurrentUrl, setCurrentPage, lookUpType, setlookUpType, route, itemAdvSearch, setItemAdvSearch, setRoute, prevRouteRef, usePrevious, sortedColumn, setSortedColumn, sortDirection, setSortDirection, setShowSessionPopupup, showSessionPopupup, searchedFlag, ActivePageName, setActivePageName, setSearchedFlag, itemsearch, setItemSearch, bidsSearch, setBidsSearch, bidsAdvSearch, setBidsAdvSearch, GetTimeActivity, workshopsearch, setWorkshopSearch, productsearch, setProductSearch, selctionOrder, setSelectionOrder, setRetailSearch, retailsData, setRetailsData
+    }}>
       {props.children}
     </contentContext.Provider>
   )
