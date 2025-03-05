@@ -175,6 +175,7 @@ const User = () => {
                 "emailid": formChange?.emailId,
                 "status": formChange?.status,
                 "usertype": formChange?.usertype,
+                "companyid":companyId
             }
             // formChange["companyId"] = companyId
             // formChange["type"] = "companyUser"
@@ -212,7 +213,7 @@ const User = () => {
     const getUser = (e) => {
         let companyId = localStorage.getItem("companyId")
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        const urlLink = lambda + '/userInfo?appname=' + appname + "&type=companyUser" + "&userId=" + userid;
+        const urlLink = lambda + '/user?appname=' + appname + "&userid=" + userid;
         axios({
             method: 'GET',
             url: urlLink,
@@ -272,7 +273,7 @@ const User = () => {
                 "status": "Active",
                 "phoneNumber": formChange?.phoneNumber,
                 "usertype": formChange?.usertype,
-                "companyId": companyId,
+                "companyid": companyId,
                 "type": "companyUser",
                 "userId": id,
             }
@@ -364,7 +365,7 @@ const User = () => {
 
                                                                     {/* <th className="align-middle">S No</th> */}
                                                                     <th className="align-middle">Name</th>
-                                                                    <th className="align-middle">Email Id</th>
+                                                                    <th className="align-middle">Email ID</th>
                                                                     <th className="align-middle">Phone Number</th>
                                                                     <th className="align-middle">Status</th>
                                                                     <th className="align-middle">Created</th>
@@ -431,7 +432,7 @@ const User = () => {
                                                     </div>
                                                     <div className="col-md-6">
                                                         <div className="mb-3 input-field">
-                                                            <label className="form-label form-label">Email Id</label>
+                                                            <label className="form-label form-label">Email ID</label>
                                                             <input type="text" className="form-control" id="name" placeholder="Enter Email" name="emailId" value={formChange?.emailId} onChange={(e) => handleChange(e)} autoComplete="on" />
                                                             {emailError != "" ? <span className="errormsg" style={{
                                                                 fontWeight: 'bold',

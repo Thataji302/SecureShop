@@ -21,12 +21,12 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
 
 
 
-    const { formFields, services, columns, labels } = tabData;
+    let { formFields, services, columns, labels } = tabData;
 
 
 
     const getSummaryData = () => {
-
+        setData([])
         fetch(services?.summaryAPI.url, { method: services?.summaryAPI.method })
             .then(response => response.json())
             .then(data => {
@@ -155,6 +155,8 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
             url = url.replace("$id", `${formValues.fastagid}`)
         } else if (tabData.tab === 'Vendor') {
             url = url.replace("$id", `${formValues.vendorid}`)
+        }else if (tabData.tab === 'Executive') {
+            url = url.replace("$id", `${formValues.executiveid}`)
         } else {
             url = url.replace("$id", `${formValues._id}`)
         }
@@ -172,7 +174,7 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
             ? services.updateAPI
             : services.createAPI;
         if (!formValues._id) {
-            formValues["status"] = "Active";
+            formValues["status"] = "ACTIVE";
         }
         let { url, method } = api;
         url = changeId(url)
@@ -199,6 +201,8 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
                     if (api.errors.includes(data.result)) {
                         setIsError(true)
                     } else {
+                        getSummaryData();
+
                         setIsError(false)
                     }
                 }
@@ -270,6 +274,8 @@ const SubLookup = ({ tabData, imageCloudfront, tabSelected }) => {
             setTitle(data.result);
             setSuccess(true);
             setIsError(!data.result);
+            getSummaryData();
+
         } catch (error) {
             console.error("Delete Error:", error);
             alert(error.message || "Network error. Please try again.");

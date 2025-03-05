@@ -2,7 +2,9 @@ import moment from "moment";
 
 const LookupTable = ({ data, header, addClick, imageCloudfront,columns,editClick,deleteClick }) => {
 
-    if (!data || data.length === 0) {
+    let newData=data?.filter(item => item.status === "ACTIVE") || [];
+    console.log(newData,data)
+    if (newData.length === 0) {
         return <div className="form_section"><div className="empty_page">
             <img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} />
             <p>There are no {header} available.<br />Please add {header}.</p>
@@ -35,8 +37,7 @@ const LookupTable = ({ data, header, addClick, imageCloudfront,columns,editClick
                         </tr>
                     </thead>
                     <tbody>
-                        {data && data
-                            .filter(item => item.status === "Active") // Show only active records
+                        {newData && newData // Show only active records
                             .map((eachItem, key) => (
                                 <tr key={key}>
                                     {columns.map((col, index) => (

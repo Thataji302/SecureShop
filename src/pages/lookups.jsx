@@ -426,25 +426,25 @@ const Lookups = () => {
             services: {
                 "summaryAPI": {
                     method: "GET",
-                    url: `${lambda}/vendorsInfo?appname=${appname}&companyid=${companyId}&userid=${userid}`
+                    url: `${lambda}/executivesInfo?appname=${appname}&companyid=${companyId}&userid=${userid}`
 
                 },
                 "createAPI": {
                     method: "POST",
-                    url: `${lambda}/addVendor?appname=${appname}&companyid=${companyId}&userid=${userid}`,
+                    url: `${lambda}/addexecutives?appname=${appname}&companyid=${companyId}&userid=${userid}`,
                     errors: [
-                        "Vendor already exists"]
+                        "Executive already exists"]
                 },
                 "updateAPI": {
                     method: "POST",
-                    url: `${lambda}/updateVendor?appname=${appname}&vendorId=$id&companyid=${companyId}&userid=${userid}`,
+                    url: `${lambda}/updateExecutives?appname=${appname}&executiveid=$id&companyid=${companyId}&userid=${userid}`,
                     errors: [
-                        "Vendor already exists"]
+                        "Executive already exists"]
 
                 },
                 "deleteAPI": {
                     method: "POST",
-                    url: `${lambda}/updateVendor?appname=${appname}&vendorId=$id&type=delete&companyid=${companyId}&userid=${userid}`,
+                    url: `${lambda}/updateExecutives?appname=${appname}&executiveid=$id&type=delete&companyid=${companyId}&userid=${userid}`,
                 }
             },
             columns: [
