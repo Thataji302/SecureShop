@@ -460,15 +460,15 @@ const Purchases = () => {
 
                                                                     {/* <th className="align-middle">S No</th> */}
                                                                     <th className="align-middle">Invoice Date</th>
-                                                                    <th className="align-middle">Invoice Date</th>
-
                                                                     <th className="align-middle">Invoice Number</th>
+
                                                                     <th className="align-middle">Model Name</th>
                                                                     <th className="align-middle">Chassis Number</th>
                                                                     <th className="align-middle">Vendor Name</th>
-                                                                    {/* <th className="align-middle">GST Number</th> */}
                                                                     <th className="align-middle">Created</th>
+                                                                    {/* <th className="align-middle">GST Number</th> */}
                                                                     <th className="align-middle">Action</th>
+                                                                   
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
