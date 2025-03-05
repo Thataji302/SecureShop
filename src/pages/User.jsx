@@ -230,7 +230,7 @@ const User = () => {
 
     const editClick = (e, item) => {
         let type = item && item.type;
-        let id = item && item.id;
+        let id = item && item.userid;
         //localStorage.setItem("item", JSON.stringify(item));
         //history.push("/lookupForm")
         localStorage.removeItem("formType");
@@ -367,6 +367,7 @@ const User = () => {
                                                                     <th className="align-middle">Name</th>
                                                                     <th className="align-middle">Email ID</th>
                                                                     <th className="align-middle">Phone Number</th>
+                                                                    <th className="align-middle">Type</th>
                                                                     <th className="align-middle">Status</th>
                                                                     <th className="align-middle">Created</th>
                                                                     <th className="align-middle">Action</th>
@@ -379,6 +380,7 @@ const User = () => {
                                                                             <td>{eachItem?.name ? eachItem?.name : 'N/A'}</td>
                                                                             <td>{eachItem?.emailId ? eachItem?.emailId : 'N/A'}</td>
                                                                             <td>{eachItem?.phoneNumber ? eachItem?.phoneNumber : 'N/A'}</td>
+                                                                            <td>{eachItem?.userType ? eachItem?.userType : 'N/A'}</td>
                                                                             <td>{eachItem?.status ? eachItem?.status : 'N/A'}</td>
                                                                             <td>{moment(eachItem?.created).format('DD-MM-YYYY')}</td>
 
