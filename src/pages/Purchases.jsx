@@ -70,10 +70,10 @@ const Purchases = () => {
         }
         console.log('id', id)
         if (id) {
-            userClick()
+            getPurchases()
             setBranchStatus(true)
         } else {
-            getUser()
+            getPurchase()
             setBranchStatus(false)
 
         }
@@ -83,7 +83,7 @@ const Purchases = () => {
     const goBack = () => {
         history.goBack();
     }
-    const userClick = () => {
+    const getPurchases = () => {
         let userId = localStorage.getItem("userid") || localStorage.getItem("userId")
         const urlLink = lambda + '/purchase?appname=' + appname + "&purchaseId=" + id + "&userId=" + userId + "&type=purchase";
         axios({
@@ -104,6 +104,7 @@ const Purchases = () => {
     const backClick = () => {
         // history.goBack();
         setBranchStatus(false)
+        window.location = `/purchases`;
         // getUser()
     }
 
@@ -202,7 +203,7 @@ const Purchases = () => {
                         // history.push("./user");
                         //  window.location = "/user"
                         // setBranchStatus(false)
-                        getUser()
+                        getPurchase()
                         setSubmitButton(false)
                         setUserSuccess(true)
 
@@ -226,7 +227,7 @@ const Purchases = () => {
                         // localStorage.setItem("previousid", response.data.result)
                         // history.push("./branches");
 
-                        getUser()
+                        getPurchase()
                         setSubmitButton(false)
                         setUserSuccess(true)
                     }
@@ -235,7 +236,7 @@ const Purchases = () => {
 
         // formvalidation()
     }
-    const getUser = (e) => {
+    const getPurchase = (e) => {
         //  let companyId = localStorage.getItem("companyId")
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
         const urlLink = lambda + '/purchase?appname=' + appname + "&type=purchase" + "&userId=" + userid;
@@ -248,7 +249,7 @@ const Purchases = () => {
                     // localStorage.setItem("previousid", response.data.result)
                     // history.push("./branches");
                     setSavedPropertyData(response.data.result)
-                    // getUser()
+                    // getPurchase()
                 }
             });
     }
@@ -271,7 +272,7 @@ const Purchases = () => {
         setResultSuccess(false)
         // const type = "companyUser";
         setUserSuccess(false)
-        getUser();
+        getPurchase();
         setBranchStatus(false)
     };
     function closePopup() {
@@ -496,7 +497,7 @@ const Purchases = () => {
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    :
+                                                    : savedPropertyData && savedPropertyData?.length == 0 &&
                                                     <div className="form_section"><div className="empty_page">
                                                         <span><img src="https://d9nwtjplhevo0.cloudfront.net/orasi/admin/resources/orasiv1/images/add-conversation.png" /></span>
                                                         <p>There are no purchases available.<br />Please add purchases.</p>
