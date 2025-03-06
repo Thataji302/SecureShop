@@ -20,24 +20,28 @@ import Sidebar from ".././components/dashboard/sidebar";
 import tmdbApi from "../api/tmdbApi";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import SessionPopup from "./SessionPopup"
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useLocation  } from "react-router-dom";
 import * as Config from "../constants/Config";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import axios from 'axios';
 import { removeSpecialCharecters, location } from '././../utils/commonUtils';
+import { ConstructionOutlined } from "@mui/icons-material";
 
 let { lambda, country, appname } = window.app;
-var urlParams = location("type");
-var id = location("id");
+
+
 const User = () => {
     const history = useHistory();
+    const { search } = useLocation();
+    const query = new URLSearchParams(search);
+    const id = query.get('id');
     const [propertyData, setPropertyData] = useState({})
     const [config, setConfig] = useState({});
     const [activeId, setActiveId] = useState();
     const [formChange, setFormChange] = useState({});
     const [customerErrors, setCustomerErrors] = useState({});
-    const [savedPropertyData, setSavedPropertyData] = useState({})
+    const [savedPropertyData, setSavedPropertyData] = useState([])
     const [emailError, setEmailError] = useState('');
     const [branchStatus, setBranchStatus] = useState(false);
     const [nameerror, setNameError] = useState('');
@@ -58,22 +62,27 @@ const User = () => {
             history.push("/");
         }
         // console.log('urlParams', urlParams)
+         getUser()
+          
+
+    }, []);
+
+    console.log("iddd",id)
+    useEffect(() => {
+        
         if (id) {
             userClick()
             setBranchStatus(true)
-        } else {
-            getUser()
-            setBranchStatus(false)
-        }
+        } 
 
-    }, []);
+    }, [id]);
     //  console.log("data", data);setCommission
     const goBack = () => {
         history.goBack();
     }
     const userClick = () => {
         let userId = localStorage.getItem("userid") || localStorage.getItem("userId")
-        const urlLink = lambda + '/userInfo?appname=' + appname + "&id=" + id + "&userId=" + userId + "&type=companyUser";
+        const urlLink = lambda + '/user?appname=' + appname + "&userId=" + id;
         axios({
             method: 'GET',
             url: urlLink,
@@ -92,6 +101,7 @@ const User = () => {
         // history.goBack();
         setBranchStatus(false)
         getUser()
+        history.push("/user");
     }
     // const handleEmailMessage = (e) => {
     //     setError("");
@@ -145,10 +155,10 @@ const User = () => {
                 "phoneNumber": formChange?.phoneNumber,
                 "emailid": formChange?.emailId,
                 "status": formChange?.status,
-                "usertype": formChange?.usertype,
+                "userType": formChange?.userType,
             }
             console.log("payload", payload)
-            const urlLink = lambda + '/updateUser?appname=' + appname + "&id=" + id + "&type=companyUser";
+            const urlLink = lambda + '/user?appname=' + appname + "&userId=" + id;
             axios({
                 method: 'POST',
                 url: urlLink,
@@ -174,8 +184,8 @@ const User = () => {
                 "phoneNumber": formChange?.phoneNumber,
                 "emailid": formChange?.emailId,
                 "status": formChange?.status,
-                "usertype": formChange?.usertype,
-                "companyid":companyId
+                "userType": formChange?.userType,
+                "companyid": companyId
             }
             // formChange["companyId"] = companyId
             // formChange["type"] = "companyUser"
@@ -213,7 +223,7 @@ const User = () => {
     const getUser = (e) => {
         let companyId = localStorage.getItem("companyId")
         let userid = localStorage.getItem("userid") || localStorage.getItem("userId")
-        const urlLink = lambda + '/user?appname=' + appname + "&userid=" + userid;
+        const urlLink = lambda + '/getUser?appname=' + appname + "&userId=" + userid;
         axios({
             method: 'GET',
             url: urlLink,
@@ -234,7 +244,9 @@ const User = () => {
         //localStorage.setItem("item", JSON.stringify(item));
         //history.push("/lookupForm")
         localStorage.removeItem("formType");
-        window.location = `/user?id=${id} `;
+        setBranchStatus(true)
+        history.push(`/user?id=${id}`)
+
     }
     const deleteClick = (e, item) => {
         setDeleteConfirm(true)
@@ -248,7 +260,7 @@ const User = () => {
         // setResultSuccess(false)
         setBranchStatus(false)
         setUserSuccess(false)
-        window.location = "/user"
+        // window.location = "/user"
     };
     function closePopup() {
         setDeleteConfirm(false)
@@ -257,50 +269,28 @@ const User = () => {
     function onConfirm2() {
         setDeleteConfirm(false)
         let item = deleteData;
-        setDataType(item && item.type)
-        let type = item && item.type;
-        let id = item && item.userId;
-        //let lookupid = id;
-        if (id) {
-            //let payload;
-            // let userid = localStorage.getItem("userid")
-            //formChange ["status" ] = "Archive"
-            let companyId = localStorage.getItem("companyId")
-            let payload =
-            {
-                "name": formChange?.name,
-                "emailid": formChange?.emailId,
-                "status": "Active",
-                "phoneNumber": formChange?.phoneNumber,
-                "usertype": formChange?.usertype,
-                "companyid": companyId,
-                "type": "companyUser",
-                "userId": id,
-            }
 
-            const urlLink = lambda + '/delete?appname=' + appname + "&userId=" + id + "&type=" + type;
-            axios({
-                method: 'DELETE',
-                url: urlLink,
-                data: payload
-            })
-                .then(function (response) {
-                    if (response.data.statusCode === 200) {
-                        // localStorage.setItem("previousid", response.data.result)
-                        // history.push("./fastag");
-                        setResultSuccess(true)
-                    }
-                });
-        }
-        // const type = "branches";
-        // GetPropertyData(type);
+        let userid = item?.userid;
+
+
+        const urlLink = lambda + '/user?appname=' + appname + "&userId=" + userid + "&type=delete";
+        axios({
+            method: 'POST',
+            url: urlLink,
+        })
+            .then(function (response) {
+                if (response.data.statusCode === 200) {
+                    setResultSuccess(true)
+                }
+            });
+
     };
     let type = localStorage.getItem("formType");
     let imageCloudfront;
     if (config.common && config.common.imageCloudfront) {
         imageCloudfront = config.common.imageCloudfront;
     }
-    console.log("imageCloudfront", imageCloudfront)
+    // console.log("imageCloudfront", imageCloudfront)
     const addClick = (e, item) => {
         setBranchStatus(true)
         setFormChange("")
@@ -395,7 +385,7 @@ const User = () => {
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    :
+                                                    : savedPropertyData && savedPropertyData?.length == 0 &&
                                                     <div className="form_section"><div className="empty_page">
                                                         <span><img src={imageCloudfront + "propertyCalculator/images/dashboard.png"} /></span>
                                                         <p>There are no users available.<br />Please add users.</p>
@@ -407,7 +397,7 @@ const User = () => {
                                             <div className="form_seciton">
                                                 <div className="breadcurmb">
                                                     <div className="title_block">
-                                                        <h5>add user</h5>
+                                                        <h5>{id ? "Edit" : "Add "} user</h5>
                                                     </div>
                                                     <div className="buttons">
 
@@ -448,8 +438,8 @@ const User = () => {
                                                             {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
                                                             <select className="form-select" aria-label="Default select example" name="status" value={formChange?.status} onChange={handleChange}>
                                                                 <option value="">Select Status </option>
-                                                                <option value="Active">Active</option>
-                                                                <option value="Inactive"> Inactive</option>
+                                                                <option value="Active">ACTIVE</option>
+                                                                <option value="Inactive"> INACTIVE</option>
 
                                                             </select>
                                                         </div>
@@ -458,7 +448,7 @@ const User = () => {
                                                         <div className="mb-3 input-field">
                                                             <label className="form-label form-label">User Type</label>
                                                             {/* <input type="text" className="form-control" id="name" placeholder="Enter Status" name="status" value={formChange?.status} onChange={(e) => handleChange(e)} autoComplete="on" /> */}
-                                                            <select className="form-select" aria-label="Default select example" name="usertype" value={formChange?.usertype} onChange={handleChange}>
+                                                            <select className="form-select" aria-label="Default select example" name="usertype" value={formChange?.userType} onChange={handleChange}>
                                                                 <option value="">Select Status </option>
                                                                 <option value="OPERATOR">Operator</option>
                                                                 <option value="MANAGER"> Manager</option>
@@ -516,7 +506,7 @@ const User = () => {
                         {deleteConfirm &&
                             <Modal className="access-denied delete_popup" show={deleteConfirm}>
 
-                                <div className="modal-body">
+                                {/* <div className="modal-body">
                                     <div className="container">
                                         <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
                                         <span className="material-icons access-denied-icon">delete_outline</span>
@@ -527,7 +517,7 @@ const User = () => {
                                             <button className="fill_btn " onClick={e => onConfirm2()}> Yes, Delete</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                             </Modal>}
                     </div>
