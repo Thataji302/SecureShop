@@ -63,9 +63,9 @@ const Header = (props) => {
   useEffect(() => {
 
 
-    console.log('userData  ddd ', userData?.userType)
+    // console.log('userData  ddd ', userData?.userType)
     if (userData?.userType != undefined && userData?.userType == 'SUPER ADMIN') {
-      console.log('ssss')
+      // console.log('ssss')
       setmenuList([{
         id: '1',
         labelName: 'Company',
@@ -153,7 +153,7 @@ const Header = (props) => {
     history.push(item.route)
   }
 
-  console.log('menuList ', menuList, userData)
+  // console.log('menuList ', menuList, userData)
   return (
     <header id="page-topbar" >
       <div className="navbar-header inner_header">
