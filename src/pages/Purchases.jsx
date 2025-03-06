@@ -621,6 +621,45 @@ const Purchases = () => {
                                                             }
                                                         </div>
                                                     </div>
+
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Branch</label>
+                                                           
+                                                            <select className="form-select" name="branch" value={formChange?.branch} onChange={handleChange}>
+                                                                <option value="">Select</option>
+                                                                <option value="mainbranch">Main Branch</option>
+                                                                <option value="subbranch">Sub Branch</option>
+                                                            </select>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    {formChange?.branch == "mainbranch" &&
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Main Branches</label>
+                                                           
+                                                            <select className="form-select" name="mainbranch" value={formChange?.subbranch} onChange={handleChange}>
+                                                                <option value="">Select</option>
+                                                                <option value="mainbranch">Main Branch</option>
+                                                            </select>
+                                                            
+                                                        </div>
+                                                    </div>}
+
+                                                    {formChange?.branch == "subbranch" &&
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3 input-field">
+                                                            <label className="form-label form-label">Sub Branches</label>
+                                                           
+                                                            <select className="form-select" name="subbranch" value={formChange?.subbranch} onChange={handleChange}>
+                                                                <option value="">Select</option>
+                                                                <option value="mainbranch">Main Branch</option>
+                                                            </select>
+                                                            
+                                                        </div>
+                                                    </div>}
+
                                                     {/* <div className="col-md-6">
                                                                 <div className="mb-3 input-field">
                                                                     <label className="form-label form-label">GST Number</label>
