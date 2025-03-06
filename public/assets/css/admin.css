@@ -1,0 +1,31 @@
+.dashboard { background-color: #F3F7FF !important;}
+.table th { background-color: #E9F0FF; color: #091B51 !important; font-size: 10px; padding: 13px 10px; }
+.table td {  font-size: 10px; color: #091B51 !important; }
+.table { border-color:#AFC5F4;}
+.table-striped>tbody>tr:nth-of-type(odd)>* { --bs-table-accent-bg: #F8FAFF; background-color: #F8FAFF !important;}
+.page-title-box { padding-bottom: 10px;}
+.title-block { display: flex; align-items: center; margin-bottom: 5px; justify-content: space-between;}
+.card-title {color: #091B51; font-size: 16px !important; text-transform: capitalize; font-weight: 600;}
+.navbar-header {box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1);}
+.card {box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1);}
+.new_search {display: flex; justify-content: center; align-items: center; height: calc(100vh - 362px);}
+.new_search h2 { font-size: 28px; text-align: center; color: #202669; font-weight: bold; margin-bottom: 20px;}
+.estimate_price { padding: 0;}
+.recent_searches .card {box-shadow: none;}
+.recent_searches .card-body {padding: 10px;}
+.recent_searches .property_info .info { padding: 0; position: relative; width: 100%; padding-left: 0; margin-bottom: 0; padding-top: 0;}
+.recent_searches .property_info .icon-box {width: 55px; height: 55px;}
+.recent_searches .property_info .icon-box span { color: rgba(88, 104, 140, 1);font-size: 31px;}
+.recent_searches .property_info .card-info {margin-left: 15px;}
+.recent_searches .property_info .card-info .calendar_month {color: rgba(88, 104, 140, 1); font-size: 10px; font-weight: normal; margin: 0; display: flex; align-items: center;}
+.recent_searches .property_info .card-info .calendar_month span {color: rgba(28, 27, 31, 1); margin-right: 5px; font-size: 12px; line-height: inherit;}
+.recent_searches .property_info .card-info h6 {font-size: 11px; font-weight: 500; margin-bottom: 0px;}
+.recent_searches .property_info .card-info p {margin: 2px 0 4px 0; font-size: 11px; font-weight: 600;}
+.recent_searches .col-md-3 {padding-left: 5px; padding-right: 5px;}
+.property_searches .title-block {margin-bottom: 13px;}
+.property_searches .card-title {margin-bottom: 0 !important;}
+.property_searches .title-block p{display: flex; align-items: center; margin-left: 20px; margin-bottom: 0; color: rgba(9, 27, 81, 1); font-weight: 600; font-size: 14px;}
+.property_searches .title-block span{color: rgba(212, 120, 79, 1); margin-right: 5px; font-size: 21px;}
+.property_searches .property_info .back {position: inherit;}
+.property_searches .property_info .back span {margin-right: 1px !important; font-size: 14px !important;}
+.table th:last-child, .table td:last-child {color: rgba(212, 120, 79, 1) !important;}
