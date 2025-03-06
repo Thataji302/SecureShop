@@ -506,7 +506,7 @@ const User = () => {
                         {deleteConfirm &&
                             <Modal className="access-denied delete_popup" show={deleteConfirm}>
 
-                                {/* <div className="modal-body">
+                                <div className="modal-body">
                                     <div className="container">
                                         <button className="close-btn" onClick={e => closePopup()}><span className="material-icons">close</span></button>
                                         <span className="material-icons access-denied-icon">delete_outline</span>
@@ -517,7 +517,7 @@ const User = () => {
                                             <button className="fill_btn " onClick={e => onConfirm2()}> Yes, Delete</button>
                                         </div>
                                     </div>
-                                </div> */}
+                                </div>
 
                             </Modal>}
                     </div>
