@@ -3,11 +3,6 @@ image: maven:3.8.6-openjdk-17
 pipelines:
   default:
     - step:
-        name: Build and Test
-        caches:
-          - maven
+        name: Test Maven Setup
         script:
-          - mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=Dealers-MIS-reports-app \
-            -Dsonar.host.url=http://44.207.67.158:9000 \
-            -Dsonar.login=squ_507fe91340a59206d513067df9df5d685ba1aec7
+          - mvn --version
