@@ -1,0 +1,32 @@
+# Template: Maven build with SonarQube integration (Java 17)
+
+image: maven:3.6.3  # Maven with Java (will use default Java unless specified)
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: Build and Test
+          caches:
+            - maven
+          script:
+            - java -version  # Verify Java version (should be Java 17)
+            - mvn -B verify --file pom.xml
+          after-script:
+              # Collect checkstyle results, if any, and convert to Bitbucket Code Insights.
+            - pipe: atlassian/checkstyle-report:0.3.0
+      - step:
+          name: Security Scan
+          script:
+            # Run a security scan for sensitive data.
+            - pipe: atlassian/git-secrets-scan:0.5.1
+    - step:
+        name: SonarQube Analysis
+        image: openjdk:17  # Use Java 17 for SonarQube analysis
+        caches:
+          - maven
+        script:
+          - mvn clean verify sonar:sonar \
+              -Dsonar.projectKey=Dealers-MIS-reports-app  \
+              -Dsonar.host.url=http://44.207.67.158:9000/L \
+              -Dsonar.login=squ_507fe91340a59206d513067df9df5d685ba1aec7
