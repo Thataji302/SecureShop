@@ -8,6 +8,7 @@ interface AuthModalProps {
   onModeSwitch: () => void;
 }
 
+
 export default function AuthModal({ isOpen, mode, onClose, onModeSwitch }: AuthModalProps) {
   const [formData, setFormData] = useState({
     fullName: '',
